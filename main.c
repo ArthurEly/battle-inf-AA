@@ -18,7 +18,7 @@ int main(void)
     const int screenWidth = 1000;
     const int screenHeight = 600;
 
-    InitWindow(screenWidth, screenHeight, "raylib [models] example - box collisions");
+    InitWindow(screenWidth, screenHeight, "trabalho top");
 
     // Define the camera to look into our 3d world
     Camera camera = { { 0.0f, 40.0f, 35.0f }, { 0.0f, 0.0f, 0.0f }, { 0.0f, 1.0f, 0.0f }, 45.0f, 0 };
