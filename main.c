@@ -28,7 +28,7 @@ int main(void)
     Color playerColor = GREEN;
 
     Vector3 enemyBoxPos = { 20, 1.0, -20};
-    Vector3 enemyBoxSize = { 1.0f, 3.0f, 1.0f };
+    Vector3 enemyBoxSize = { 10.0f, 3.0f, 10.0f };
 
     Vector3 enemySpherePos = { 4.0f, 0.0f, 0.0f };
     float enemySphereSize = 1.5f;
