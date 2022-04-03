@@ -1,7 +1,30 @@
 # depslib dependency file v1.0
-1648666101 source:c:\battle inf\battle-inf-aa\main.c
+1649028205 source:c:\battle inf\battle-inf-aa\main.c
 	"raylib.h"
+	"drawFunctions.h"
+	"game.h"
+	"options.h"
 
 1648683061 source:c:\users\guto\documents\ufrgs\alg e prog\trabalho\battle-inf-aa\main.c
 	"raylib.h"
+
+1649006486 c:\battle inf\battle-inf-aa\estados.c
+	"raylib.h"
+	"stdio.h"
+
+1649006688 c:\battle inf\battle-inf-aa\estados.h
+	"raylib.h"
+	"stdio.h"
+
+1649027007 c:\battle inf\battle-inf-aa\drawfunctions.h
+	"raylib.h"
+	"stdio.h"
+
+1649028179 c:\battle inf\battle-inf-aa\game.h
+	"raylib.h"
+	"stdio.h"
+
+1649028176 c:\battle inf\battle-inf-aa\options.h
+	"raylib.h"
+	"stdio.h"
 

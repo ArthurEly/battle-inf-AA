@@ -31,9 +31,14 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
+		<Unit filename="drawFunctions.h" />
+		<Unit filename="game.h" />
 		<Unit filename="main.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="menu.h" />
+		<Unit filename="options.h" />
+		<Unit filename="states.h" />
 		<Extensions>
 			<lib_finder disable_auto="1" />
 		</Extensions>
