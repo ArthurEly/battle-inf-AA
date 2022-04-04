@@ -7,6 +7,8 @@ Screens id
 12 -> Options Menu Screen
 */
 //Main Menu variables
+void SetActiveScreen(int screen_id);
+
 const int menu_items[2]={
     11,
     12

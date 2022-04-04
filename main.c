@@ -10,6 +10,9 @@ Screens id
 11 -> Gameplay Screen
 12 -> Options Menu Screen
 */
+void SetActiveScreen(int screen_id);
+void DrawScreen(int screen_id);
+
 int screens[SCREENS_QTDY]={
         10, //Main Menu Screen
         11, //Gameplay Screen

@@ -8,7 +8,7 @@ Screens id
 */
 void DrawOptionsScreen(){
     ClearBackground(WHITE);
-    DrawText("opcaos kkkkk", 20, 140, 40, BLACK);
+    DrawText("Tamanho da janela: 1000 por 800", 20, 140, 40, BLACK);
 
     if(IsKeyPressed(KEY_P)){
         SetActiveScreen(10);
