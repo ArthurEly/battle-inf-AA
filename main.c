@@ -2,30 +2,26 @@
 #include "menu.h"
 #include "game.h"
 #include "options.h"
+#include "highscores.h"
+#include "pause_menu.h"
 
-#define SCREENS_QTDY 3
-/*
-Screens id
-10 -> Main Menu Screen
-11 -> Gameplay Screen
-12 -> Options Menu Screen
-*/
 void SetActiveScreen(int screen_id);
 void DrawScreen(int screen_id);
 
-int screens[SCREENS_QTDY]={
+int screens[5]={
         10, //Main Menu Screen
         11, //Gameplay Screen
+        111, //menu de pausa dentro do jogo
         12, //Options Screen
+        13  //Options Screen
     };
 int active_screen = 10;
+const int SCREENS_QTDY = sizeof(screens)/sizeof(screens[0]);
 
 int main(void)
 {
     const int screenWidth = 1000;
     const int screenHeight = 800;
-
-    int i = 0;
 
     InitWindow(screenWidth, screenHeight, "Battle INF");
 
@@ -34,20 +30,8 @@ int main(void)
     while (!WindowShouldClose())
     {
         BeginDrawing();
+            DrawScreen(active_screen);
 
-            switch(active_screen){
-                case 10:
-                    DrawScreen(10);
-                    break;
-
-                case 11:
-                    DrawScreen(11);
-                    break;
-
-                case 12:
-                    DrawScreen(12);
-                    break;
-            }
         EndDrawing();
     }
 
@@ -67,8 +51,16 @@ void DrawScreen(int screen_id){
             DrawGameplayScreen();
             break;
 
+        case 111:
+            DrawPauseMenu();
+            break;
+
         case 12:
             DrawOptionsScreen();
+            break;
+
+        case 13:
+            DrawHighScoresScreen();
             break;
 
         default:

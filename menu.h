@@ -1,52 +1,62 @@
 #include "raylib.h"
 #include "stdio.h"
-/*
-Screens id
-10 -> Main Menu Screen
-11 -> Gameplay Screen
-12 -> Options Menu Screen
-*/
-//Main Menu variables
+
 void SetActiveScreen(int screen_id);
 
-const int menu_items[2]={
+const int menu_items[4]={
     11,
-    12
+    12,
+    13,
+    999
 };
-int op=0;
+const int MENU_ITEMS_QTDY = sizeof(menu_items)/sizeof(menu_items[0]);
+int menu_option=0;
 
 void DrawMainMenuScreen(){
-    printf("\n%d\n",op);
-
     ClearBackground(BLUE);
     Color optionColor = LIGHTGRAY;
 
-    if(IsKeyPressed(KEY_DOWN) && op<1){
-        printf("baixo");
-        op++;
+    if(IsKeyPressed(KEY_DOWN) &&menu_option<MENU_ITEMS_QTDY-1){
+       menu_option++;
     }
 
-    if(IsKeyPressed(KEY_UP) && op>0){
-        printf("CIAM");
-        op--;
+    if(IsKeyPressed(KEY_UP) &&menu_option>0){
+       menu_option--;
     }
 
-    if(op == 0){
-        optionColor = YELLOW;
+    if(menu_option == 0){
+        optionColor = GREEN;
     }else{
         optionColor = LIGHTGRAY;
     }
     DrawText("Novo jogo", 20, 20, 40, optionColor);
 
-    if(op == 1){
+    if(menu_option == 1){
         optionColor = YELLOW;
     }else{
         optionColor = LIGHTGRAY;
     }
     DrawText("Opcoes", 20, 140, 40, optionColor);
 
+    if(menu_option == 2){
+        optionColor = YELLOW;
+    }else{
+        optionColor = LIGHTGRAY;
+    }
+    DrawText("Highscores", 20, 230, 40, optionColor);
+
+    if(menu_option == 3){
+        optionColor = YELLOW;
+    }else{
+        optionColor = LIGHTGRAY;
+    }
+    DrawText("Sair", 20, 260, 40, optionColor);
+
     if(IsKeyPressed(KEY_ENTER)){
-        SetActiveScreen(menu_items[op]);
+        if(menu_items[menu_option] != 999)
+            SetActiveScreen(menu_items[menu_option]);
+        else
+            CloseWindow();
     }
 }
 

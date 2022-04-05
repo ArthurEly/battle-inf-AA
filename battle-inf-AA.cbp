@@ -33,11 +33,13 @@
 		</Compiler>
 		<Unit filename="drawFunctions.h" />
 		<Unit filename="game.h" />
+		<Unit filename="highscores.h" />
 		<Unit filename="main.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="menu.h" />
 		<Unit filename="options.h" />
+		<Unit filename="pause_menu.h" />
 		<Unit filename="states.h" />
 		<Extensions>
 			<lib_finder disable_auto="1" />

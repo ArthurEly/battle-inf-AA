@@ -1,9 +1,11 @@
 # depslib dependency file v1.0
-1649028205 source:c:\battle inf\battle-inf-aa\main.c
+1649180943 source:c:\battle inf\battle-inf-aa\main.c
 	"raylib.h"
-	"drawFunctions.h"
+	"menu.h"
 	"game.h"
 	"options.h"
+	"highscores.h"
+	"pause_menu.h"
 
 1648683061 source:c:\users\guto\documents\ufrgs\alg e prog\trabalho\battle-inf-aa\main.c
 	"raylib.h"
@@ -20,11 +22,11 @@
 	"raylib.h"
 	"stdio.h"
 
-1649028179 c:\battle inf\battle-inf-aa\game.h
+1649180522 c:\battle inf\battle-inf-aa\game.h
 	"raylib.h"
 	"stdio.h"
 
-1649028176 c:\battle inf\battle-inf-aa\options.h
+1649178399 c:\battle inf\battle-inf-aa\options.h
 	"raylib.h"
 	"stdio.h"
 
@@ -43,6 +45,18 @@
 	"stdio.h"
 
 1649096930 c:\users\user\documents\ufrgs\algoritmos e programacao\trabalho final\battle-inf-aa\options.h
+	"raylib.h"
+	"stdio.h"
+
+1649181204 c:\battle inf\battle-inf-aa\menu.h
+	"raylib.h"
+	"stdio.h"
+
+1649179966 c:\battle inf\battle-inf-aa\highscores.h
+	"raylib.h"
+	"stdio.h"
+
+1649181020 c:\battle inf\battle-inf-aa\pause_menu.h
 	"raylib.h"
 	"stdio.h"
 
