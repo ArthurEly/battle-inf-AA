@@ -1,12 +1,7 @@
-#include "raylib.h"
-#include "stdio.h"
+#ifndef HIGHSCORES_H_INCLUDED
+#define HIGHSCORES_H_INCLUDED
 
-void DrawHighScoresScreen(){
-    ClearBackground(GREEN);
-    DrawText("PONTNIHOS", 20, 140, 40, WHITE);
+void DrawHighScoresScreen(void);
 
-    if(IsKeyPressed(KEY_P)){
-        SetActiveScreen(10);
-    }
-}
+#endif
 
