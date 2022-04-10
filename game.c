@@ -11,7 +11,6 @@ Rectangle playerTextutre = { 0, 0, 100, 100};
 Rectangle playerRectangle = { 1000/2.0f, 800/2.0f, 100*2.0f, 100*2.0f };
 Vector2 origin = { 100, 100};
 float angle = 0;
-bool isAKeyPressed;
 
 void DrawGameplayScreen(){
 
@@ -35,10 +34,8 @@ void DrawGameplayScreen(){
         angle=0;
     }
 
-    int key = GetKeyPressed();
-    if(key != 0){
-        printf("\n%d\n",key);
-    }
+
+    printf("aang %.0f\n",angle);
     ClearBackground(RAYWHITE);
 
     DrawTexturePro(

@@ -17,7 +17,7 @@ int g_screens[5]={
         12, //Options Screen
         13  //Options Screen
     };
-int g_active_screen = 11;
+int g_active_screen = 10;
 
 const int SCREENS_QTDY = sizeof(g_screens)/sizeof(g_screens[0]);
 

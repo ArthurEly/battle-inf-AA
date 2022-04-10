@@ -32,13 +32,28 @@
 			<Add option="-Wall" />
 		</Compiler>
 		<Unit filename="drawFunctions.h" />
+		<Unit filename="game.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="game.h" />
+		<Unit filename="highscores.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="highscores.h" />
 		<Unit filename="main.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="menu.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="menu.h" />
+		<Unit filename="options.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="options.h" />
+		<Unit filename="pause_menu.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="pause_menu.h" />
 		<Unit filename="states.h" />
 		<Extensions>
