@@ -1,15 +1,33 @@
 #include "raylib.h"
 #include "stdio.h"
 #include "menu.h"
+
+#define TEXTOS 5
 void SetActiveScreen(int screen_id);
-const int menu_items[4]={
+const int menu_items[TEXTOS]={
     11,
     12,
     13,
+    14,
     999
 };
 const int MENU_ITEMS_QTDY = sizeof(menu_items)/sizeof(menu_items[0]);
 int menu_option=0;
+//Font fonte = GetFontDefault();
+const char *escrita[TEXTOS] = { "Novo Jogo",
+                                "Continuar",
+                                "Carregar Mapa",
+                                "Highscores",
+                                "Sair"};
+int i;
+/*void teste(){
+    Vector2 posicao[TEXTOS] = { 0 };
+    for (i = 0; i < TEXTOS; i++){
+        posicao[i].x = 400.0f - MeasureText(escrita[i], 40.0f).x/2.0f;
+        posicao[i].y = 400.0f + 50.0f*i;
+    }
+}
+int spacing = 2;*/
 
 void DrawMainMenuScreen(){
     ClearBackground(BLUE);
@@ -23,33 +41,49 @@ void DrawMainMenuScreen(){
        menu_option--;
     }
 
-    if(menu_option == 0){
-        optionColor = GREEN;
+    /*if(menu_option == 0){
+        optionColor = YELLOW;
     }else{
         optionColor = LIGHTGRAY;
     }
-    DrawText("Novo jogo", 20, 20, 40, optionColor);
+    DrawText("Novo jogo", 400, 400, 40, optionColor);
 
     if(menu_option == 1){
         optionColor = YELLOW;
     }else{
         optionColor = LIGHTGRAY;
     }
-    DrawText("Opcoes", 20, 140, 40, optionColor);
+    DrawText("Continuar", 400, 450, 40, optionColor);
 
     if(menu_option == 2){
         optionColor = YELLOW;
     }else{
         optionColor = LIGHTGRAY;
-    }
-    DrawText("Highscores", 20, 230, 40, optionColor);
+    }    DrawTextEx(GetFontDefault(), "Carregar Mapa", (Vector2){400.0f, 500.0f}, 40.0, 5, optionColor);
 
     if(menu_option == 3){
         optionColor = YELLOW;
     }else{
         optionColor = LIGHTGRAY;
     }
-    DrawText("Sair", 20, 260, 40, optionColor);
+    DrawText("Highscores", 400, 550, 40, optionColor);
+
+    if(menu_option == 4){
+        optionColor = YELLOW;
+    }else{
+        optionColor = LIGHTGRAY;
+    }
+    DrawText("Sair", 400, 600, 40, optionColor);*/
+
+    for (int i = 0; i < TEXTOS; i++)
+            {
+                if(menu_option == i){
+            optionColor = YELLOW;
+            }else{
+            optionColor = LIGHTGRAY;
+            }
+                DrawText(escrita[i], 500 - (MeasureText(escrita[i], 40)/2), 400 + 50*i, 40, optionColor);
+            }
 
     if(IsKeyPressed(KEY_ENTER)){
         if(menu_items[menu_option] != 999)

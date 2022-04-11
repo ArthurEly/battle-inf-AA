@@ -4,18 +4,20 @@
 #include "options.h"
 #include "highscores.h"
 #include "pause_menu.h"
+#include "stdio.h"
 
 void SetActiveScreen(int screen_id);
 void DrawScreen(int screen_id);
 
 Texture2D g_tank_texture;
 
-int g_screens[5]={
+int g_screens[6]={
         10, //Main Menu Screen
         11, //Gameplay Screen
         111, //menu de pausa dentro do jogo
-        12, //Options Screen
-        13  //Options Screen
+        12, //Continue Screen
+        13, //Load Map Screen
+        14,  //HighScore Screen
     };
 int g_active_screen = 10;
 
@@ -67,8 +69,12 @@ void DrawScreen(int screen_id){
             break;
 
         case 13:
-            DrawHighScoresScreen();
-            break;
+        DrawHighScoresScreen();
+        break;
+
+        case 14:
+        DrawHighScoresScreen();
+        break;
 
         default:
             printf("Não existe tela com esse id");
