@@ -65,7 +65,7 @@ void DrawScreen(int screen_id){
             break;
 
         case 12:
-            DrawOptionsScreen();
+            DrawGameplayScreen();
             break;
 
         case 13:
