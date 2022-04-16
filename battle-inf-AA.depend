@@ -1,11 +1,12 @@
 # depslib dependency file v1.0
-1649305520 source:c:\battle inf\battle-inf-aa\main.c
+1650085803 source:c:\battle inf\battle-inf-aa\main.c
 	"raylib.h"
 	"menu.h"
 	"game.h"
 	"options.h"
 	"highscores.h"
 	"pause_menu.h"
+	"stdio.h"
 
 1648683061 source:c:\users\guto\documents\ufrgs\alg e prog\trabalho\battle-inf-aa\main.c
 	"raylib.h"
@@ -22,7 +23,7 @@
 	"raylib.h"
 	"stdio.h"
 
-1649305520 c:\battle inf\battle-inf-aa\game.h
+1650059176 c:\battle inf\battle-inf-aa\game.h
 
 1649305520 c:\battle inf\battle-inf-aa\options.h
 
@@ -47,17 +48,19 @@
 
 1649305520 c:\battle inf\battle-inf-aa\pause_menu.h
 
-1649305520 source:c:\battle inf\battle-inf-aa\game.c
+1650085653 source:c:\battle inf\battle-inf-aa\game.c
 	"game.h"
 	"raylib.h"
 	"stdio.h"
+	"jogador.h"
+	"inimigo.h"
 
 1649305520 source:c:\battle inf\battle-inf-aa\highscores.c
 	"raylib.h"
 	"stdio.h"
 	"highscores.h"
 
-1649305520 source:c:\battle inf\battle-inf-aa\menu.c
+1649693914 source:c:\battle inf\battle-inf-aa\menu.c
 	"raylib.h"
 	"stdio.h"
 	"menu.h"
@@ -102,4 +105,26 @@
 	"raylib.h"
 	"stdio.h"
 	"pause_menu.h"
+
+1650055849 source:c:\battle inf\battle-inf-aa\cel_energia.c
+
+1650084961 source:c:\battle inf\battle-inf-aa\inimigo.c
+	"game.h"
+	"raylib.h"
+	"stdio.h"
+	"inimigo.h"
+	"jogador.h"
+
+1650055858 source:c:\battle inf\battle-inf-aa\projetil.c
+
+1650080850 c:\battle inf\battle-inf-aa\jogador.h
+
+1650084501 source:c:\battle inf\battle-inf-aa\jogador.c
+	"game.h"
+	"raylib.h"
+	"stdio.h"
+	"jogador.h"
+	"inimigo.h"
+
+1650066155 c:\battle inf\battle-inf-aa\inimigo.h
 

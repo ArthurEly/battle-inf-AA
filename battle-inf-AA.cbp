@@ -31,6 +31,10 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
+		<Unit filename="cel_energia.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="cel_energia.h" />
 		<Unit filename="drawFunctions.h" />
 		<Unit filename="game.c">
 			<Option compilerVar="CC" />
@@ -40,6 +44,14 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="highscores.h" />
+		<Unit filename="inimigo.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="inimigo.h" />
+		<Unit filename="jogador.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="jogador.h" />
 		<Unit filename="main.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -55,6 +67,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="pause_menu.h" />
+		<Unit filename="projetil.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="projetil.h" />
 		<Unit filename="states.h" />
 		<Extensions>
 			<lib_finder disable_auto="1" />

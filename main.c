@@ -9,7 +9,12 @@
 void SetActiveScreen(int screen_id);
 void DrawScreen(int screen_id);
 
-Texture2D g_tank_texture;
+Texture2D g_textura_jogador;
+Texture2D g_textura_inimigo_patrulha;
+Texture2D g_textura_inimigo_perseguicao;
+
+const int tanque_altura_padrao = 50;
+const int tanque_largura_padrao = 50;
 
 int g_screens[6]={
         10, //Main Menu Screen
@@ -19,7 +24,7 @@ int g_screens[6]={
         13, //Load Map Screen
         14,  //HighScore Screen
     };
-int g_active_screen = 10;
+int g_active_screen = 11;
 
 const int SCREENS_QTDY = sizeof(g_screens)/sizeof(g_screens[0]);
 
@@ -31,12 +36,18 @@ int main(void)
     InitWindow(screenWidth, screenHeight, "Battle INF");
 
     SetTargetFPS(60);
-    /*
-    carregamento dos recursos do jogo
-    */
-    g_tank_texture = LoadTexture("assets/tanque_player.png");
-    g_tank_texture.height = 100;
-    g_tank_texture.width = 100;
+
+    g_textura_jogador = LoadTexture("assets/tanque_player.png");
+    g_textura_jogador.height = tanque_altura_padrao;
+    g_textura_jogador.width = tanque_largura_padrao;
+
+    g_textura_inimigo_patrulha = LoadTexture("assets/tanque_verde.png");
+    g_textura_inimigo_patrulha.height = tanque_altura_padrao;
+    g_textura_inimigo_patrulha.width = tanque_largura_padrao;
+
+    g_textura_inimigo_perseguicao = LoadTexture("assets/tanque_inimigo.png");
+    g_textura_inimigo_perseguicao.height = tanque_altura_padrao;
+    g_textura_inimigo_perseguicao.width = tanque_largura_padrao;
     while (!WindowShouldClose())
     {
         BeginDrawing();
@@ -69,12 +80,12 @@ void DrawScreen(int screen_id){
             break;
 
         case 13:
-        DrawHighScoresScreen();
-        break;
+            DrawHighScoresScreen();
+            break;
 
         case 14:
-        DrawHighScoresScreen();
-        break;
+            DrawHighScoresScreen();
+            break;
 
         default:
             printf("Não existe tela com esse id");
