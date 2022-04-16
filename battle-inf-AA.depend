@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1650085803 source:c:\battle inf\battle-inf-aa\main.c
+1650086059 source:c:\battle inf\battle-inf-aa\main.c
 	"raylib.h"
 	"menu.h"
 	"game.h"
