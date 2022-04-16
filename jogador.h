@@ -15,6 +15,7 @@ typedef struct jogador{
 }JOGADOR;
 
 void movimentacaoJogador(JOGADOR *jogador, Rectangle *jogador_R);
+bool checarColisaoJogadorEInimigo(Rectangle *jogador_R, Rectangle *inimigo_R);
 
 #endif
 

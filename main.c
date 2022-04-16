@@ -9,7 +9,7 @@
 void SetActiveScreen(int screen_id);
 void DrawScreen(int screen_id);
 
-Image fundo;
+Texture2D escudo;
 Texture2D texture;
 Font fonte_legal;
 Texture2D g_textura_jogador;
@@ -41,8 +41,8 @@ int main(void)
     SetTargetFPS(60);
 
     fonte_legal = LoadFontEx("assets/Ironmonger FB Extended.otf", 72, 0, 0);
-    fundo = LoadImage("assets/Imagem padrao.png");
-    texture = LoadTextureFromImage(fundo);
+    texture = LoadTexture("assets/Imagem padrao.png");
+    escudo = LoadTexture("assets/shield.png");
 
     g_textura_jogador = LoadTexture("assets/tanque_player.png");
     g_textura_jogador.height = tanque_altura_padrao;

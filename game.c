@@ -5,6 +5,7 @@
 #include "inimigo.h"
 
 void SetActiveScreen(int screen_id);
+extern Texture2D escudo;
 extern Texture2D g_textura_jogador;
 extern Texture2D g_textura_inimigo_patrulha;
 extern Texture2D g_textura_inimigo_perseguicao;
@@ -50,6 +51,7 @@ void DrawGameplayScreen(){
     ClearBackground(RAYWHITE);
     timerSegundos();
     int i;
+    DrawTexture(escudo, 0, 0, WHITE);
 
     DrawTexturePro(
         g_textura_jogador,
@@ -63,7 +65,7 @@ void DrawGameplayScreen(){
     movimentacaoJogador(&jogador, &jogador_R);
     for(i=0; i<contador_inimigos; i++){
         if (checarColisaoJogadorEInimigo(&jogador_R, &inimigos_R[i])){
-            removerInimigo(&inimigos,i);
+            removerInimigo(&inimigos, i);
         }
     }
 

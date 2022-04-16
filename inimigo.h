@@ -14,5 +14,7 @@ typedef struct inimigo{
 }INIMIGO;
 
 void criarNovoInimigo(INIMIGO *inimigo, Rectangle *jogador_R);
+void movimentarInimigos(JOGADOR *jogador, INIMIGO *inimigo, Rectangle *inimigo_R);
+void removerInimigo(INIMIGO inimigos[], int indice);
 
 #endif
