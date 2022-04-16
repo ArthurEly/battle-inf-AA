@@ -9,6 +9,9 @@
 void SetActiveScreen(int screen_id);
 void DrawScreen(int screen_id);
 
+Image escudo;
+Texture2D texture;
+Font fonte_legal;
 Texture2D g_textura_jogador;
 Texture2D g_textura_inimigo_patrulha;
 Texture2D g_textura_inimigo_perseguicao;
@@ -24,7 +27,7 @@ int g_screens[6]={
         13, //Load Map Screen
         14,  //HighScore Screen
     };
-int g_active_screen = 11;
+int g_active_screen = 10;
 
 const int SCREENS_QTDY = sizeof(g_screens)/sizeof(g_screens[0]);
 
@@ -36,6 +39,10 @@ int main(void)
     InitWindow(screenWidth, screenHeight, "Battle INF");
 
     SetTargetFPS(60);
+
+    fonte_legal = LoadFont("assets/geomancy_extra_bold.otf");
+    escudo = LoadImage("assets/shield.png");
+    texture = LoadTextureFromImage(escudo);
 
     g_textura_jogador = LoadTexture("assets/tanque_player.png");
     g_textura_jogador.height = tanque_altura_padrao;

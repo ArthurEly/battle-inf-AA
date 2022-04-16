@@ -27,7 +27,7 @@
 
 1649305520 c:\battle inf\battle-inf-aa\options.h
 
-1649685724 source:c:\users\user\documents\ufrgs\algoritmos e programacao\trabalho final\battle-inf-aa\main.c
+1650129379 source:c:\users\user\documents\ufrgs\algoritmos e programacao\trabalho final\battle-inf-aa\main.c
 	"raylib.h"
 	"menu.h"
 	"game.h"
@@ -38,7 +38,7 @@
 
 1649680450 c:\users\user\documents\ufrgs\algoritmos e programacao\trabalho final\battle-inf-aa\menu.h
 
-1649680450 c:\users\user\documents\ufrgs\algoritmos e programacao\trabalho final\battle-inf-aa\game.h
+1650127065 c:\users\user\documents\ufrgs\algoritmos e programacao\trabalho final\battle-inf-aa\game.h
 
 1649680450 c:\users\user\documents\ufrgs\algoritmos e programacao\trabalho final\battle-inf-aa\options.h
 
@@ -78,10 +78,12 @@
 	"raylib.h"
 	"stdio.h"
 
-1649680450 source:c:\users\user\documents\ufrgs\algoritmos e programacao\trabalho final\battle-inf-aa\game.c
+1650127065 source:c:\users\user\documents\ufrgs\algoritmos e programacao\trabalho final\battle-inf-aa\game.c
 	"game.h"
 	"raylib.h"
 	"stdio.h"
+	"jogador.h"
+	"inimigo.h"
 
 1649680450 source:c:\users\user\documents\ufrgs\algoritmos e programacao\trabalho final\battle-inf-aa\highscores.c
 	"raylib.h"
@@ -92,7 +94,7 @@
 
 1649680450 c:\users\user\documents\ufrgs\algoritmos e programacao\trabalho final\battle-inf-aa\pause_menu.h
 
-1649685487 source:c:\users\user\documents\ufrgs\algoritmos e programacao\trabalho final\battle-inf-aa\menu.c
+1650129516 source:c:\users\user\documents\ufrgs\algoritmos e programacao\trabalho final\battle-inf-aa\menu.c
 	"raylib.h"
 	"stdio.h"
 	"menu.h"
@@ -127,4 +129,26 @@
 	"inimigo.h"
 
 1650066155 c:\battle inf\battle-inf-aa\inimigo.h
+
+1650127065 source:c:\users\user\documents\ufrgs\algoritmos e programacao\trabalho final\battle-inf-aa\cel_energia.c
+
+1650127065 c:\users\user\documents\ufrgs\algoritmos e programacao\trabalho final\battle-inf-aa\jogador.h
+
+1650127065 c:\users\user\documents\ufrgs\algoritmos e programacao\trabalho final\battle-inf-aa\inimigo.h
+
+1650127065 source:c:\users\user\documents\ufrgs\algoritmos e programacao\trabalho final\battle-inf-aa\inimigo.c
+	"game.h"
+	"raylib.h"
+	"stdio.h"
+	"inimigo.h"
+	"jogador.h"
+
+1650127065 source:c:\users\user\documents\ufrgs\algoritmos e programacao\trabalho final\battle-inf-aa\jogador.c
+	"game.h"
+	"raylib.h"
+	"stdio.h"
+	"jogador.h"
+	"inimigo.h"
+
+1650127065 source:c:\users\user\documents\ufrgs\algoritmos e programacao\trabalho final\battle-inf-aa\projetil.c
 

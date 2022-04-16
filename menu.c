@@ -3,7 +3,10 @@
 #include "menu.h"
 
 #define TEXTOS 5
+
 void SetActiveScreen(int screen_id);
+extern Font fonte_legal;
+extern Texture2D texture;
 const int menu_items[TEXTOS]={
     11,
     12,
@@ -32,6 +35,8 @@ int spacing = 2;*/
 void DrawMainMenuScreen(){
     ClearBackground(BLUE);
     Color optionColor = LIGHTGRAY;
+   // DrawTexture(texture, 0, 0, GRAY);
+    DrawTextureEx(texture, (Vector2){400,0}, 0, 0.1, WHITE);
 
     if(IsKeyPressed(KEY_DOWN) &&menu_option<MENU_ITEMS_QTDY-1){
        menu_option++;
@@ -82,7 +87,8 @@ void DrawMainMenuScreen(){
             }else{
             optionColor = LIGHTGRAY;
             }
-                DrawText(escrita[i], 500 - (MeasureText(escrita[i], 40)/2), 400 + 50*i, 40, optionColor);
+                DrawTextEx(fonte_legal, escrita[i], (Vector2){500 - (MeasureText(escrita[i], 40)/2), 400 + 50*i}, 40, 2, optionColor);
+                //DrawText(escrita[i], 500 - (MeasureText(escrita[i], 40)/2), 400 + 50*i, 40, optionColor);
             }
 
     if(IsKeyPressed(KEY_ENTER)){
