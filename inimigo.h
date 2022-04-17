@@ -1,5 +1,6 @@
 #ifndef INIMIGO_H_INCLUDED
 #define INIMIGO_H_INCLUDED
+#include "jogador.h"
 typedef struct inimigo{
     int x;
     int y;

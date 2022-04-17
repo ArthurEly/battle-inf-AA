@@ -78,7 +78,7 @@
 	"raylib.h"
 	"stdio.h"
 
-1650127065 source:c:\users\user\documents\ufrgs\algoritmos e programacao\trabalho final\battle-inf-aa\game.c
+1650153297 source:c:\users\user\documents\ufrgs\algoritmos e programacao\trabalho final\battle-inf-aa\game.c
 	"game.h"
 	"raylib.h"
 	"stdio.h"
@@ -94,7 +94,7 @@
 
 1649680450 c:\users\user\documents\ufrgs\algoritmos e programacao\trabalho final\battle-inf-aa\pause_menu.h
 
-1650146034 source:c:\users\user\documents\ufrgs\algoritmos e programacao\trabalho final\battle-inf-aa\menu.c
+1650153489 source:c:\users\user\documents\ufrgs\algoritmos e programacao\trabalho final\battle-inf-aa\menu.c
 	"raylib.h"
 	"stdio.h"
 	"menu.h"
@@ -134,7 +134,8 @@
 
 1650146621 c:\users\user\documents\ufrgs\algoritmos e programacao\trabalho final\battle-inf-aa\jogador.h
 
-1650146887 c:\users\user\documents\ufrgs\algoritmos e programacao\trabalho final\battle-inf-aa\inimigo.h
+1650153347 c:\users\user\documents\ufrgs\algoritmos e programacao\trabalho final\battle-inf-aa\inimigo.h
+	"jogador.h"
 
 1650127065 source:c:\users\user\documents\ufrgs\algoritmos e programacao\trabalho final\battle-inf-aa\inimigo.c
 	"game.h"

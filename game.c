@@ -19,7 +19,7 @@ JOGADOR jogador = {
         .vel = {0,0},
         .altura = 50,
         .largura = 50,
-        .cor = WHITE,
+    //    .cor = WHITE,
         .origem_textura={50,50}
 };
 
@@ -51,7 +51,7 @@ void DrawGameplayScreen(){
     ClearBackground(RAYWHITE);
     timerSegundos();
     int i;
-    DrawTexture(escudo, 0, 0, WHITE);
+    DrawTextureEx(escudo, (Vector2){0, 0}, 0, 0.1, WHITE);
 
     DrawTexturePro(
         g_textura_jogador,
@@ -59,13 +59,13 @@ void DrawGameplayScreen(){
         jogador_R,
         jogador.origem_textura,
         jogador.angulo,
-        jogador.cor
+        WHITE
     );
 
     movimentacaoJogador(&jogador, &jogador_R);
     for(i=0; i<contador_inimigos; i++){
         if (checarColisaoJogadorEInimigo(&jogador_R, &inimigos_R[i])){
-            removerInimigo(&inimigos, i);
+            removerInimigo(inimigos, i);
         }
     }
 
