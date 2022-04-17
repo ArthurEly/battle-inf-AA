@@ -25,7 +25,7 @@ void timerSegundos(){
 }
 
 int contador_inimigos = 0;
-INIMIGO inimigos[3]={{0}};
+INIMIGO inimigos[3]={0};
 
 JOGADOR jogador = {
         .jogador_R.x = 500,
@@ -36,7 +36,7 @@ JOGADOR jogador = {
         .pontuacao = 0,
         .angulo = 0,
         .vel = {0,0},
-        .cor = WHITE,
+//     .cor =  WHITE,
         .origem_textura={0,0}
 };
 
@@ -46,9 +46,12 @@ int contador_projeteis= 0;
 void DrawGameplayScreen(){
     ClearBackground(RAYWHITE);
     timerSegundos();
-    int i,j;
+    int i,j, vidas=3;
 
-    DrawTextureEx(escudo, (Vector2){0, 0}, 0, 0.1, WHITE);
+    for(int k; k<vidas; k++){
+        DrawTextureEx(escudo, (Vector2){k*60, 0}, 0, 0.1, WHITE);
+    }
+
 
     //if(segundos % 2 == 0 && timer_segundos == 0){
     if(contador_inimigos < 3){
@@ -108,7 +111,8 @@ void DrawGameplayScreen(){
         jogador.jogador_R,
         jogador.origem_textura,
         jogador.angulo,
-        jogador.cor
+        WHITE
+        //jogador.cor
     );
 
     movimentacaoJogador(&jogador);

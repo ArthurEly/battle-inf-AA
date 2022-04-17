@@ -79,12 +79,13 @@
 	"raylib.h"
 	"stdio.h"
 
-1650153297 source:c:\users\user\documents\ufrgs\algoritmos e programacao\trabalho final\battle-inf-aa\game.c
+1650221612 source:c:\users\user\documents\ufrgs\algoritmos e programacao\trabalho final\battle-inf-aa\game.c
 	"game.h"
 	"raylib.h"
 	"stdio.h"
 	"jogador.h"
 	"inimigo.h"
+	"projetil.h"
 
 1649680450 source:c:\users\user\documents\ufrgs\algoritmos e programacao\trabalho final\battle-inf-aa\highscores.c
 	"raylib.h"
@@ -140,26 +141,34 @@
 
 1650127065 source:c:\users\user\documents\ufrgs\algoritmos e programacao\trabalho final\battle-inf-aa\cel_energia.c
 
-1650146621 c:\users\user\documents\ufrgs\algoritmos e programacao\trabalho final\battle-inf-aa\jogador.h
+1650221214 c:\users\user\documents\ufrgs\algoritmos e programacao\trabalho final\battle-inf-aa\jogador.h
 
-1650153347 c:\users\user\documents\ufrgs\algoritmos e programacao\trabalho final\battle-inf-aa\inimigo.h
+1650221214 c:\users\user\documents\ufrgs\algoritmos e programacao\trabalho final\battle-inf-aa\inimigo.h
 	"jogador.h"
 
-1650127065 source:c:\users\user\documents\ufrgs\algoritmos e programacao\trabalho final\battle-inf-aa\inimigo.c
+1650221214 source:c:\users\user\documents\ufrgs\algoritmos e programacao\trabalho final\battle-inf-aa\inimigo.c
 	"game.h"
 	"raylib.h"
 	"stdio.h"
 	"inimigo.h"
 	"jogador.h"
 
-1650127065 source:c:\users\user\documents\ufrgs\algoritmos e programacao\trabalho final\battle-inf-aa\jogador.c
+1650221214 source:c:\users\user\documents\ufrgs\algoritmos e programacao\trabalho final\battle-inf-aa\jogador.c
 	"game.h"
 	"raylib.h"
 	"stdio.h"
 	"jogador.h"
 	"inimigo.h"
 
-1650127065 source:c:\users\user\documents\ufrgs\algoritmos e programacao\trabalho final\battle-inf-aa\projetil.c
+1650221214 source:c:\users\user\documents\ufrgs\algoritmos e programacao\trabalho final\battle-inf-aa\projetil.c
+	"game.h"
+	"raylib.h"
+	"stdio.h"
+	"jogador.h"
+	"inimigo.h"
+	"projetil.h"
 
 1650170870 c:\battle inf\battle-inf-aa\projetil.h
+
+1650221214 c:\users\user\documents\ufrgs\algoritmos e programacao\trabalho final\battle-inf-aa\projetil.h
 
