@@ -2,20 +2,17 @@
 #define INIMIGO_H_INCLUDED
 #include "jogador.h"
 typedef struct inimigo{
-    int x;
-    int y;
+    Rectangle inimigo_R;
     int vidas;
     float angulo;
     VELOCIDADE vel;
-    int altura;
-    int largura;
     Color cor;
     Vector2 origem_textura;
     int emMovimento;
 }INIMIGO;
 
-void criarNovoInimigo(INIMIGO *inimigo, Rectangle *jogador_R);
-void movimentarInimigos(JOGADOR *jogador, INIMIGO *inimigo, Rectangle *inimigo_R);
+void criarNovoInimigo(INIMIGO *inimigo);
+void movimentarInimigos(JOGADOR *jogador, INIMIGO *inimigo);
 void removerInimigo(INIMIGO inimigos[], int indice);
 
 #endif

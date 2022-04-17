@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1650086059 source:c:\battle inf\battle-inf-aa\main.c
+1650170154 source:c:\battle inf\battle-inf-aa\main.c
 	"raylib.h"
 	"menu.h"
 	"game.h"
@@ -23,9 +23,9 @@
 	"raylib.h"
 	"stdio.h"
 
-1650059176 c:\battle inf\battle-inf-aa\game.h
+1650170154 c:\battle inf\battle-inf-aa\game.h
 
-1649305520 c:\battle inf\battle-inf-aa\options.h
+1650170154 c:\battle inf\battle-inf-aa\options.h
 
 1650146264 source:c:\users\user\documents\ufrgs\algoritmos e programacao\trabalho final\battle-inf-aa\main.c
 	"raylib.h"
@@ -42,34 +42,35 @@
 
 1649680450 c:\users\user\documents\ufrgs\algoritmos e programacao\trabalho final\battle-inf-aa\options.h
 
-1649305520 c:\battle inf\battle-inf-aa\menu.h
+1650170154 c:\battle inf\battle-inf-aa\menu.h
 
-1649305520 c:\battle inf\battle-inf-aa\highscores.h
+1650170154 c:\battle inf\battle-inf-aa\highscores.h
 
-1649305520 c:\battle inf\battle-inf-aa\pause_menu.h
+1650170154 c:\battle inf\battle-inf-aa\pause_menu.h
 
-1650085653 source:c:\battle inf\battle-inf-aa\game.c
+1650171152 source:c:\battle inf\battle-inf-aa\game.c
 	"game.h"
 	"raylib.h"
 	"stdio.h"
 	"jogador.h"
 	"inimigo.h"
+	"projetil.h"
 
-1649305520 source:c:\battle inf\battle-inf-aa\highscores.c
+1650170154 source:c:\battle inf\battle-inf-aa\highscores.c
 	"raylib.h"
 	"stdio.h"
 	"highscores.h"
 
-1649693914 source:c:\battle inf\battle-inf-aa\menu.c
+1650170154 source:c:\battle inf\battle-inf-aa\menu.c
 	"raylib.h"
 	"stdio.h"
 	"menu.h"
 
-1649305520 source:c:\battle inf\battle-inf-aa\options.c
+1650170154 source:c:\battle inf\battle-inf-aa\options.c
 	"raylib.h"
 	"stdio.h"
 
-1649305520 source:c:\battle inf\battle-inf-aa\pause_menu.c
+1650170154 source:c:\battle inf\battle-inf-aa\pause_menu.c
 	"raylib.h"
 	"stdio.h"
 	"pause_menu.h"
@@ -108,27 +109,34 @@
 	"stdio.h"
 	"pause_menu.h"
 
-1650055849 source:c:\battle inf\battle-inf-aa\cel_energia.c
+1650170154 source:c:\battle inf\battle-inf-aa\cel_energia.c
 
-1650084961 source:c:\battle inf\battle-inf-aa\inimigo.c
+1650170435 source:c:\battle inf\battle-inf-aa\inimigo.c
 	"game.h"
 	"raylib.h"
 	"stdio.h"
 	"inimigo.h"
 	"jogador.h"
 
-1650055858 source:c:\battle inf\battle-inf-aa\projetil.c
+1650170877 source:c:\battle inf\battle-inf-aa\projetil.c
+	"game.h"
+	"raylib.h"
+	"stdio.h"
+	"jogador.h"
+	"inimigo.h"
+	"projetil.h"
 
-1650080850 c:\battle inf\battle-inf-aa\jogador.h
+1650170849 c:\battle inf\battle-inf-aa\jogador.h
 
-1650084501 source:c:\battle inf\battle-inf-aa\jogador.c
+1650170461 source:c:\battle inf\battle-inf-aa\jogador.c
 	"game.h"
 	"raylib.h"
 	"stdio.h"
 	"jogador.h"
 	"inimigo.h"
 
-1650066155 c:\battle inf\battle-inf-aa\inimigo.h
+1650170837 c:\battle inf\battle-inf-aa\inimigo.h
+	"jogador.h"
 
 1650127065 source:c:\users\user\documents\ufrgs\algoritmos e programacao\trabalho final\battle-inf-aa\cel_energia.c
 
@@ -152,4 +160,6 @@
 	"inimigo.h"
 
 1650127065 source:c:\users\user\documents\ufrgs\algoritmos e programacao\trabalho final\battle-inf-aa\projetil.c
+
+1650170870 c:\battle inf\battle-inf-aa\projetil.h
 

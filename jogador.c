@@ -4,32 +4,38 @@
 #include "jogador.h"
 #include "inimigo.h"
 
-void movimentacaoJogador(JOGADOR *jogador, Rectangle *jogador_R){
+void movimentacaoJogador(JOGADOR *jogador){
+    int velocidade = 5;
     if (IsKeyDown(KEY_RIGHT)){
-        jogador->vel.vx += 2;
+        jogador->vel.vx += velocidade;
         jogador->angulo = 90;
+        jogador->origem_textura.x = 0;
+        jogador->origem_textura.y = 100;
     }
 
     else if (IsKeyDown(KEY_LEFT)){
-        jogador->vel.vx += (-2);
+        jogador->vel.vx += (-velocidade);
         jogador->angulo = 270;
+        jogador->origem_textura.x = 100;
+        jogador->origem_textura.y = 0;
     }
 
     else if (IsKeyDown(KEY_DOWN)){
-        jogador->vel.vy += 2;
+        jogador->vel.vy += velocidade;
         jogador->angulo = 180;
+        jogador->origem_textura.x = 100;
+        jogador->origem_textura.y = 100;
     }
 
     else if (IsKeyDown(KEY_UP)){
-        jogador->vel.vy += (-2);
+        jogador->vel.vy += (-velocidade);
         jogador->angulo = 0;
+        jogador->origem_textura.x = 0;
+        jogador->origem_textura.y = 0;
     }
 
-    jogador->x += jogador->vel.vx;
-    jogador->y += jogador->vel.vy;
-
-    jogador_R->x = jogador->x;
-    jogador_R->y = jogador->y;
+    jogador->jogador_R.x += jogador->vel.vx;
+    jogador->jogador_R.y += jogador->vel.vy;
 
     jogador->vel.vx = 0;
     jogador->vel.vy = 0;
