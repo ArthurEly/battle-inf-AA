@@ -90,6 +90,7 @@ void DrawGameplayScreen(){
     int i,j;
     int vidas=jogador.vidas;
     timerSegundos();
+    int fase=1;
 
     for(i=0; i<MAPA_LINHAS; i++){
         for(j=0; j<MAPA_COLUNAS; j++){
@@ -98,9 +99,10 @@ void DrawGameplayScreen(){
         }
     }
 
-
+    DrawText(TextFormat("Fase: %i", fase), 600, 20, 48, ORANGE);
+    DrawText(TextFormat("Pontuacao: %i", jogador.pontuacao), 250, 30, 36, DARKGRAY);
     for(int i; i<vidas; i++){
-        DrawTextureEx(escudo, (Vector2){i*60, 0}, 0, 0.1, WHITE);
+        DrawTextureEx(escudo, (Vector2){i*65, 0}, 0, 0.11, WHITE);
     }
 
 
@@ -221,6 +223,7 @@ void DrawGameplayScreen(){
                 if (checarColisaoProjeteis(&projeteis[i], &inimigos[j])){
                     removerInimigo(inimigos,j);
                     removerProjetil(projeteis,i);
+                    jogador.pontuacao += 800;
                 }
             }
         }

@@ -40,7 +40,7 @@ int main(void)
 
     SetTargetFPS(60);
 
-    fonte_legal = LoadFontEx("assets/Ironmonger FB Extended.otf", 72, 0, 0);
+    fonte_legal = LoadFont("assets/Ironmonger FB Extended.otf");
     texture = LoadTexture("assets/Imagem padrao.png");
     escudo = LoadTexture("assets/shield.png");
 

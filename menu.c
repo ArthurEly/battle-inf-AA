@@ -46,19 +46,19 @@ void DrawMainMenuScreen(){
        menu_option--;
     }
 
-    /*if(menu_option == 0){
+ /*   if(menu_option == 0){
         optionColor = YELLOW;
     }else{
         optionColor = LIGHTGRAY;
     }
-    DrawText("Novo jogo", 400, 400, 40, optionColor);
+   // DrawText("Novo jogo", 400, 400, 40, optionColor);
 
     if(menu_option == 1){
         optionColor = YELLOW;
     }else{
         optionColor = LIGHTGRAY;
     }
-    DrawText("Continuar", 400, 450, 40, optionColor);
+    //DrawText("Continuar", 400, 450, 40, optionColor);
 
     if(menu_option == 2){
         optionColor = YELLOW;
@@ -80,9 +80,8 @@ void DrawMainMenuScreen(){
     }
     DrawText("Sair", 400, 600, 40, optionColor);*/
 
-    for (int i = 0; i < TEXTOS; i++)
-            {
-                if(menu_option == i){
+    for (int i = 0; i < TEXTOS; i++){
+            if(menu_option == i){
             optionColor = YELLOW;
             }else{
             optionColor = LIGHTGRAY;

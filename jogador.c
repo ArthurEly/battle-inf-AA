@@ -6,7 +6,7 @@
 
 void movimentacaoJogador(JOGADOR *jogador){
     int velocidade = 3*jogador->multiplicador_vel;
-    if (IsKeyDown(KEY_RIGHT)){
+    if (IsKeyDown(KEY_RIGHT) && jogador->jogador_R.x + jogador->jogador_R.width<1010){
         jogador->vel.vx += velocidade;
         jogador->angulo = 90;
         jogador->origem_textura.x = 0;
@@ -15,7 +15,7 @@ void movimentacaoJogador(JOGADOR *jogador){
         jogador->ponto_de_colisao.y = jogador->jogador_R.y + jogador->jogador_R.height/2 - jogador->ponto_de_colisao.height*0.45;
     }
 
-    else if (IsKeyDown(KEY_LEFT)){
+    else if (IsKeyDown(KEY_LEFT) && jogador->jogador_R.x >10){
         jogador->vel.vx += (-velocidade);
         jogador->angulo = 270;
         jogador->origem_textura.x = jogador->jogador_R.width;
@@ -24,7 +24,7 @@ void movimentacaoJogador(JOGADOR *jogador){
         jogador->ponto_de_colisao.y = jogador->jogador_R.y + jogador->jogador_R.height/2;
     }
 
-    else if (IsKeyDown(KEY_DOWN)){
+    else if (IsKeyDown(KEY_DOWN) && jogador->jogador_R.y + jogador->jogador_R.height<700){
         jogador->vel.vy += velocidade;
         jogador->angulo = 180;
         jogador->origem_textura.x = jogador->jogador_R.width;
@@ -33,7 +33,7 @@ void movimentacaoJogador(JOGADOR *jogador){
         jogador->ponto_de_colisao.y = jogador->jogador_R.y + jogador->jogador_R.height;
     }
 
-    else if (IsKeyDown(KEY_UP)){
+    else if (IsKeyDown(KEY_UP) && jogador->jogador_R.y>100){
         jogador->vel.vy += (-velocidade);
         jogador->angulo = 0;
         jogador->origem_textura.x = 0;
