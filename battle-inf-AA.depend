@@ -153,7 +153,7 @@
 	"inimigo.h"
 	"jogador.h"
 
-1650288915 source:c:\users\user\documents\ufrgs\algoritmos e programacao\trabalho final\battle-inf-aa\jogador.c
+1650289020 source:c:\users\user\documents\ufrgs\algoritmos e programacao\trabalho final\battle-inf-aa\jogador.c
 	"game.h"
 	"raylib.h"
 	"stdio.h"

@@ -4,6 +4,7 @@
 #include "jogador.h"
 #include "inimigo.h"
 #include "projetil.h"
+#include <time.h>
 
 void SetActiveScreen(int screen_id);
 
@@ -51,7 +52,7 @@ void DrawGameplayScreen(){
     for(int k; k<vidas; k++){
         DrawTextureEx(escudo, (Vector2){k*60, 0}, 0, 0.1, WHITE);
     }
-
+    DrawText(TextFormat("Pontuacao: %i", jogador.pontuacao), 200, 20, 36, DARKGRAY);
 
     //if(segundos % 2 == 0 && timer_segundos == 0){
     if(contador_inimigos < 3){
@@ -141,6 +142,7 @@ void DrawGameplayScreen(){
                     printf("aooooooooba\n");
                     removerInimigo(inimigos,j);
                     removerProjetil(projeteis,i);
+                    jogador.pontuacao +=100;
                 }
             }
         }
