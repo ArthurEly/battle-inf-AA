@@ -36,7 +36,7 @@ void DrawMainMenuScreen(){
     ClearBackground(BLUE);
     Color optionColor = LIGHTGRAY;
    // DrawTexture(texture, 0, 0, GRAY);
-    DrawTextureEx(texture, (Vector2){0,0}, 0, 1, WHITE);
+    DrawTextureEx(texture, (Vector2){-75,0}, 0, 1, WHITE);
 
     if(IsKeyPressed(KEY_DOWN) &&menu_option<MENU_ITEMS_QTDY-1){
        menu_option++;
@@ -86,7 +86,7 @@ void DrawMainMenuScreen(){
             }else{
             optionColor = LIGHTGRAY;
             }
-                DrawTextEx(fonte_legal, escrita[i], (Vector2){(500 - (MeasureTextEx(fonte_legal, escrita[i], 36, 2).x)/2), 400 + 50*i}, 36, 2, optionColor);
+                DrawTextEx(fonte_legal, escrita[i], (Vector2){(565 - (MeasureTextEx(fonte_legal, escrita[i], 36, 2).x)/2), 400 + 50*i}, 36, 2, optionColor);
                            //(MeasureText(escrita[i], 40)/2), 400 + 50*i}, 40, 2, optionColor);
                 //DrawText(escrita[i], 500 - (MeasureText(escrita[i], 40)/2), 400 + 50*i, 40, optionColor);
             }

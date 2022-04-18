@@ -41,7 +41,7 @@ int main(void)
     SetTargetFPS(60);
 
     fonte_legal = LoadFontEx("assets/ironmonger-fb-black.otf", 72, 0, 0);
-    texture = LoadTexture("assets/Imagem padrao.png");
+    texture = LoadTexture("assets/FUNDO JOGO.png");
     escudo = LoadTexture("assets/shield.png");
 
     g_textura_jogador = LoadTexture("assets/tanque_player.png");
