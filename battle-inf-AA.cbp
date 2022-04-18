@@ -31,6 +31,10 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
+		<Unit filename="carregar.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="carregar.h" />
 		<Unit filename="cel_energia.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -67,10 +71,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="menu.h" />
-		<Unit filename="options.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="options.h" />
 		<Unit filename="pause_menu.c">
 			<Option compilerVar="CC" />
 		</Unit>
