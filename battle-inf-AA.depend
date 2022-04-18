@@ -79,7 +79,7 @@
 	"raylib.h"
 	"stdio.h"
 
-1650290078 source:c:\users\user\documents\ufrgs\algoritmos e programacao\trabalho final\battle-inf-aa\game.c
+1650291969 source:c:\users\user\documents\ufrgs\algoritmos e programacao\trabalho final\battle-inf-aa\game.c
 	"game.h"
 	"raylib.h"
 	"stdio.h"
@@ -175,4 +175,9 @@
 1650221214 c:\users\user\documents\ufrgs\algoritmos e programacao\trabalho final\battle-inf-aa\projetil.h
 
 1650290929 c:\users\user\documents\ufrgs\algoritmos e programacao\trabalho final\battle-inf-aa\carregar.h
+
+1650291202 source:c:\users\user\documents\ufrgs\algoritmos e programacao\trabalho final\battle-inf-aa\carregar.c
+	"raylib.h"
+	"stdio.h"
+	"carregar.h"
 

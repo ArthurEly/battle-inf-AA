@@ -27,7 +27,7 @@ void movimentacaoJogador(JOGADOR *jogador){
         jogador->origem_textura.y = 100;
     }
 
-    else if (IsKeyDown(KEY_UP) && jogador->jogador_R.y>0){
+    else if (IsKeyDown(KEY_UP) && jogador->jogador_R.y>100){
         jogador->vel.vy += (-velocidade);
         jogador->angulo = 0;
         jogador->origem_textura.x = 0;

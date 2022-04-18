@@ -47,12 +47,14 @@ int contador_projeteis= 0;
 void DrawGameplayScreen(){
     ClearBackground(RAYWHITE);
     timerSegundos();
-    int i,j, vidas=3;
-
+    int i,j, vidas=3, fase=1;
+    DrawRectangle(0, 0, 1000, 100, GRAY);
     for(int k; k<vidas; k++){
-        DrawTextureEx(escudo, (Vector2){k*60, 0}, 0, 0.1, WHITE);
+        DrawTextureEx(escudo, (Vector2){k*70, 0}, 0, 0.12, WHITE);
     }
-    DrawText(TextFormat("Pontuacao: %i", jogador.pontuacao), 200, 20, 36, DARKGRAY);
+    DrawText(TextFormat("Pontuacao: %i", jogador.pontuacao), 300, 25, 36, YELLOW);
+    DrawText(TextFormat("Fase %i", fase), 700, 20, 48, ORANGE);
+
 
     //if(segundos % 2 == 0 && timer_segundos == 0){
     if(contador_inimigos < 3){
@@ -142,7 +144,7 @@ void DrawGameplayScreen(){
                     printf("aooooooooba\n");
                     removerInimigo(inimigos,j);
                     removerProjetil(projeteis,i);
-                    jogador.pontuacao +=100;
+                    jogador.pontuacao += 800;
                 }
             }
         }
