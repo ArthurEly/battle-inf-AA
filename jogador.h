@@ -14,7 +14,10 @@ typedef struct jogador{
 }JOGADOR;
 
 void movimentacaoJogador(JOGADOR *jogador);
+void pararJogador(JOGADOR *jogador);
+void retomarJogador(JOGADOR *jogador);
 bool checarColisaoJogadorEInimigo(Rectangle *jogador_R, Rectangle *inimigo_R);
+bool checarColisaoJogadorEBloquinho(Rectangle *ponto_de_colisao, Rectangle *bloco_R);
 
 #endif
 

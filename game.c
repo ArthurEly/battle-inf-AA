@@ -7,7 +7,7 @@
 #include "construcao.h"
 #include "mapa.h"
 
-#define NRO_INIMIGOS 4
+#define NRO_INIMIGOS 8
 
 #define MAPA_LINHAS 17
 #define MAPA_COLUNAS 42
@@ -192,7 +192,7 @@ void DrawGameplayScreen(){
     for(i=0; i<MAPA_LINHAS; i++){
         for(j=0; j<MAPA_COLUNAS; j++){
             if (blocos[i][j].tipo != 0){
-                    //parei aqui
+                //parei aqui
                 if(checarColisaoJogadorEBloquinho(&jogador.ponto_de_colisao, &blocos[i][j].bloco_R)){
                     pararJogador(&jogador);
                 }

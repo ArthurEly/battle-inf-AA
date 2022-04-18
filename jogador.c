@@ -50,12 +50,10 @@ void movimentacaoJogador(JOGADOR *jogador){
 }
 
 void pararJogador(JOGADOR *jogador){
-    printf("coe paizao");
     jogador->multiplicador_vel = 0;
 }
 
 void retomarJogador(JOGADOR *jogador){
-    printf("receeeeeeba");
     jogador->multiplicador_vel = 1;
 }
 

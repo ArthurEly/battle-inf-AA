@@ -27,7 +27,7 @@ int g_screens[6]={
         13, //Load Map Screen
         14,  //HighScore Screen
     };
-int g_active_screen = 11;
+int g_active_screen = 10;
 
 const int SCREENS_QTDY = sizeof(g_screens)/sizeof(g_screens[0]);
 
@@ -56,12 +56,12 @@ int main(void)
     g_textura_inimigo_perseguicao.height = g_altura_tanques;
     g_textura_inimigo_perseguicao.width = g_largura_tanques;
 
-
+    //feito pra teste
     Camera2D camera = { 0 };
-    camera.target = (Vector2){ 500, 400};
+    camera.target = (Vector2){ 0, 0};
     camera.offset = (Vector2){ 0, 0 };
     camera.rotation = 0.0f;
-    camera.zoom = 2.0f;
+    camera.zoom = 1.0f;
 
     while (!WindowShouldClose())
     {

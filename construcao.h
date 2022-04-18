@@ -13,4 +13,6 @@ typedef struct bloco{
 
 }BLOCO;
 
+void renderizarBloquinho(BLOCO bloco);
+
 #endif

@@ -13,9 +13,9 @@ void criarNovoInimigo(INIMIGO *inimigo, int altura_tanque, int largura_tanque){
     inimigo->inimigo_R.height = altura_tanque;
     inimigo->inimigo_R.width = largura_tanque;
     inimigo->vidas = 1;
-    inimigo->multiplicador_vel = 0;
+    inimigo->multiplicador_vel = 1;
     inimigo->cor = WHITE;
-    inimigo->emMovimento = 0;
+    inimigo->emMovimento = 2;
 }
 
 void movimentarInimigos(JOGADOR *jogador, INIMIGO *inimigo){
@@ -45,7 +45,7 @@ void movimentarInimigos(JOGADOR *jogador, INIMIGO *inimigo){
 
     } else if (inimigo->emMovimento == 2){
         //perseguição
-        inimigo->multiplicador_vel = 2;
+        inimigo->multiplicador_vel = 1;
         if(inimigo->inimigo_R.x < jogador->jogador_R.x){
             //direita
             inimigo->vel.vy = 0;
