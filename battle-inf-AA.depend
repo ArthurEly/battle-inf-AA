@@ -27,11 +27,11 @@
 
 1650170154 c:\battle inf\battle-inf-aa\options.h
 
-1650146264 source:c:\users\user\documents\ufrgs\algoritmos e programacao\trabalho final\battle-inf-aa\main.c
+1650290752 source:c:\users\user\documents\ufrgs\algoritmos e programacao\trabalho final\battle-inf-aa\main.c
 	"raylib.h"
 	"menu.h"
 	"game.h"
-	"options.h"
+	"carregar.h"
 	"highscores.h"
 	"pause_menu.h"
 	"stdio.h"
@@ -40,7 +40,7 @@
 
 1650127065 c:\users\user\documents\ufrgs\algoritmos e programacao\trabalho final\battle-inf-aa\game.h
 
-1649680450 c:\users\user\documents\ufrgs\algoritmos e programacao\trabalho final\battle-inf-aa\options.h
+1650290532 c:\users\user\documents\ufrgs\algoritmos e programacao\trabalho final\battle-inf-aa\options.h
 
 1650170154 c:\battle inf\battle-inf-aa\menu.h
 
@@ -79,13 +79,14 @@
 	"raylib.h"
 	"stdio.h"
 
-1650288503 source:c:\users\user\documents\ufrgs\algoritmos e programacao\trabalho final\battle-inf-aa\game.c
+1650290078 source:c:\users\user\documents\ufrgs\algoritmos e programacao\trabalho final\battle-inf-aa\game.c
 	"game.h"
 	"raylib.h"
 	"stdio.h"
 	"jogador.h"
 	"inimigo.h"
 	"projetil.h"
+	<time.h>
 
 1649680450 source:c:\users\user\documents\ufrgs\algoritmos e programacao\trabalho final\battle-inf-aa\highscores.c
 	"raylib.h"
@@ -101,9 +102,10 @@
 	"stdio.h"
 	"menu.h"
 
-1649680450 source:c:\users\user\documents\ufrgs\algoritmos e programacao\trabalho final\battle-inf-aa\options.c
+1650290666 source:c:\users\user\documents\ufrgs\algoritmos e programacao\trabalho final\battle-inf-aa\options.c
 	"raylib.h"
 	"stdio.h"
+	"carregar.h"
 
 1649680450 source:c:\users\user\documents\ufrgs\algoritmos e programacao\trabalho final\battle-inf-aa\pause_menu.c
 	"raylib.h"
@@ -171,4 +173,6 @@
 1650170870 c:\battle inf\battle-inf-aa\projetil.h
 
 1650221214 c:\users\user\documents\ufrgs\algoritmos e programacao\trabalho final\battle-inf-aa\projetil.h
+
+1650290929 c:\users\user\documents\ufrgs\algoritmos e programacao\trabalho final\battle-inf-aa\carregar.h
 

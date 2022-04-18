@@ -1,7 +1,7 @@
 #include "raylib.h"
 #include "menu.h"
 #include "game.h"
-#include "options.h"
+#include "carregar.h"
 #include "highscores.h"
 #include "pause_menu.h"
 #include "stdio.h"
@@ -87,7 +87,7 @@ void DrawScreen(int screen_id){
             break;
 
         case 13:
-            DrawHighScoresScreen();
+            DrawCarregarScreen();
             break;
 
         case 14:

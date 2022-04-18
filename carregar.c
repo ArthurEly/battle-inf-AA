@@ -2,16 +2,20 @@
 #include "stdio.h"
 #include "carregar.h"
 
+void SetActiveScreen(int screen_id);
+
 int count = 0;
     char **droppedFiles = { 0 };
 
-void SetActiveScreen(int screen_id);
-
-void DrawOptionsScreen(){
+void att(void){
     if (IsFileDropped())
         {
             droppedFiles = GetDroppedFiles(&count);
         }
+}
+
+void DrawCarregarScreen(){
+        att();
         ClearBackground(RAYWHITE);
 
             if (count == 0) DrawText("Drop your files to this window!", 100, 40, 20, DARKGRAY);
