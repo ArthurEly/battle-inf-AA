@@ -4,30 +4,27 @@
 #include "inimigo.h"
 #include "jogador.h"
 
-void criarNovoInimigo(INIMIGO *inimigo){
-    int x = GetRandomValue(50,950);
-    int y = GetRandomValue(50,750);
+void criarNovoInimigo(INIMIGO *inimigo, int altura_tanque, int largura_tanque){
+    int x = GetRandomValue(10,970);
+    int y = GetRandomValue(100,660);
 
     inimigo->inimigo_R.x = x;
     inimigo->inimigo_R.y = y;
-    inimigo->inimigo_R.height = 100;
-    inimigo->inimigo_R.width = 100;
+    inimigo->inimigo_R.height = altura_tanque;
+    inimigo->inimigo_R.width = largura_tanque;
     inimigo->vidas = 1;
-    inimigo->vel.vx = 0;
-    inimigo->vel.vy = 0;
+    inimigo->multiplicador_vel = 0;
     inimigo->cor = WHITE;
-    inimigo->origem_textura.x=0;
-    inimigo->origem_textura.y=0;
-    inimigo->emMovimento = 2;
+    inimigo->emMovimento = 0;
 }
 
 void movimentarInimigos(JOGADOR *jogador, INIMIGO *inimigo){
-    int velocidade = 1;
+    int velocidade = 1*inimigo->multiplicador_vel;
     int movimentacoes[4][5]={
-        {  velocidade ,  0 , 90, 0 ,100},
-        {(-velocidade),  0 ,270,100, 0 },
-        {  0 ,  velocidade ,180,100,100},
-        {  0 ,(-velocidade), 0 , 0 , 0 }
+        {  velocidade ,      0      ,  90 ,            0             , inimigo->inimigo_R.height },
+        {(-velocidade),      0      , 270 , inimigo->inimigo_R.width ,            0              },
+        {      0      ,  velocidade , 180 , inimigo->inimigo_R.width , inimigo->inimigo_R.height },
+        {      0      ,(-velocidade),  0  ,            0             ,            0              }
     };
 
     int movimentacaoAleatoria = GetRandomValue(0,3);
@@ -42,7 +39,40 @@ void movimentarInimigos(JOGADOR *jogador, INIMIGO *inimigo){
 
     } else if (inimigo->emMovimento == 1){
         //patrulha
-        if(inimigo->inimigo_R.x == jogador->jogador_R.x){
+        if(inimigo->inimigo_R.x == jogador->jogador_R.x || inimigo->inimigo_R.y == jogador->jogador_R.y){
+            inimigo->emMovimento = 2;
+        }
+
+    } else if (inimigo->emMovimento == 2){
+        //perseguição
+        inimigo->multiplicador_vel = 2;
+        if(inimigo->inimigo_R.x < jogador->jogador_R.x){
+            //direita
+            inimigo->vel.vy = 0;
+            inimigo->vel.vx = velocidade;
+            inimigo->angulo = 90;
+            inimigo->origem_textura.x = 0;
+            inimigo->origem_textura.y = inimigo->inimigo_R.height;
+        }
+
+        else if(inimigo->inimigo_R.x > jogador->jogador_R.x){
+            //esquerda
+            inimigo->vel.vy = 0;
+            inimigo->vel.vx = (-velocidade);
+            inimigo->angulo = 270;
+            inimigo->origem_textura.x = inimigo->inimigo_R.width;
+            inimigo->origem_textura.y = 0;
+        }
+
+        else if(inimigo->inimigo_R.y < jogador->jogador_R.y){
+            inimigo->vel.vx = 0;
+            inimigo->vel.vy = velocidade;
+            inimigo->angulo = 180;
+            inimigo->origem_textura.x = inimigo->inimigo_R.width;
+            inimigo->origem_textura.y = inimigo->inimigo_R.height;
+        }
+
+        else if(inimigo->inimigo_R.x == jogador->jogador_R.x){
             inimigo->vel.vx = 0;
             if(inimigo->inimigo_R.y > jogador->jogador_R.y){
                 inimigo->vel.vy = (-velocidade);
@@ -50,62 +80,27 @@ void movimentarInimigos(JOGADOR *jogador, INIMIGO *inimigo){
                 inimigo->origem_textura.x = 0;
                 inimigo->origem_textura.y = 0;
             }else{
+                printf("oiooio\n");
                 inimigo->vel.vy = velocidade;
                 inimigo->angulo = 180;
-                inimigo->origem_textura.x = 100;
-                inimigo->origem_textura.y = 100;
+                inimigo->origem_textura.x = inimigo->inimigo_R.width;
+                inimigo->origem_textura.y = inimigo->inimigo_R.height;
             }
-            inimigo->emMovimento = 2;
         }
 
-        if(inimigo->inimigo_R.y == jogador->jogador_R.y){
+        else if(inimigo->inimigo_R.y == jogador->jogador_R.y){
             inimigo->vel.vy = 0;
             if(inimigo->inimigo_R.x > jogador->jogador_R.x){
                 inimigo->vel.vx = (-velocidade);
                 inimigo->angulo = 270;
-                inimigo->origem_textura.x = 100;
+                inimigo->origem_textura.x = inimigo->inimigo_R.width;
                 inimigo->origem_textura.y = 0;
             }else{
                 inimigo->vel.vx = velocidade;
                 inimigo->angulo = 90;
                 inimigo->origem_textura.x = 0;
-                inimigo->origem_textura.y = 100;
+                inimigo->origem_textura.y = inimigo->inimigo_R.height;
             }
-            inimigo->emMovimento = 2;
-        }
-
-    } else if (inimigo->emMovimento == 2){
-        //perseguição
-        if(inimigo->inimigo_R.x < jogador->jogador_R.x){
-            inimigo->vel.vy = 0;
-            inimigo->vel.vx = velocidade;
-            inimigo->angulo = 90;
-            inimigo->origem_textura.x = 0;
-            inimigo->origem_textura.y = 100;
-        }
-
-        if(inimigo->inimigo_R.x > jogador->jogador_R.x){
-            inimigo->vel.vy = 0;
-            inimigo->vel.vx = (-velocidade);
-            inimigo->angulo = 270;
-            inimigo->origem_textura.x = 100;
-            inimigo->origem_textura.y = 0;
-        }
-
-        if(inimigo->inimigo_R.y < jogador->jogador_R.y){
-            inimigo->vel.vx = 0;
-            inimigo->vel.vy = velocidade;
-            inimigo->angulo = 180;
-            inimigo->origem_textura.x = 100;
-            inimigo->origem_textura.y = 100;
-        }
-
-        if(inimigo->inimigo_R.y > jogador->jogador_R.y){
-            inimigo->vel.vx = 0;
-            inimigo->vel.vy = (-velocidade);
-            inimigo->angulo = 0;
-            inimigo->origem_textura.x = 0;
-            inimigo->origem_textura.y = 0;
         }
     }
 

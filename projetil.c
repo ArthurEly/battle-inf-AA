@@ -7,29 +7,30 @@
 
 void atirarProjetil(PROJETIL *projetil, JOGADOR jogador){
     projetil->em_movimento = 1;
-    projetil->projetil_R.height = 10;
-    projetil->projetil_R.width = 10;
+    projetil->projetil_R.height = jogador.jogador_R.height*0.2;
+    projetil->projetil_R.width = jogador.jogador_R.width*0.2;
     int velocidade = 10;
+    int variacao = jogador.jogador_R.height*0.075;
 
     switch(jogador.angulo){
         case 0:
-            projetil->projetil_R.x = jogador.jogador_R.x+45;
+            projetil->projetil_R.x = jogador.jogador_R.x+((float)(jogador.jogador_R.width/2)-variacao);
             projetil->projetil_R.y = jogador.jogador_R.y;
             projetil->vel.vx = 0;
             projetil->vel.vy = -velocidade;
             break;
 
         case 90:
-            projetil->projetil_R.x = jogador.jogador_R.x+95;
-            projetil->projetil_R.y = jogador.jogador_R.y+45;
+            projetil->projetil_R.x = jogador.jogador_R.x+((float)(jogador.jogador_R.width)-variacao);
+            projetil->projetil_R.y = jogador.jogador_R.y+((float)(jogador.jogador_R.height/2)-variacao);
             projetil->vel.vx = velocidade;
             projetil->vel.vy = 0;
             break;
 
 
         case 180:
-            projetil->projetil_R.x = jogador.jogador_R.x+45;
-            projetil->projetil_R.y = jogador.jogador_R.y+95;
+            projetil->projetil_R.x = jogador.jogador_R.x+((float)(jogador.jogador_R.width/2)-variacao);
+            projetil->projetil_R.y = jogador.jogador_R.y+((float)(jogador.jogador_R.height)-variacao);
             projetil->vel.vx = 0;
             projetil->vel.vy = velocidade;
             break;
@@ -37,7 +38,7 @@ void atirarProjetil(PROJETIL *projetil, JOGADOR jogador){
 
         case 270:
             projetil->projetil_R.x = jogador.jogador_R.x;
-            projetil->projetil_R.y = jogador.jogador_R.y+45;
+            projetil->projetil_R.y = jogador.jogador_R.y+((float)(jogador.jogador_R.height/2)-variacao);
             projetil->vel.vx = -velocidade;
             projetil->vel.vy = 0;
             break;

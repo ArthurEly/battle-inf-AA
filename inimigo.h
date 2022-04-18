@@ -6,12 +6,13 @@ typedef struct inimigo{
     int vidas;
     float angulo;
     VELOCIDADE vel;
+    int multiplicador_vel;
     Color cor;
     Vector2 origem_textura;
     int emMovimento;
 }INIMIGO;
 
-void criarNovoInimigo(INIMIGO *inimigo);
+void criarNovoInimigo(INIMIGO *inimigo, int altura_tanque, int largura_tanque);
 void movimentarInimigos(JOGADOR *jogador, INIMIGO *inimigo);
 void removerInimigo(INIMIGO inimigos[], int indice);
 

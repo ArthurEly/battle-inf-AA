@@ -35,6 +35,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="cel_energia.h" />
+		<Unit filename="construcao.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="construcao.h" />
 		<Unit filename="drawFunctions.h" />
 		<Unit filename="game.c">
 			<Option compilerVar="CC" />
@@ -55,6 +59,10 @@
 		<Unit filename="main.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="mapa.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="mapa.h" />
 		<Unit filename="menu.c">
 			<Option compilerVar="CC" />
 		</Unit>
