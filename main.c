@@ -11,6 +11,7 @@
 void SetActiveScreen(int screen_id);
 void DrawScreen(int screen_id);
 
+Texture2D tijolo;
 Texture2D escudo;
 Texture2D texture;
 Font fonte_legal;
@@ -42,6 +43,7 @@ int main(void)
     fonte_legal = LoadFontEx("assets/ironmonger-fb-black.otf", 72, 0, 0);
     texture = LoadTexture("assets/FUNDO JOGO.png");
     escudo = LoadTexture("assets/shield.png");
+    tijolo = LoadTexture("assets/brick_texture2.png");
 
     g_textura_jogador = LoadTexture("assets/tanque_player.png");
     g_textura_jogador.height = TAMANHO_TANQUES/2;

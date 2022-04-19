@@ -8,7 +8,7 @@ typedef struct projetil{
 
 }PROJETIL;
 
-void atirarProjetil(PROJETIL *projetil, JOGADOR jogador);
+void atirarProjetilJogador(PROJETIL *projetil, JOGADOR jogador);
 void atirarProjetilInimigo(PROJETIL *projetil, INIMIGO inimigo);
 void movimentarProjeteis(PROJETIL *projetil);
 void removerProjetil(PROJETIL projeteis[], int indice);

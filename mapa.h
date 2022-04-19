@@ -16,6 +16,5 @@ int converterCoordenadaXParaIndice(int coord_x);
 int converterCoordenadaYParaIndice(int coord_y);
 int converterIndiceXParaCoordenada(int indice_x);
 int converterIndiceYParaCoordenada(int indice_y);
-
 #endif
 

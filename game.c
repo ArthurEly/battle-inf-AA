@@ -8,7 +8,7 @@
 #include "mapa.h"
 #include "cel_energia.h"
 
-#define NRO_INIMIGOS 5
+#define NRO_INIMIGOS 1000
 #define NRO_PROJETEIS 100
 #define NRO_CELS_ENERGIA 2
 
@@ -22,6 +22,7 @@
 
 void SetActiveScreen(int screen_id);
 
+extern Texture2D tijolo;
 extern Texture2D escudo;
 extern Texture2D g_textura_jogador;
 extern Texture2D g_textura_inimigo_patrulha;
@@ -120,7 +121,7 @@ void DrawGameplayScreen(){
     }
 
     int sair_loop = FALSE;
-    if(segundos % 1 == 0 && timer_segundos == 0){
+    if(segundos % 5 == 0 && timer_segundos == 0){
         if(contador_inimigos < NRO_INIMIGOS){
             criarNovoInimigo(blocos, &inimigos[contador_inimigos],TAMANHO_TANQUES,TAMANHO_TANQUES);
             contador_inimigos++;

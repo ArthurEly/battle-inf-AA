@@ -5,6 +5,7 @@
 #include "inimigo.h"
 #include "projetil.h"
 #include "construcao.h"
+#include <math.h>
 
 #define MAPA_LINHAS 17
 #define MAPA_COLUNAS 42
@@ -20,6 +21,9 @@ const int borda = 90;
 int contador_x_borda = tamanho_padrao_borda;
 int contador_y_borda = borda;
 int contador_x_blocos = tamanho_padrao_borda;
+
+int buscarVizinhos(BLOCO blocos[][42],int y, int x);
+int buscarLugarVazio(BLOCO blocos[][42],int y, int x);
 
 void transcreverMapa(int *id, int y, int x, int y_max, int x_max, BLOCO blocos[][MAPA_COLUNAS]){
     if (x == 0)
