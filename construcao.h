@@ -2,7 +2,7 @@
 #define CONSTRUCAO_H_INCLUDED
 #include "raylib.h"
 
-typedef struct bloco{
+typedef struct id{
     Rectangle bloco_R;
     int indice_y;
     int indice_x;
@@ -13,6 +13,6 @@ typedef struct bloco{
 
 }BLOCO;
 
-void renderizarBloquinho(BLOCO bloco);
+void renderizarBloquinho(BLOCO id);
 
 #endif

@@ -16,8 +16,8 @@ Texture2D g_textura_jogador;
 Texture2D g_textura_inimigo_patrulha;
 Texture2D g_textura_inimigo_perseguicao;
 
-const int g_altura_tanques = 40/2;
-const int g_largura_tanques = 40/2;
+const float g_altura_tanques = (float)35/2;
+const float g_largura_tanques = (float)35/2;
 
 int g_screens[6]={
         10, //Main Menu Screen
@@ -27,7 +27,7 @@ int g_screens[6]={
         13, //Load Map Screen
         14,  //HighScore Screen
     };
-int g_active_screen = 10;
+int g_active_screen = 11;
 
 const int SCREENS_QTDY = sizeof(g_screens)/sizeof(g_screens[0]);
 

@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1650300365 source:c:\battle inf\battle-inf-aa\main.c
+1650326877 source:c:\battle inf\battle-inf-aa\main.c
 	"raylib.h"
 	"menu.h"
 	"game.h"
@@ -48,7 +48,7 @@
 
 1650170154 c:\battle inf\battle-inf-aa\pause_menu.h
 
-1650299377 source:c:\battle inf\battle-inf-aa\game.c
+1650347167 source:c:\battle inf\battle-inf-aa\game.c
 	"game.h"
 	"raylib.h"
 	"stdio.h"
@@ -63,7 +63,7 @@
 	"stdio.h"
 	"highscores.h"
 
-1650170154 source:c:\battle inf\battle-inf-aa\menu.c
+1650308482 source:c:\battle inf\battle-inf-aa\menu.c
 	"raylib.h"
 	"stdio.h"
 	"menu.h"
@@ -116,32 +116,36 @@
 
 1650170154 source:c:\battle inf\battle-inf-aa\cel_energia.c
 
-1650299361 source:c:\battle inf\battle-inf-aa\inimigo.c
+1650345151 source:c:\battle inf\battle-inf-aa\inimigo.c
 	"game.h"
 	"raylib.h"
 	"stdio.h"
 	"inimigo.h"
 	"jogador.h"
+	"construcao.h"
+	"math.h"
 
-1650251467 source:c:\battle inf\battle-inf-aa\projetil.c
+1650346868 source:c:\battle inf\battle-inf-aa\projetil.c
 	"game.h"
 	"raylib.h"
 	"stdio.h"
 	"jogador.h"
 	"inimigo.h"
 	"projetil.h"
+	"construcao.h"
 
-1650300495 c:\battle inf\battle-inf-aa\jogador.h
+1650311842 c:\battle inf\battle-inf-aa\jogador.h
 
-1650299138 source:c:\battle inf\battle-inf-aa\jogador.c
+1650345762 source:c:\battle inf\battle-inf-aa\jogador.c
 	"game.h"
 	"raylib.h"
 	"stdio.h"
 	"jogador.h"
 	"inimigo.h"
 
-1650251625 c:\battle inf\battle-inf-aa\inimigo.h
+1650337923 c:\battle inf\battle-inf-aa\inimigo.h
 	"jogador.h"
+	"construcao.h"
 
 1650127065 source:c:\users\user\documents\ufrgs\algoritmos e programacao\trabalho final\battle-inf-aa\cel_energia.c
 
@@ -176,16 +180,16 @@
 
 1650221214 c:\users\user\documents\ufrgs\algoritmos e programacao\trabalho final\battle-inf-aa\projetil.h
 
-1650277574 source:c:\battle inf\battle-inf-aa\construcao.c
+1650315673 source:c:\battle inf\battle-inf-aa\construcao.c
 	"game.h"
 	"raylib.h"
 	"stdio.h"
 	"construcao.h"
 
-1650300407 c:\battle inf\battle-inf-aa\construcao.h
+1650315673 c:\battle inf\battle-inf-aa\construcao.h
 	"raylib.h"
 
-1650300522 source:c:\battle inf\battle-inf-aa\mapa.c
+1650329406 source:c:\battle inf\battle-inf-aa\mapa.c
 	"game.h"
 	"raylib.h"
 	"stdio.h"

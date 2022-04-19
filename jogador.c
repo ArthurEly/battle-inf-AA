@@ -6,40 +6,32 @@
 
 void movimentacaoJogador(JOGADOR *jogador){
     int velocidade = 3*jogador->multiplicador_vel;
-    if (IsKeyDown(KEY_RIGHT) && jogador->jogador_R.x + jogador->jogador_R.width<1010){
+    if (IsKeyDown(KEY_RIGHT)/* && jogador->jogador_R.x + jogador->jogador_R.width<1010*/){
         jogador->vel.vx += velocidade;
         jogador->angulo = 90;
         jogador->origem_textura.x = 0;
         jogador->origem_textura.y = jogador->jogador_R.height;
-        jogador->ponto_de_colisao.x = jogador->jogador_R.x + jogador->jogador_R.width - jogador->ponto_de_colisao.width*0.35;
-        jogador->ponto_de_colisao.y = jogador->jogador_R.y + jogador->jogador_R.height/2 - jogador->ponto_de_colisao.height*0.45;
     }
 
-    else if (IsKeyDown(KEY_LEFT) && jogador->jogador_R.x >10){
+    else if (IsKeyDown(KEY_LEFT)/* && jogador->jogador_R.x >10*/){
         jogador->vel.vx += (-velocidade);
         jogador->angulo = 270;
         jogador->origem_textura.x = jogador->jogador_R.width;
         jogador->origem_textura.y = 0;
-        jogador->ponto_de_colisao.x = jogador->jogador_R.x;
-        jogador->ponto_de_colisao.y = jogador->jogador_R.y + jogador->jogador_R.height/2;
     }
 
-    else if (IsKeyDown(KEY_DOWN) && jogador->jogador_R.y + jogador->jogador_R.height<700){
+    else if (IsKeyDown(KEY_DOWN)/* && jogador->jogador_R.y + jogador->jogador_R.height<700*/){
         jogador->vel.vy += velocidade;
         jogador->angulo = 180;
         jogador->origem_textura.x = jogador->jogador_R.width;
         jogador->origem_textura.y = jogador->jogador_R.height;
-        jogador->ponto_de_colisao.x = jogador->jogador_R.x + jogador->jogador_R.width/2;
-        jogador->ponto_de_colisao.y = jogador->jogador_R.y + jogador->jogador_R.height;
     }
 
-    else if (IsKeyDown(KEY_UP) && jogador->jogador_R.y>100){
+    else if (IsKeyDown(KEY_UP)/* && jogador->jogador_R.y>100*/){
         jogador->vel.vy += (-velocidade);
         jogador->angulo = 0;
         jogador->origem_textura.x = 0;
         jogador->origem_textura.y = 0;
-        jogador->ponto_de_colisao.x = jogador->jogador_R.x + jogador->jogador_R.width/2;
-        jogador->ponto_de_colisao.y = jogador->jogador_R.y;
     }
 
     jogador->jogador_R.x += jogador->vel.vx;
@@ -51,10 +43,28 @@ void movimentacaoJogador(JOGADOR *jogador){
 
 void pararJogador(JOGADOR *jogador){
     jogador->multiplicador_vel = 0;
+    jogador->colidindo=true;
+
+    if(jogador->angulo == 0){
+        jogador->jogador_R.y = jogador->jogador_R.y+0.5;
+    }
+
+    if(jogador->angulo == 90){
+        jogador->jogador_R.x = jogador->jogador_R.x-0.5;
+    }
+
+    if(jogador->angulo == 180){
+        jogador->jogador_R.y = jogador->jogador_R.y-0.5;
+    }
+
+    if(jogador->angulo == 270){
+        jogador->jogador_R.x = jogador->jogador_R.x+0.5;
+    }
 }
 
 void retomarJogador(JOGADOR *jogador){
     jogador->multiplicador_vel = 1;
+    jogador->colidindo=false;
 }
 
 //aqui tem que ir o array de construção, projetil inimigo, e inimigos

@@ -3,12 +3,18 @@
 #include "stdio.h"
 #include "construcao.h"
 
-void renderizarBloquinho(BLOCO bloco){
-    DrawRectangle(
-        bloco.bloco_R.x,
-        bloco.bloco_R.y,
-        bloco.bloco_R.width,
-        bloco.bloco_R.height,
-        bloco.cor
-    );
+void renderizarBloquinho(BLOCO id){
+    if(id.tipo != 0){
+        DrawRectangle(
+            id.bloco_R.x,
+            id.bloco_R.y,
+            id.bloco_R.width,
+            id.bloco_R.height,
+            id.cor
+        );
+    }
+}
+
+void removerBloquinho(BLOCO *id){
+    id->tipo = 0;
 }

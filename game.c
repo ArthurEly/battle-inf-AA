@@ -7,7 +7,8 @@
 #include "construcao.h"
 #include "mapa.h"
 
-#define NRO_INIMIGOS 8
+#define NRO_INIMIGOS 1
+#define NRO_PROJETEIS 100
 
 #define MAPA_LINHAS 17
 #define MAPA_COLUNAS 42
@@ -18,8 +19,6 @@ extern Texture2D escudo;
 extern Texture2D g_textura_jogador;
 extern Texture2D g_textura_inimigo_patrulha;
 extern Texture2D g_textura_inimigo_perseguicao;
-extern const int g_altura_tanques;
-extern const int g_largura_tanques;
 
 float timer_segundos = 0;
 int segundos = 0;
@@ -35,47 +34,42 @@ int contador_inimigos = 0;
 
 INIMIGO inimigos[NRO_INIMIGOS]={0};
 
-PROJETIL projeteis[10]={0};
+PROJETIL projeteis[NRO_PROJETEIS]={0};
 int contador_projeteis= 0;
 
 int mapa[MAPA_LINHAS][MAPA_COLUNAS] = {
     //8-> borda lateral
     //9-> borda superior/inferior
-
     {8,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,8},
+    {8,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,8},
     {8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8},
     {8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8},
     {8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8},
-    {8,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8},
-    {8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,0,0,0,0,0,0,0,0,0,8},
-    {8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,8},
-    {8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,8},
-    {8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,0,0,0,0,0,0,0,0,0,8},
+    {8,1,1,1,0,1,0,1,0,1,1,1,1,0,1,0,1,0,1,1,1,1,0,1,0,0,1,0,1,0,1,0,1,1,1,1,0,0,0,0,0,8},
+    {8,1,0,1,0,1,0,1,0,1,0,0,0,0,1,0,1,0,0,1,1,0,0,1,0,0,1,0,1,0,1,0,1,0,0,1,0,0,0,0,0,8},
+    {8,1,1,1,0,1,0,1,0,1,0,1,1,0,1,0,1,0,0,1,1,0,0,1,1,1,1,0,1,0,1,0,1,0,1,1,0,0,0,0,0,8},
+    {8,1,0,1,0,1,0,1,0,1,0,0,1,0,1,0,1,0,0,1,1,0,0,1,0,0,1,0,1,0,1,0,1,1,1,0,0,0,0,1,0,8},
+    {8,1,0,1,0,1,1,1,0,1,1,1,1,0,1,1,1,0,0,1,1,0,0,1,0,0,1,0,1,1,1,0,1,0,0,1,0,0,0,0,0,8},
     {8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8},
     {8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8},
     {8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8},
     {8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8},
     {8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8},
-    {8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8},
-    {8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8},
+    {8,10,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,8},
     {8,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,8}
 };
 BLOCO blocos[MAPA_LINHAS][MAPA_COLUNAS] = {0};
 
 //alterar os DOIS valores
-Rectangle tanque_textura_R = {0,0,40/2,40/2};
-const int local_altura_tanques = 40;
-const int local_largura_tanques = 40;
+Rectangle tanque_textura_R = {0,0,35/2,35/2};
+const float altura_tanques_local = 35;
+const float largura_tanques_local = 35;
 
 JOGADOR jogador = {
-        .jogador_R.x = 500,
+        .jogador_R.x = 1100,
         .jogador_R.y = 400,
-        .jogador_R.height = 40,
-        .jogador_R.width = 40,
-        .ponto_de_colisao.x = 500,
-        .ponto_de_colisao.y = 400,
-        .ponto_de_colisao.height = 5,
-        .ponto_de_colisao.width = 5,
+        .jogador_R.height = 35, //aqui também
+        .jogador_R.width = 35, //aqui também
         .vidas = 3,
         .pontuacao = 0,
         .angulo = 0,
@@ -85,9 +79,11 @@ JOGADOR jogador = {
         .origem_textura={0,0}
 };
 
+int tanques_posicionados=0;
+
 void DrawGameplayScreen(){
     ClearBackground(RAYWHITE);
-    int i,j;
+    int i,j,k;
     int vidas=jogador.vidas;
     timerSegundos();
     int fase=1;
@@ -101,36 +97,73 @@ void DrawGameplayScreen(){
 
     DrawText(TextFormat("Fase: %i", fase), 600, 20, 48, ORANGE);
     DrawText(TextFormat("Pontuacao: %i", jogador.pontuacao), 250, 30, 36, DARKGRAY);
-    for(int i; i<vidas; i++){
+    for(i=0; i<vidas; i++){
         DrawTextureEx(escudo, (Vector2){i*65, 0}, 0, 0.11, WHITE);
     }
 
+    //if(segundos % 1 == 0 && timer_segundos == 0){
+        if(contador_inimigos < NRO_INIMIGOS){
+            criarNovoInimigo(blocos, &inimigos[contador_inimigos],altura_tanques_local,largura_tanques_local);
+            contador_inimigos++;
+        }else{
+            for(i=0; i<NRO_INIMIGOS; i++){
+                if (inimigos[i].vidas == 0){
+                    criarNovoInimigo(blocos, &inimigos[i],altura_tanques_local,largura_tanques_local);
+                }
+            }
+         }
 
-    //if(segundos % 2 == 0 && timer_segundos == 0){
-    if(contador_inimigos < NRO_INIMIGOS){
-        criarNovoInimigo(&inimigos[contador_inimigos],local_altura_tanques,local_largura_tanques);
-        contador_inimigos++;
-    }else{
-        for(i=0; i<NRO_INIMIGOS; i++){
-            if (inimigos[i].vidas == 0){
-                criarNovoInimigo(&inimigos[i],local_altura_tanques,local_largura_tanques);
+    //}
+
+    if(!tanques_posicionados){
+        for(i=0; i<MAPA_LINHAS; i++){
+            for(j=0; j<MAPA_COLUNAS; j++){
+                posicionarJogador(mapa[i][j],&jogador,i,j);
             }
         }
+        tanques_posicionados = 1;
     }
-    //}
 
     for(i=0;i<contador_inimigos;i++){
         if(inimigos[i].vidas !=0){
+            int contador_colisao_inimigo = 0;
+
+            for(j=0; j<MAPA_LINHAS; j++){
+                for(k=0; k<MAPA_COLUNAS; k++){
+                    if (blocos[j][k].tipo != 0){
+                        if(checarColisaoInimigoEBloquinho(&inimigos[i].inimigo_R, &blocos[j][k].bloco_R)){
+                            contador_colisao_inimigo++;
+                        }
+                    }
+                }
+            }
+
+            if (contador_colisao_inimigo > 0){
+                girarSentidoHorario(&inimigos[i]);
+                inimigos[i].colidindo = true;
+            } else {
+                inimigos[i].colidindo = false;
+            }
+
+
             movimentarInimigos(&jogador, &inimigos[i]);
         }
 
         Texture2D tanque_inimigo_textura;
 
-        if(inimigos[i].emMovimento == 2)
+        if(inimigos[i].emMovimento == 2){
             tanque_inimigo_textura = g_textura_inimigo_perseguicao;
-        else
-            tanque_inimigo_textura = g_textura_inimigo_patrulha;
 
+            if(contador_projeteis < NRO_PROJETEIS)
+                contador_projeteis++;
+            else
+                contador_projeteis = 0;
+
+            atirarProjetilInimigo(&projeteis[contador_projeteis],inimigos[i]);
+        }
+        else{
+            tanque_inimigo_textura = g_textura_inimigo_patrulha;
+        }
 
         DrawRectangle(
             inimigos[i].inimigo_R.x,
@@ -158,14 +191,6 @@ void DrawGameplayScreen(){
         SKYBLUE
     );
 
-    DrawRectangle(
-        jogador.ponto_de_colisao.x,
-        jogador.ponto_de_colisao.y,
-        jogador.ponto_de_colisao.height,
-        jogador.ponto_de_colisao.width,
-        GRAY
-    );
-
     DrawTexturePro(
         g_textura_jogador,
         tanque_textura_R,
@@ -179,7 +204,9 @@ void DrawGameplayScreen(){
         IsKeyDown(KEY_RIGHT)||
         IsKeyDown(KEY_DOWN) ||
         IsKeyDown(KEY_UP)   ){
-            movimentacaoJogador(&jogador);
+            if(jogador.colidindo == false){
+                movimentacaoJogador(&jogador);
+            }
     }
 
     for(i=0; i<contador_inimigos; i++){
@@ -191,43 +218,76 @@ void DrawGameplayScreen(){
         }
     }
 
+    int contador_colisoes = 0;
     for(i=0; i<MAPA_LINHAS; i++){
         for(j=0; j<MAPA_COLUNAS; j++){
             if (blocos[i][j].tipo != 0){
-                //parei aqui
-                if(checarColisaoJogadorEBloquinho(&jogador.ponto_de_colisao, &blocos[i][j].bloco_R)){
-                    pararJogador(&jogador);
-                }
-                else if(!checarColisaoJogadorEBloquinho(&jogador.ponto_de_colisao, &blocos[i][j].bloco_R)){
-                    retomarJogador(&jogador);
+                if(checarColisaoJogadorEBloquinho(&jogador.jogador_R, &blocos[i][j].bloco_R)){
+                    contador_colisoes++;
                 }
             }
         }
     }
 
+    if(contador_colisoes > 0)
+        pararJogador(&jogador);
+    else
+        retomarJogador(&jogador);
+
     if(IsKeyPressed(KEY_SPACE)){
-        if(contador_projeteis < 10){
+        if(contador_projeteis < NRO_PROJETEIS)
             contador_projeteis++;
-        } else{
+        else
             contador_projeteis = 0;
-        }
-        atirarProjetil(&projeteis[contador_projeteis],jogador);
+        atirarProjetilJogador(&projeteis[contador_projeteis],jogador);
     }
 
-    for(i=0; i<10; i++){
+    for(i=0; i<NRO_PROJETEIS; i++){
         if (projeteis[i].em_movimento == 1){
             movimentarProjeteis(&projeteis[i]);
             renderizarProjeteis(&projeteis[i]);
 
             for(j=0; j<contador_inimigos; j++){
-                if (checarColisaoProjeteis(&projeteis[i], &inimigos[j])){
-                    removerInimigo(inimigos,j);
-                    removerProjetil(projeteis,i);
-                    jogador.pontuacao += 800;
+                if(projeteis[i].tanque_de_origem == 'j'){
+                    if (checarColisaoProjeteisEInimigo(&projeteis[i], &inimigos[j])){
+                        removerInimigo(inimigos,j);
+                        removerProjetil(projeteis,i);
+                        jogador.pontuacao += 800;
+                    }
+                } else{
+                    if (checarColisaoProjeteisEJogador(&projeteis[i], &jogador)){
+                        removerProjetil(projeteis,i);
+                        jogador.vidas--;
+                        printf("vose moreu\n");
+                    }
+                }
+            }
+
+            for(j=0; j<MAPA_LINHAS; j++){
+                for(k=0; k<MAPA_COLUNAS; k++){
+                    if(blocos[j][k].tipo == 1 || blocos[j][k].tipo == 8 || blocos[j][k].tipo == 9){
+                        if (checarColisaoProjeteisEBlocos(&projeteis[i], &blocos[j][k])){
+                            if(blocos[j][k].destrutivel){
+                                removerBloquinho(&blocos[j][k]);
+                            }
+                            removerProjetil(projeteis,i);
+                        }
+                    }
+                }
+            }
+
+            for(j=i+1; j<NRO_PROJETEIS; j++){
+                if (projeteis[j].em_movimento == 1){
+                    if(checarColisaoDeProjeteis(&projeteis[i],&projeteis[j])){
+                        removerProjetil(projeteis,i);
+                        removerProjetil(projeteis,j);
+                    }
                 }
             }
         }
     }
+
+    atualizarMapa(mapa,blocos);
 
     if(IsKeyPressed(KEY_P)){
         SetActiveScreen(111);

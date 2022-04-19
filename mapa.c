@@ -18,65 +18,45 @@ const int borda = 90;
 
 int contador_x_borda = tamanho_padrao_borda;
 int contador_y_borda = borda;
-
 int contador_x_blocos = tamanho_padrao_borda;
 
-void transcreverMapa(int *bloco, int y, int x, int y_max, int x_max, BLOCO blocos[][42]){
+void transcreverMapa(int *id, int y, int x, int y_max, int x_max, BLOCO blocos[][MAPA_COLUNAS]){
     if (x == 0)
         contador_x_blocos = tamanho_padrao_borda;
 
-    if (*bloco == 0){
+    if (*id == 0){
+        blocos[y][x].tipo = 0;
         contador_x_blocos += largura_padrao_construcao;
     }
 
-    if(*bloco == 1){
+    if(*id == 1){
         blocos[y][x].bloco_R.x = contador_x_blocos;
         blocos[y][x].bloco_R.y = (borda+tamanho_padrao_borda)+((y-1)*altura_padrao_construcao);
         blocos[y][x].bloco_R.width = largura_padrao_construcao;
         blocos[y][x].bloco_R.height = altura_padrao_construcao;
         blocos[y][x].cor = BROWN;
         blocos[y][x].tipo = 1;
+        blocos[y][x].destrutivel = true;
         contador_x_blocos += largura_padrao_construcao;
     }
 
-    if(*bloco == 2){
+    if(*id == 2){
         blocos[y][x].bloco_R.x = contador_x_blocos;
         blocos[y][x].bloco_R.y = (borda+tamanho_padrao_borda)+((y-1)*altura_padrao_construcao);
         blocos[y][x].bloco_R.width = largura_padrao_construcao;
         blocos[y][x].bloco_R.height = altura_padrao_construcao;
         blocos[y][x].cor = RED;
         blocos[y][x].tipo = 2;
+        blocos[y][x].destrutivel = true;
         contador_x_blocos += largura_padrao_construcao;
     }
 
-    if(*bloco == 9){
-        //borda superior
-        float coord_y = 0;
-
-        if (y == 0){
-            coord_y = borda+(y*altura_padrao_construcao);
-        }
-        else{
-            coord_y = borda+(y-1)*altura_padrao_construcao+tamanho_padrao_borda;
-        }
-
-        blocos[y][x].bloco_R.x = contador_x_borda;
-        blocos[y][x].bloco_R.y = coord_y;
-        blocos[y][x].bloco_R.width = largura_padrao_construcao;
-        blocos[y][x].bloco_R.height = tamanho_padrao_borda;
-        blocos[y][x].cor = GRAY;
-        blocos[y][x].tipo = 9;
-        contador_x_borda += largura_padrao_construcao;
-
-        if (x == 40)
-            contador_x_borda = tamanho_padrao_borda;
-    }
-
-    if(*bloco == 8){
+        if(*id == 8){
         //borda lateral
         blocos[y][x].bloco_R.y = contador_y_borda;
         blocos[y][x].cor = GRAY;
         blocos[y][x].tipo = 8;
+        blocos[y][x].destrutivel = false;
 
         int coord_x;
         if(x == 0 && y == 0){
@@ -133,5 +113,59 @@ void transcreverMapa(int *bloco, int y, int x, int y_max, int x_max, BLOCO bloco
         //resetar
         if (y == y_max)
             contador_y_borda = borda;
+    }
+
+    if(*id == 9){
+        //borda superior
+        float coord_y = 0;
+
+        if (y == 0){
+            coord_y = borda+(y*altura_padrao_construcao);
+        }
+        else{
+            coord_y = borda+(y-1)*altura_padrao_construcao+tamanho_padrao_borda;
+        }
+
+        blocos[y][x].bloco_R.x = contador_x_borda;
+        blocos[y][x].bloco_R.y = coord_y;
+        blocos[y][x].bloco_R.width = largura_padrao_construcao;
+        blocos[y][x].bloco_R.height = tamanho_padrao_borda;
+        blocos[y][x].cor = GRAY;
+        blocos[y][x].tipo = 9;
+        blocos[y][x].destrutivel = false;
+        contador_x_borda += largura_padrao_construcao;
+
+        if (x == 40)
+            contador_x_borda = tamanho_padrao_borda;
+    }
+}
+
+void atualizarMapa(int mapa[][MAPA_COLUNAS], BLOCO blocos[][MAPA_COLUNAS]){
+    int i,j;
+    for(i=0; i<MAPA_LINHAS; i++){
+        for(j=0; j<MAPA_COLUNAS; j++){
+            mapa[i][j] = blocos[i][j].tipo;
+        }
+    }
+}
+
+void posicionarJogador(int id, JOGADOR *jogador, int y, int x){
+    if(id==10){
+        int coord_x;
+        int coord_y;
+
+        if(x != 40)
+            coord_x = tamanho_padrao_borda + (x-1)*largura_padrao_construcao;
+         else
+            coord_x = (x-1)*largura_padrao_construcao;
+
+
+        if(y != 15)
+            coord_y = borda + tamanho_padrao_borda + (y-1)*altura_padrao_construcao;
+        else
+            coord_y = borda + tamanho_padrao_borda + (y-1)*altura_padrao_construcao + 5;
+
+        jogador->jogador_R.x = coord_x;
+        jogador->jogador_R.y = coord_y;
     }
 }
