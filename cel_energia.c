@@ -18,8 +18,11 @@ void criarCelulaDeEnergia(BLOCO blocos[][MAPA_COLUNAS], CELULA *cel_energia, int
     cel_energia->multiplicador_cel_energia = 2;
     cel_energia->cor = BLUE;
     cel_energia->ativa = true;
-    cel_energia->cel_energia_R.height = largura_cel_energia;
-    cel_energia->cel_energia_R.width = altura_cel_energia;
+    cel_energia->cel_energia_R.height = altura_cel_energia;
+    cel_energia->cel_energia_R.width = largura_cel_energia;
+
+    cel_energia->origem_textura.x = 0;
+    cel_energia->origem_textura.y = 0;
 
     int x_rand = GetRandomValue(10,1000);
     int y_rand = GetRandomValue(100,700);

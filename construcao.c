@@ -7,7 +7,6 @@ extern Texture2D tijolo;
 Rectangle bloco_textura = {0,0,40,25};
 
 void renderizarBloquinho(BLOCO id){
-    Rectangle sourceRec = { 0, 0, id.bloco_R.width, id.bloco_R.height};
     if(id.tipo != 0){
         /*DrawRectangle(
             id.bloco_R.x,

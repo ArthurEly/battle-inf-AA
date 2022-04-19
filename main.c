@@ -11,6 +11,7 @@
 void SetActiveScreen(int screen_id);
 void DrawScreen(int screen_id);
 
+Texture2D energia;
 Texture2D tijolo;
 Texture2D escudo;
 Texture2D texture;
@@ -40,6 +41,9 @@ int main(void)
 
     SetTargetFPS(60);
 
+    energia = LoadTexture("assets/energy_drop.png");
+    energia.height = 25;
+    energia.width = 25;
     fonte_legal = LoadFontEx("assets/ironmonger-fb-black.otf", 72, 0, 0);
     texture = LoadTexture("assets/FUNDO JOGO.png");
     escudo = LoadTexture("assets/shield.png");

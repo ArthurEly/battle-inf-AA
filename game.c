@@ -8,7 +8,7 @@
 #include "mapa.h"
 #include "cel_energia.h"
 
-#define NRO_INIMIGOS 1000
+#define NRO_INIMIGOS 5
 #define NRO_PROJETEIS 100
 #define NRO_CELS_ENERGIA 2
 
@@ -22,6 +22,7 @@
 
 void SetActiveScreen(int screen_id);
 
+extern Texture2D energia;
 extern Texture2D tijolo;
 extern Texture2D escudo;
 extern Texture2D g_textura_jogador;
@@ -69,6 +70,7 @@ int mapa[MAPA_LINHAS][MAPA_COLUNAS] = {
 BLOCO blocos[MAPA_LINHAS][MAPA_COLUNAS] = {0};
 
 Rectangle tanque_textura_R = {0,0,TAMANHO_TANQUES/2,TAMANHO_TANQUES/2};
+Rectangle energia_textura = {0,0, 25, 25};
 
 JOGADOR jogador = {
         .jogador_R.x = 1100,
@@ -80,15 +82,15 @@ JOGADOR jogador = {
         .angulo = 0,
         .vel = {0,0},
         .multiplicador_vel = 1,
-//     .cor =  WHITE,
+        .cor =  {255, 255, 255, 255},
         .origem_textura={0,0}
 };
 int tanques_posicionados=0;
 
 CELULA cels_energia[NRO_CELS_ENERGIA]={0};
 int contador_cels_energia = 0;
-int altura_cel_energia = 40;
-int largura_cel_energia = 25;
+int altura_cel_energia = 35;
+int largura_cel_energia = 35;
 int contador_interno_cel_energia = 0;
 
 void DrawGameplayScreen(){
@@ -121,7 +123,7 @@ void DrawGameplayScreen(){
     }
 
     int sair_loop = FALSE;
-    if(segundos % 5 == 0 && timer_segundos == 0){
+   /* if(segundos % 5 == 0 && timer_segundos == 0){
         if(contador_inimigos < NRO_INIMIGOS){
             criarNovoInimigo(blocos, &inimigos[contador_inimigos],TAMANHO_TANQUES,TAMANHO_TANQUES);
             contador_inimigos++;
@@ -134,7 +136,7 @@ void DrawGameplayScreen(){
                 }
             }
         }
-    }
+    }*/
 
     for(i=0;i<contador_inimigos;i++){
         if(inimigos[i].vidas !=0){
@@ -209,7 +211,7 @@ void DrawGameplayScreen(){
         jogador.jogador_R,
         jogador.origem_textura,
         jogador.angulo,
-        WHITE
+        jogador.cor
     );
 
     if (IsKeyDown(KEY_LEFT) ||
@@ -262,7 +264,9 @@ void DrawGameplayScreen(){
             for(j=0; j<contador_inimigos; j++){
                 if(projeteis[i].tanque_de_origem == 'j'){
                     if (checarColisaoProjeteisEInimigo(&projeteis[i], &inimigos[j])){
-                        removerInimigo(inimigos,j);
+                        if (inimigos[j].vidas == 1){
+                            removerInimigo(inimigos,j);
+                        }
                         removerProjetil(projeteis,i);
                         jogador.pontuacao += 800;
                     }
@@ -299,20 +303,23 @@ void DrawGameplayScreen(){
         }
     }
 
-    if(segundos % 3 == 0 && timer_segundos == 0){
         if(contador_inimigos < NRO_INIMIGOS){
-            criarNovoInimigo(blocos, &inimigos[contador_inimigos],TAMANHO_TANQUES,TAMANHO_TANQUES);
-            contador_inimigos++;
-        }
-        else{
-            for (i=0; i<NRO_INIMIGOS; i++){
-                if(inimigos[i].vidas == 0){
-                    contador_inimigos = 0;
-                    criarNovoInimigo(blocos, &inimigos[i],TAMANHO_TANQUES,TAMANHO_TANQUES);
-                }
+            //if(segundos % 5 == 0 && timer_segundos == 0){
+            if(inimigos[contador_inimigos].vidas == 0){
+                criarNovoInimigo(blocos, &inimigos[contador_inimigos],TAMANHO_TANQUES,TAMANHO_TANQUES);
+                contador_inimigos++;
+        //    }
+            }
+            else{
+
             }
         }
-    }
+       // else{
+     //           contador_inimigos = 0;
+       //         }
+
+
+
 
 
 
@@ -336,14 +343,22 @@ void DrawGameplayScreen(){
             DrawRectangle(
                 cels_energia[i].cel_energia_R.x,
                 cels_energia[i].cel_energia_R.y,
-                cels_energia[i].cel_energia_R.height,
                 cels_energia[i].cel_energia_R.width,
+                cels_energia[i].cel_energia_R.height,
                 YELLOW
             );
+            DrawTexturePro(
+            energia,
+            energia_textura,
+            cels_energia[i].cel_energia_R,
+            cels_energia[i].origem_textura,
+            0,
+            cels_energia[i].cor
+         );
 
             if (checarColisaoJogadorECelEnergia(&jogador.jogador_R, &cels_energia[i].cel_energia_R)){
-                if (contador_interno_cel_energia < 10){
-                    contador_interno_cel_energia += 5;
+                if (contador_interno_cel_energia < 20){
+                    contador_interno_cel_energia += 10;
                 }
                 energizarJogador(&jogador,&cels_energia[i]);
                 removerCelEnergia(&cels_energia[i]);
@@ -357,8 +372,15 @@ void DrawGameplayScreen(){
             if(contador_interno_cel_energia == 0){
                 jogador.energizado = false;
                 jogador.multiplicador_vel = 1;
+                jogador.cor = WHITE;
+
             }
         }
+        if (timer_segundos>0 && timer_segundos < 0.5){
+                jogador.cor = YELLOW;
+            }else if(timer_segundos>0.5){
+                jogador.cor = WHITE;
+            }
     }
 
     atualizarMapa(mapa,blocos);
