@@ -12,7 +12,7 @@ void atirarProjetilJogador(PROJETIL *projetil, JOGADOR jogador){
     projetil->tanque_de_origem = 'j';
     projetil->projetil_R.height = jogador.jogador_R.height*0.2;
     projetil->projetil_R.width = jogador.jogador_R.width*0.2;
-    int velocidade = 10;
+    int velocidade = 10*jogador.multiplicador_vel;
     int variacao = jogador.jogador_R.height*0.075;
 
     switch(jogador.angulo){

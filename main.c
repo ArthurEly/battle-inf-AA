@@ -6,6 +6,8 @@
 #include "pause_menu.h"
 #include "stdio.h"
 
+#define TAMANHO_TANQUES 35
+
 void SetActiveScreen(int screen_id);
 void DrawScreen(int screen_id);
 
@@ -15,9 +17,6 @@ Font fonte_legal;
 Texture2D g_textura_jogador;
 Texture2D g_textura_inimigo_patrulha;
 Texture2D g_textura_inimigo_perseguicao;
-
-const float g_altura_tanques = (float)35/2;
-const float g_largura_tanques = (float)35/2;
 
 int g_screens[6]={
         10, //Main Menu Screen
@@ -45,16 +44,16 @@ int main(void)
     escudo = LoadTexture("assets/shield.png");
 
     g_textura_jogador = LoadTexture("assets/tanque_player.png");
-    g_textura_jogador.height = g_altura_tanques;
-    g_textura_jogador.width = g_largura_tanques;
+    g_textura_jogador.height = TAMANHO_TANQUES/2;
+    g_textura_jogador.width = TAMANHO_TANQUES/2;
 
     g_textura_inimigo_patrulha = LoadTexture("assets/tanque_verde.png");
-    g_textura_inimigo_patrulha.height = g_altura_tanques;
-    g_textura_inimigo_patrulha.width = g_largura_tanques;
+    g_textura_inimigo_patrulha.height = TAMANHO_TANQUES/2;
+    g_textura_inimigo_patrulha.width = TAMANHO_TANQUES/2;
 
     g_textura_inimigo_perseguicao = LoadTexture("assets/tanque_inimigo.png");
-    g_textura_inimigo_perseguicao.height = g_altura_tanques;
-    g_textura_inimigo_perseguicao.width = g_largura_tanques;
+    g_textura_inimigo_perseguicao.height = TAMANHO_TANQUES/2;
+    g_textura_inimigo_perseguicao.width = TAMANHO_TANQUES/2;
 
     //feito pra teste
     Camera2D camera = { 0 };

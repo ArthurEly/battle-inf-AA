@@ -3,6 +3,7 @@
 #include "stdio.h"
 #include "jogador.h"
 #include "inimigo.h"
+#include "cel_energia.h"
 
 void movimentacaoJogador(JOGADOR *jogador){
     int velocidade = 3*jogador->multiplicador_vel;
@@ -42,7 +43,8 @@ void movimentacaoJogador(JOGADOR *jogador){
 }
 
 void pararJogador(JOGADOR *jogador){
-    jogador->multiplicador_vel = 0;
+    jogador->vel.vx = 0;
+    jogador->vel.vy = 0;
     jogador->colidindo=true;
 
     if(jogador->angulo == 0){
@@ -63,11 +65,9 @@ void pararJogador(JOGADOR *jogador){
 }
 
 void retomarJogador(JOGADOR *jogador){
-    jogador->multiplicador_vel = 1;
     jogador->colidindo=false;
 }
 
-//aqui tem que ir o array de construção, projetil inimigo, e inimigos
 bool checarColisaoJogadorEInimigo(Rectangle *jogador_R, Rectangle *inimigo_R){
     bool colidiu = CheckCollisionRecs(*jogador_R,*inimigo_R);
     return colidiu;
@@ -78,3 +78,7 @@ bool checarColisaoJogadorEBloquinho(Rectangle *ponto_de_colisao, Rectangle *bloc
     return colidiu;
 }
 
+bool checarColisaoJogadorECelEnergia(Rectangle *jogador_R, Rectangle *cel_energia_R){
+    bool colidiu = CheckCollisionRecs(*jogador_R,*cel_energia_R);
+    return colidiu;
+}

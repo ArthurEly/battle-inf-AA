@@ -9,11 +9,11 @@
 #define MAPA_LINHAS 17
 #define MAPA_COLUNAS 42
 
+
 #define FALSE 0
 #define TRUE 1
 
 void criarNovoInimigo(BLOCO blocos[][MAPA_COLUNAS], INIMIGO *inimigo, int altura_tanque, int largura_tanque){
-    /*ARRUMAR ISSO AQUI ANTES DE ENTREGAR KKKKKKKKKKK*/
     inimigo->inimigo_R.height = altura_tanque;
     inimigo->inimigo_R.width = largura_tanque;
     inimigo->vidas = 1;
@@ -21,126 +21,28 @@ void criarNovoInimigo(BLOCO blocos[][MAPA_COLUNAS], INIMIGO *inimigo, int altura
     inimigo->cor = WHITE;
     inimigo->emMovimento = 0;
 
-    int xa = GetRandomValue(10,955);
-    int ya = GetRandomValue(100,655);
+    int x_rand = GetRandomValue(10,955);
+    int y_rand = GetRandomValue(100,655);
 
-    inimigo->inimigo_R.x = xa;
-    inimigo->inimigo_R.y = ya;
+    inimigo->inimigo_R.x = x_rand;
+    inimigo->inimigo_R.y = y_rand;
 
-    int altura_padrao_construcao = 40;
-    int largura_padrao_construcao = 25;
-    int tamanho_padrao_borda = 10;
-    int borda = 90;
+    int x = converterCoordenadaXParaIndice(x_rand);
+    int y = converterCoordenadaYParaIndice(y_rand);
 
-    int i,j;
-
-    float indice_x = (inimigo->inimigo_R.x - tamanho_padrao_borda + largura_padrao_construcao)/largura_padrao_construcao;
-    float indice_y = (inimigo->inimigo_R.y - borda - tamanho_padrao_borda + altura_padrao_construcao)/altura_padrao_construcao;
-
-    int x = ceil(indice_x);
-    int y = ceil(indice_y);
-
-    bool colidiu = false;
-    bool ao_lado = blocos[y][x].tipo != 0 || blocos[y][x+1].tipo != 0 || blocos[y][x-1].tipo != 0;
-    if (checarColisaoInimigoEBloquinho(&inimigo->inimigo_R, &blocos[y][x].bloco_R) || ao_lado){
-        colidiu = true;
-        printf("original: x->%d  y->%d\n",x,y);
-    }
-
-    int s=1;
     int novo_x = x;
     int novo_y = y;
 
-    while (colidiu){
-        int x_dir= x+s;
-        if (x_dir > 41)
-            x_dir = 41;
+    bool colidiu = false;
+    bool tem_blocos_ao_lado = blocos[y][x].tipo != 0 || blocos[y][x+1].tipo != 0 || blocos[y][x-1].tipo != 0;
+    bool colidiu_com_o_bloco = checarColisaoInimigoEBloquinho(&inimigo->inimigo_R, &blocos[y][x].bloco_R);
 
-        int x_esq = x-s;
-        if (x_dir < 0)
-            x_dir = 0;
-
-        int y_acima = y-s;
-        if (y_acima < 0)
-            y_acima = 0;
-
-        int y_abaixo = y+s;
-        if (y_abaixo > 16)
-            y_abaixo = 16;
-
-        if(blocos[y][x_dir].tipo == 0){
-            printf("entrei 1\n");
-            if (buscarVizinhos(blocos,y,x+s) == FALSE){
-                printf("opa 1\n");
-                novo_x = x+s;
-                colidiu = false;
-            }
-        }
-
-        if(blocos[y][x_esq].tipo == 0){
-            printf("entrei 2\n");
-            if (buscarVizinhos(blocos,y,x-s) == FALSE){
-                printf("opa 2\n");
-                novo_x = x-s;
-                colidiu = false;
-            }
-        }
-
-        if(blocos[y_abaixo][x].tipo == 0){
-            printf("entrei 3\n");
-            if (buscarVizinhos(blocos,y+s,x) == FALSE){
-                printf("opa 3\n");
-                novo_y = y+s;
-                colidiu = false;
-            }
-        }
-
-        if(blocos[y_acima][x].tipo == 0){
-            printf("entrei 4\n");
-            if (buscarVizinhos(blocos,y-s,x) == FALSE){
-                printf("opa 4\n");
-                novo_y = y-s;
-                colidiu = false;
-            }
-        }
-
-        if(blocos[y_abaixo][x_dir].tipo == 0){
-            printf("entrei 5\n");
-            if (buscarVizinhos(blocos,y+s,x+s) == FALSE){
-                printf("opa 5\n");
-                novo_x = x+s;
-                novo_y = y+s;
-                colidiu = false;
-            }
-        }
-
-        if(blocos[y_acima][x_esq].tipo == 0){
-            printf("entrei 6\n");
-            if (buscarVizinhos(blocos,y-s,x-s) == FALSE){
-                printf("opa 6\n");
-                novo_x = x-s;
-                novo_y = y-s;
-                colidiu = false;
-            }
-        }
-        s++;
-    };
-
-    printf("novo: x->%d  y->%d\n\n\n\n\n",novo_x,novo_y);
-
-    int coord_x = tamanho_padrao_borda + (novo_x-1)*largura_padrao_construcao;
-    int coord_y = borda + tamanho_padrao_borda + (novo_y-1)*altura_padrao_construcao;
-
-    inimigo->inimigo_R.x = coord_x;
-    inimigo->inimigo_R.y = coord_y;
-}
-
-int buscarVizinhos(BLOCO blocos[][42],int y, int x){
-    int tem_vizinhos = TRUE;
-    if (blocos[y][x].tipo == 0 && blocos[y][x+1].tipo == 0 && blocos[y][x-1].tipo == 0){
-        tem_vizinhos = FALSE;
+    if (colidiu_com_o_bloco || tem_blocos_ao_lado){
+        reposicionarInimigo(blocos,y,x,&novo_y,&novo_x);
     }
-    return tem_vizinhos;
+
+    inimigo->inimigo_R.x = converterIndiceXParaCoordenada(novo_x);
+    inimigo->inimigo_R.y = converterIndiceYParaCoordenada(novo_y);
 }
 
 void movimentarInimigos(JOGADOR *jogador, INIMIGO *inimigo){

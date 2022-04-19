@@ -10,6 +10,7 @@ typedef struct jogador{
     Color cor;
     Vector2 origem_textura;
     bool colidindo;
+    bool energizado;
 
 }JOGADOR;
 
@@ -18,6 +19,6 @@ void pararJogador(JOGADOR *jogador);
 void retomarJogador(JOGADOR *jogador);
 bool checarColisaoJogadorEInimigo(Rectangle *jogador_R, Rectangle *inimigo_R);
 bool checarColisaoJogadorEBloquinho(Rectangle *jogador_R, Rectangle *bloco_R);
-
+bool checarColisaoJogadorECelEnergia(Rectangle *jogador_R, Rectangle *cel_energia_R);
 #endif
 

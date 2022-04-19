@@ -14,5 +14,5 @@ typedef struct id{
 }BLOCO;
 
 void renderizarBloquinho(BLOCO id);
-
+void removerBloquinho(BLOCO *id);
 #endif
