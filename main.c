@@ -48,6 +48,8 @@ int main(void)
     texture = LoadTexture("assets/FUNDO JOGO.png");
     escudo = LoadTexture("assets/shield.png");
     tijolo = LoadTexture("assets/brick_texture2.png");
+    tijolo.height = 25;
+    tijolo.width = 25;
 
     g_textura_jogador = LoadTexture("assets/tanque_player.png");
     g_textura_jogador.height = TAMANHO_TANQUES/2;
