@@ -14,7 +14,7 @@
 #define FALSE 0
 #define TRUE 1
 
-void criarCelulaDeEnergia(BLOCO blocos[][MAPA_COLUNAS], CELULA *cel_energia, int altura_cel_energia, int largura_cel_energia){
+void criarCelulaDeEnergia(int mapa[][MAPA_COLUNAS] ,BLOCO blocos[][MAPA_COLUNAS], CELULA *cel_energia, int altura_cel_energia, int largura_cel_energia){
     cel_energia->multiplicador_cel_energia = 2;
     cel_energia->cor = BLUE;
     cel_energia->ativa = true;
@@ -24,26 +24,37 @@ void criarCelulaDeEnergia(BLOCO blocos[][MAPA_COLUNAS], CELULA *cel_energia, int
     cel_energia->origem_textura.x = 0;
     cel_energia->origem_textura.y = 0;
 
-    int x_rand = GetRandomValue(10,1000);
-    int y_rand = GetRandomValue(100,700);
+    int coord_y_rand;
+    int coord_x_rand;
+    int y_rand;
+    int x_rand;
 
-    cel_energia->cel_energia_R.x = x_rand;
-    cel_energia->cel_energia_R.y = y_rand;
+    do{
+        y_rand = GetRandomValue(1,15);
+        x_rand = GetRandomValue(1,40);
+    }while(proximoAoJogador(mapa,y_rand,x_rand,3));
 
-    cel_energia->cel_energia_R.x = x_rand;
-    cel_energia->cel_energia_R.y = y_rand;
+    coord_x_rand = converterIndiceXParaCoordenada(x_rand);
+    coord_y_rand = converterIndiceYParaCoordenada(y_rand);
 
-    int x = converterCoordenadaXParaIndice(x_rand);
-    int y = converterCoordenadaYParaIndice(y_rand);
+    cel_energia->cel_energia_R.x = coord_x_rand;
+    cel_energia->cel_energia_R.y = coord_y_rand;
 
-    int novo_x = x;
-    int novo_y = y;
+    int novo_x = x_rand;
+    int novo_y = y_rand;
 
-    bool colidiu_com_o_bloco = checarColisaoCelEnergiaEBloquinho(&cel_energia->cel_energia_R, &blocos[y][x].bloco_R);
+    bool colidiu_com_o_bloco = checarColisaoCelEnergiaEBloquinho(&cel_energia->cel_energia_R, &blocos[y_rand][x_rand].bloco_R);
+    bool colidiu_com_o_bloco_a_direita = checarColisaoCelEnergiaEBloquinho(&cel_energia->cel_energia_R, &blocos[y_rand][x_rand+1].bloco_R);
+    bool colidiu_com_o_bloco_a_esquerda = checarColisaoCelEnergiaEBloquinho(&cel_energia->cel_energia_R, &blocos[y_rand][x_rand-1].bloco_R);
 
-    if (colidiu_com_o_bloco){
-       reposicionarCelEnergia(blocos,y,x,&novo_y,&novo_x);
+    if (colidiu_com_o_bloco || colidiu_com_o_bloco_a_direita || colidiu_com_o_bloco_a_esquerda){
+        printf("x : %d\n",novo_x);
+        printf("y : %d\n",novo_y);
+        reposicionarCelEnergia(mapa,&novo_y,&novo_x);
     }
+
+    printf("novo x : %d\n",novo_x);
+    printf("novo y : %d\n",novo_y);
 
     cel_energia->cel_energia_R.x = converterIndiceXParaCoordenada(novo_x);
     cel_energia->cel_energia_R.y = converterIndiceYParaCoordenada(novo_y);

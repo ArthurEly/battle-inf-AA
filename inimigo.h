@@ -18,7 +18,7 @@ typedef struct inimigo{
     bool colidindo;
 }INIMIGO;
 
-void criarNovoInimigo(BLOCO blocos[][MAPA_COLUNAS], INIMIGO *inimigo, int altura_tanque, int largura_tanque);
+void criarNovoInimigo(int mapa[][MAPA_COLUNAS], BLOCO blocos[][MAPA_COLUNAS], INIMIGO *inimigo, int altura_tanque, int largura_tanque);
 void movimentarInimigos(JOGADOR *jogador, INIMIGO *inimigo);
 void girarSentidoHorario(INIMIGO *inimigo);
 void removerInimigo(INIMIGO inimigos[], int indice);

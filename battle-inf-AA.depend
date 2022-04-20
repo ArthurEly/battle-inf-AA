@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1650351137 source:c:\battle inf\battle-inf-aa\main.c
+1650418451 source:c:\battle inf\battle-inf-aa\main.c
 	"raylib.h"
 	"menu.h"
 	"game.h"
@@ -48,7 +48,7 @@
 
 1650170154 c:\battle inf\battle-inf-aa\pause_menu.h
 
-1650387908 source:c:\battle inf\battle-inf-aa\game.c
+1650439335 source:c:\battle inf\battle-inf-aa\game.c
 	"game.h"
 	"raylib.h"
 	"stdio.h"
@@ -116,7 +116,7 @@
 	"stdio.h"
 	"pause_menu.h"
 
-1650388521 source:c:\battle inf\battle-inf-aa\cel_energia.c
+1650439312 source:c:\battle inf\battle-inf-aa\cel_energia.c
 	"game.h"
 	"raylib.h"
 	"stdio.h"
@@ -126,16 +126,17 @@
 	"cel_energia.h"
 	"mapa.h"
 
-1650388503 source:c:\battle inf\battle-inf-aa\inimigo.c
+1650439255 source:c:\battle inf\battle-inf-aa\inimigo.c
 	"game.h"
 	"raylib.h"
 	"stdio.h"
 	"inimigo.h"
 	"jogador.h"
 	"construcao.h"
+	"mapa.h"
 	"math.h"
 
-1650356692 source:c:\battle inf\battle-inf-aa\projetil.c
+1650418451 source:c:\battle inf\battle-inf-aa\projetil.c
 	"game.h"
 	"raylib.h"
 	"stdio.h"
@@ -154,7 +155,7 @@
 	"inimigo.h"
 	"cel_energia.h"
 
-1650388103 c:\battle inf\battle-inf-aa\inimigo.h
+1650427458 c:\battle inf\battle-inf-aa\inimigo.h
 	"jogador.h"
 	"construcao.h"
 
@@ -200,11 +201,11 @@
 	"projetil.h"
 	"construcao.h"
 
-1650388378 c:\battle inf\battle-inf-aa\projetil.h
+1650418451 c:\battle inf\battle-inf-aa\projetil.h
 
 1650388906 c:\users\user\documents\ufrgs\algoritmos e programacao\trabalho final\battle-inf-aa\projetil.h
 
-1650315673 source:c:\battle inf\battle-inf-aa\construcao.c
+1650418451 source:c:\battle inf\battle-inf-aa\construcao.c
 	"game.h"
 	"raylib.h"
 	"stdio.h"
@@ -213,7 +214,7 @@
 1650388043 c:\battle inf\battle-inf-aa\construcao.h
 	"raylib.h"
 
-1650355351 source:c:\battle inf\battle-inf-aa\mapa.c
+1650439239 source:c:\battle inf\battle-inf-aa\mapa.c
 	"game.h"
 	"raylib.h"
 	"stdio.h"
@@ -221,8 +222,9 @@
 	"inimigo.h"
 	"projetil.h"
 	"construcao.h"
+	<math.h>
 
-1650388273 c:\battle inf\battle-inf-aa\mapa.h
+1650439055 c:\battle inf\battle-inf-aa\mapa.h
 	"construcao.h"
 
 1650298920 source:c:\battle inf\battle-inf-aa\carregar.c
@@ -261,7 +263,7 @@
 	"construcao.h"
 	<math.h>
 
-1650388475 c:\battle inf\battle-inf-aa\cel_energia.h
+1650438960 c:\battle inf\battle-inf-aa\cel_energia.h
 	"jogador.h"
 	"construcao.h"
 

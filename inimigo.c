@@ -4,6 +4,7 @@
 #include "inimigo.h"
 #include "jogador.h"
 #include "construcao.h"
+#include "mapa.h"
 #include "math.h"
 
 #define MAPA_LINHAS 17
@@ -13,7 +14,7 @@
 #define FALSE 0
 #define TRUE 1
 
-void criarNovoInimigo(BLOCO blocos[][MAPA_COLUNAS], INIMIGO *inimigo, int altura_tanque, int largura_tanque){
+void criarNovoInimigo(int mapa[][MAPA_COLUNAS], BLOCO blocos[][MAPA_COLUNAS], INIMIGO *inimigo, int altura_tanque, int largura_tanque){
     inimigo->inimigo_R.height = altura_tanque;
     inimigo->inimigo_R.width = largura_tanque;
     inimigo->vidas = 1;
@@ -21,25 +22,37 @@ void criarNovoInimigo(BLOCO blocos[][MAPA_COLUNAS], INIMIGO *inimigo, int altura
     inimigo->cor = WHITE;
     inimigo->emMovimento = 0;
 
-    int x_rand = GetRandomValue(10,955);
-    int y_rand = GetRandomValue(100,655);
+    int coord_y_rand;
+    int coord_x_rand;
+    int y_rand;
+    int x_rand;
 
-    inimigo->inimigo_R.x = x_rand;
-    inimigo->inimigo_R.y = y_rand;
+    do{
+        y_rand = GetRandomValue(1,15);
+        x_rand = GetRandomValue(1,40);
+    }while(proximoAoJogador(mapa,y_rand,x_rand,10));
 
-    int x = converterCoordenadaXParaIndice(x_rand);
-    int y = converterCoordenadaYParaIndice(y_rand);
+    coord_x_rand = converterIndiceXParaCoordenada(x_rand);
+    coord_y_rand = converterIndiceYParaCoordenada(y_rand);
 
-    int novo_x = x;
-    int novo_y = y;
+    inimigo->inimigo_R.x = coord_x_rand;
+    inimigo->inimigo_R.y = coord_y_rand;
 
-    bool colidiu = false;
-    bool tem_blocos_ao_lado = blocos[y][x].tipo != 0 || blocos[y][x+1].tipo != 0 || blocos[y][x-1].tipo != 0;
-    bool colidiu_com_o_bloco = checarColisaoInimigoEBloquinho(&inimigo->inimigo_R, &blocos[y][x].bloco_R);
+    int novo_x = x_rand;
+    int novo_y = y_rand;
 
-    if (colidiu_com_o_bloco || tem_blocos_ao_lado){
-        reposicionarInimigo(blocos,y,x,&novo_y,&novo_x);
+    bool colidiu_com_o_bloco = checarColisaoInimigoEBloquinho(&inimigo->inimigo_R, &blocos[y_rand][x_rand].bloco_R);
+    bool colidiu_com_o_bloco_a_direita = checarColisaoInimigoEBloquinho(&inimigo->inimigo_R, &blocos[y_rand][x_rand+1].bloco_R);
+    bool colidiu_com_o_bloco_a_esquerda = checarColisaoInimigoEBloquinho(&inimigo->inimigo_R, &blocos[y_rand][x_rand-1].bloco_R);
+
+    if (colidiu_com_o_bloco || colidiu_com_o_bloco_a_direita || colidiu_com_o_bloco_a_esquerda){
+        printf("x : %d\n",novo_x);
+        printf("y : %d\n",novo_y);
+        reposicionarInimigo(mapa,&novo_y,&novo_x);
     }
+
+    printf("novo x : %d\n",novo_x);
+    printf("novo y : %d\n",novo_y);
 
     inimigo->inimigo_R.x = converterIndiceXParaCoordenada(novo_x);
     inimigo->inimigo_R.y = converterIndiceYParaCoordenada(novo_y);
@@ -66,7 +79,10 @@ void movimentarInimigos(JOGADOR *jogador, INIMIGO *inimigo){
 
     } else if (inimigo->emMovimento == 1){
         //patrulha
-        if(inimigo->inimigo_R.x == jogador->jogador_R.x || inimigo->inimigo_R.y == jogador->jogador_R.y){
+        bool perto_do_x = jogador->jogador_R.x+5 >= inimigo->inimigo_R.x && jogador->jogador_R.x-5 <= inimigo->inimigo_R.x;
+        bool perto_do_y = jogador->jogador_R.y+5 >= inimigo->inimigo_R.y && jogador->jogador_R.y-5 <= inimigo->inimigo_R.y;
+
+        if(perto_do_x || perto_do_y){
             inimigo->emMovimento = 2;
         }
 
