@@ -15,7 +15,7 @@ typedef struct celula{
 
 }CELULA;
 
-//void criarCelulaDeEnergia(BLOCO blocos[][MAPA_COLUNAS], CELULA *cel_energia, int altura_cel_energia, int largura_cel_energia);
+void criarCelulaDeEnergia(int mapa[][MAPA_COLUNAS] ,BLOCO blocos[][MAPA_COLUNAS], CELULA *cel_energia, int altura_cel_energia, int largura_cel_energia);
 void energizarJogador(JOGADOR *jogador, CELULA *cel_energia);
 void removerCelEnergia(CELULA *cel_energia);
 bool checarColisaoCelEnergiaEBloquinho(Rectangle *cel_energia_R, Rectangle *bloco_R);
