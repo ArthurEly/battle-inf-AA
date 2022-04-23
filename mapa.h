@@ -10,9 +10,10 @@ void atualizarMapa(int mapa[][MAPA_COLUNAS], BLOCO blocos[][MAPA_COLUNAS], JOGAD
 void posicionarJogador(int id, JOGADOR *jogador, int y, int x);
 void reposicionarInimigo(int mapa[][MAPA_COLUNAS], int *novo_y, int *novo_x);
 void reposicionarCelEnergia(int mapa[][MAPA_COLUNAS], int *novo_y, int *novo_x);
-int buscarVizinhos(int blocos[][42],int y, int x);
-int buscarLugarVazio(BLOCO blocos[][42],int y, int x);
-int proximoAoJogador(int mapa[][42],int y, int x, int distancia_minima);
+int buscarVizinhos(int blocos[][MAPA_COLUNAS],int y, int x);
+int buscarLugarVazio(BLOCO blocos[][MAPA_COLUNAS],int y, int x);
+int calcularDistanciaEntrePontos(int x_inimigo, int y_inimigo, int x_jogador, int y_jogador);
+int proximoAoJogador(int mapa[][MAPA_COLUNAS],int y, int x, int distancia_minima);
 int converterCoordenadaXParaIndice(int coord_x);
 int converterCoordenadaYParaIndice(int coord_y);
 int converterIndiceXParaCoordenada(int indice_x);

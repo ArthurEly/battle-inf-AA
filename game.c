@@ -8,7 +8,7 @@
 #include "mapa.h"
 #include "cel_energia.h"
 
-#define NRO_INIMIGOS 5
+#define NRO_INIMIGOS 2
 #define NRO_PROJETEIS 100
 #define NRO_CELS_ENERGIA 3
 
@@ -50,7 +50,7 @@ int mapa[MAPA_LINHAS][MAPA_COLUNAS] = {
     //8-> borda lateral
     //9-> borda superior/inferior
     {8,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,8},
-    {8,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,10,8},
+    {8,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8},
     {8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8},
     {8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8},
     {8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8},
@@ -64,7 +64,7 @@ int mapa[MAPA_LINHAS][MAPA_COLUNAS] = {
     {8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8},
     {8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8},
     {8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8},
-    {8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,8},
+    {8,10,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,8},
     {8,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,8}
 };
 BLOCO blocos[MAPA_LINHAS][MAPA_COLUNAS] = {0};
@@ -73,7 +73,7 @@ Rectangle tanque_textura_R = {0,0,TAMANHO_TANQUES/2,TAMANHO_TANQUES/2};
 Rectangle energia_textura = {0,0, 25, 25};
 
 JOGADOR jogador = {
-        .jogador_R.x = 800,
+        .jogador_R.x = 1100,
         .jogador_R.y = 600,
         .jogador_R.height = TAMANHO_TANQUES, //aqui também
         .jogador_R.width = TAMANHO_TANQUES, //aqui também
@@ -98,7 +98,9 @@ void DrawGameplayScreen(){
     int i,j,k;
     timerSegundos();
     int fase=1;
-
+    /**
+        MAPA
+    */
     for(i=0; i<MAPA_LINHAS; i++){
         for(j=0; j<MAPA_COLUNAS; j++){
             transcreverMapa(&mapa[i][j],i,j,(MAPA_LINHAS-1),(MAPA_COLUNAS-1),blocos);
@@ -123,6 +125,9 @@ void DrawGameplayScreen(){
         tanques_posicionados = 1;
     }
 
+    /**
+        INIMIGOS
+    */
     if(contador_inimigos < NRO_INIMIGOS){
         if(segundos % 1 == 0 && timer_segundos == 0){
             criarNovoInimigo(mapa, blocos, &inimigos[contador_inimigos],TAMANHO_TANQUES,TAMANHO_TANQUES);
@@ -153,6 +158,14 @@ void DrawGameplayScreen(){
                     }
                 }
             }
+
+            //COLISAO INIMIGOS
+            /*for(j=i+1; j<contador_inimigos; j++){
+                if(checarColisaoEntreInimigos(&inimigos[i].inimigo_R, &inimigos[j].inimigo_R)){
+                    printf("inimgios colindond\n\n");
+                    colidirInimigos(&inimigos[i].inimigo_R, &inimigos[j].inimigo_R);
+                }
+            }*/
 
             if (contador_colisao_inimigo > 0){
                 girarSentidoHorario(&inimigos[i]);
@@ -197,7 +210,9 @@ void DrawGameplayScreen(){
             );
         }
     }
-
+    /**
+        JOGADOR
+    */
     DrawRectangle(
         jogador.jogador_R.x,
         jogador.jogador_R.y,
@@ -258,7 +273,9 @@ void DrawGameplayScreen(){
         }
         atirarProjetilJogador(&projeteis[contador_projeteis],jogador);
     }
-
+    /**
+        PROJETEIS
+    */
     for(i=0; i<NRO_PROJETEIS; i++){
         if (projeteis[i].em_movimento == 1){
             movimentarProjeteis(&projeteis[i]);
@@ -267,9 +284,10 @@ void DrawGameplayScreen(){
             for(j=0; j<contador_inimigos; j++){
                 if(projeteis[i].tanque_de_origem == 'j'){
                     if (checarColisaoProjeteisEInimigo(&projeteis[i], &inimigos[j])){
+                        printf("oia eu aqui de novo");
                         removerInimigo(inimigos,j);
-                        jogador.pontuacao += 800;
                         removerProjetil(projeteis,i);
+                        jogador.pontuacao += 800;
                     }
                 } else{
                     if (checarColisaoProjeteisEJogador(&projeteis[i], &jogador)){
@@ -302,6 +320,9 @@ void DrawGameplayScreen(){
             }
         }
     }
+    /**
+        CELULAS DE ENERGIA
+    */
     if(contador_cels_energia < NRO_CELS_ENERGIA){
         if(segundos % 1 == 0 && timer_segundos == 0){
             criarCelulaDeEnergia(mapa, blocos, &cels_energia[contador_cels_energia],altura_cel_energia,largura_cel_energia);
@@ -361,7 +382,9 @@ void DrawGameplayScreen(){
                 jogador.cor = WHITE;
             }
     }
-
+    /**
+        MAPA DNV
+    */
     atualizarMapa(mapa,blocos,jogador,inimigos,contador_inimigos);
 
     if(IsKeyPressed(KEY_S)){

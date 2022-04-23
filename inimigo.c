@@ -28,7 +28,7 @@ void criarNovoInimigo(int mapa[][MAPA_COLUNAS], BLOCO blocos[][MAPA_COLUNAS], IN
     int x_rand;
 
     do{
-        y_rand = GetRandomValue(1,15);
+        y_rand = GetRandomValue(10,10);
         x_rand = GetRandomValue(1,40);
     }while(proximoAoJogador(mapa,y_rand,x_rand,10));
 
@@ -61,10 +61,10 @@ void criarNovoInimigo(int mapa[][MAPA_COLUNAS], BLOCO blocos[][MAPA_COLUNAS], IN
 void movimentarInimigos(JOGADOR *jogador, INIMIGO *inimigo){
     int velocidade = 1*inimigo->multiplicador_vel;
     int movimentacoes[4][5]={
-        {  velocidade ,      0      ,  90 ,            0             , inimigo->inimigo_R.height },
-        {(-velocidade),      0      , 270 , inimigo->inimigo_R.width ,            0              },
+        {      0      ,(-velocidade),  0  ,            0             ,            0              },
         {      0      ,  velocidade , 180 , inimigo->inimigo_R.width , inimigo->inimigo_R.height },
-        {      0      ,(-velocidade),  0  ,            0             ,            0              }
+        {  velocidade ,      0      ,  90 ,            0             , inimigo->inimigo_R.height },
+        {(-velocidade),      0      , 270 , inimigo->inimigo_R.width ,            0              }
     };
 
     int movimentacaoAleatoria = GetRandomValue(0,3);
@@ -88,63 +88,63 @@ void movimentarInimigos(JOGADOR *jogador, INIMIGO *inimigo){
 
     } else if (inimigo->emMovimento == 2){
         //perseguição
-        if(inimigo->inimigo_R.x < jogador->jogador_R.x){
-            //direita
-            inimigo->vel.vy = 0;
-            inimigo->vel.vx = velocidade;
-            inimigo->angulo = 90;
-            inimigo->origem_textura.x = 0;
-            inimigo->origem_textura.y = inimigo->inimigo_R.height;
-        }
+        //utilizando a fórmula de distancia entre dois pontos
+        int indice_x_inimigo = converterCoordenadaXParaIndice(inimigo->inimigo_R.x);
+        int indice_y_inimigo = converterCoordenadaYParaIndice(inimigo->inimigo_R.y);
 
-        else if(inimigo->inimigo_R.x > jogador->jogador_R.x){
-            //esquerda
-            inimigo->vel.vy = 0;
-            inimigo->vel.vx = (-velocidade);
-            inimigo->angulo = 270;
-            inimigo->origem_textura.x = inimigo->inimigo_R.width;
-            inimigo->origem_textura.y = 0;
-        }
+        int indice_x_jogador = converterCoordenadaXParaIndice(jogador->jogador_R.x);
+        int indice_y_jogador = converterCoordenadaYParaIndice(jogador->jogador_R.y);
 
-        else if(inimigo->inimigo_R.y < jogador->jogador_R.y){
-            //baixo
-            inimigo->vel.vx = 0;
-            inimigo->vel.vy = velocidade;
-            inimigo->angulo = 180;
-            inimigo->origem_textura.x = inimigo->inimigo_R.width;
-            inimigo->origem_textura.y = inimigo->inimigo_R.height;
-        }
+        int menor_distancia = 0;
+        int indice_movimento = 0;
 
-        else if(inimigo->inimigo_R.x == jogador->jogador_R.x){
-            inimigo->vel.vx = 0;
-            if(inimigo->inimigo_R.y > jogador->jogador_R.y){
-                inimigo->vel.vy = (-velocidade);
-                inimigo->angulo = 0;
-                inimigo->origem_textura.x = 0;
-                inimigo->origem_textura.y = 0;
-            }else{
-                printf("oiooio\n");
-                inimigo->vel.vy = velocidade;
-                inimigo->angulo = 180;
-                inimigo->origem_textura.x = inimigo->inimigo_R.width;
-                inimigo->origem_textura.y = inimigo->inimigo_R.height;
+        for(int i=0; i<4; i++){
+            int indice_x_inimigo_comparacao = indice_x_inimigo;
+            int indice_y_inimigo_comparacao = indice_y_inimigo;
+            float distancia;
+
+            if (i==1)
+                indice_y_inimigo_comparacao++;
+
+            if (i==0)
+                indice_y_inimigo_comparacao--;
+
+            if (i==2)
+                indice_x_inimigo_comparacao++;
+
+            if (i==3)
+                indice_x_inimigo_comparacao--;
+
+            distancia = calcularDistanciaEntrePontos(
+                indice_x_inimigo_comparacao,
+                indice_y_inimigo_comparacao,
+                indice_x_jogador,
+                indice_y_jogador
+            );
+
+            if (menor_distancia == 0 || distancia < menor_distancia){
+                menor_distancia = distancia;
+                indice_movimento = i;
             }
         }
 
-        else if(inimigo->inimigo_R.y == jogador->jogador_R.y){
-            inimigo->vel.vy = 0;
-            if(inimigo->inimigo_R.x > jogador->jogador_R.x){
-                inimigo->vel.vx = (-velocidade);
-                inimigo->angulo = 270;
-                inimigo->origem_textura.x = inimigo->inimigo_R.width;
-                inimigo->origem_textura.y = 0;
-            }else{
-                inimigo->vel.vx = velocidade;
-                inimigo->angulo = 90;
-                inimigo->origem_textura.x = 0;
-                inimigo->origem_textura.y = inimigo->inimigo_R.height;
-            }
-        }
+        if(indice_movimento == 0)
+            printf("tenho que me mover pra cima\n");
+
+        if(indice_movimento == 1)
+            printf("tenho que me mover pra baixo\n");
+
+        if(indice_movimento == 2)
+            printf("tenho que me mover pra esquerda\n");
+
+        if(indice_movimento == 3)
+            printf("tenho que me mover pra direita\n");
+
+        inimigo->vel.vx = movimentacoes[indice_movimento][0];
+        inimigo->vel.vy = movimentacoes[indice_movimento][1];
+        inimigo->angulo = movimentacoes[indice_movimento][2];
+        inimigo->origem_textura.x = movimentacoes[indice_movimento][3];
+        inimigo->origem_textura.y = movimentacoes[indice_movimento][4];
     }
 
     inimigo->inimigo_R.x += inimigo->vel.vx;
@@ -193,6 +193,11 @@ void girarSentidoHorario(INIMIGO *inimigo){
         inimigo->angulo = 0;
 }
 
+void colidirInimigos(INIMIGO *inimigo_a,INIMIGO *inimigo_b){
+    inimigo_a->multiplicador_vel = 0;
+    inimigo_b->multiplicador_vel = 0;
+}
+
 void removerInimigo(INIMIGO inimigos[], int indice){
     inimigos[indice].vidas = 0;
     inimigos[indice].vel.vx = 0;
@@ -205,6 +210,12 @@ bool checarColisaoInimigoEBloquinho(Rectangle *inimigo_R, Rectangle *bloco_R){
     bool colidiu = CheckCollisionRecs(*inimigo_R,*bloco_R);
     return colidiu;
 }
+
+bool checarColisaoEntreInimigos(Rectangle *inimigo_Ra, Rectangle *inimigo_Rb){
+    bool colidiu = CheckCollisionRecs(*inimigo_Ra,*inimigo_Rb);
+    return colidiu;
+}
+
 
 
 

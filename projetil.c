@@ -56,7 +56,7 @@ void atirarProjetilInimigo(PROJETIL *projetil, INIMIGO inimigo){
     int velocidade = 10;
     int variacao = inimigo.inimigo_R.height*0.075;
 
-    int atirar = GetRandomValue(0,160);
+    int atirar = GetRandomValue(0,100);
 
     if (atirar == 0){
         switch(inimigo.angulo){

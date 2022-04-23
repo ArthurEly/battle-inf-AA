@@ -53,7 +53,7 @@ void transcreverMapa(int *id, int y, int x, int y_max, int x_max, BLOCO blocos[]
         contador_x_blocos += largura_padrao_construcao;
     }
 
-        if(*id == 8){
+    if(*id == 8){
         //borda lateral
         blocos[y][x].bloco_R.y = contador_y_borda;
         blocos[y][x].cor = GRAY;
@@ -296,6 +296,13 @@ int buscarLugarVazio(BLOCO blocos[][42],int y, int x){
         lugar_vazio = TRUE;
     }
     return lugar_vazio;
+}
+
+int calcularDistanciaEntrePontos(int x_inimigo, int y_inimigo, int x_jogador, int y_jogador){
+    float distancia = 0;
+    distancia = sqrt(pow(x_jogador - x_inimigo, 2)+ pow(y_jogador - y_inimigo , 2));
+    printf("distancia eh: %.2f\n", distancia);
+    return distancia;
 }
 
 int converterCoordenadaXParaIndice(int coord_x){
