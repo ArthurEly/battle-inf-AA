@@ -15,6 +15,8 @@ Texture2D energia;
 Texture2D tijolo;
 Texture2D escudo;
 Texture2D texture;
+Texture2D pause;
+Texture2D highscore;
 Font fonte_legal;
 Texture2D g_textura_jogador;
 Texture2D g_textura_inimigo_patrulha;
@@ -46,6 +48,8 @@ int main(void)
     energia.width = 25;
     fonte_legal = LoadFontEx("assets/ironmonger-fb-black.otf", 72, 0, 0);
     texture = LoadTexture("assets/FUNDO JOGO.png");
+    pause = LoadTexture("assets/Tela pause.png");
+    highscore = LoadTexture("assets/Highscores.png");
     escudo = LoadTexture("assets/shield.png");
     tijolo = LoadTexture("assets/brick_texture2.png");
     tijolo.height = 25;
