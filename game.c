@@ -9,6 +9,7 @@
 #include "cel_energia.h"
 
 #define NRO_INIMIGOS 2
+#define TEMPO_DE_SPAWN_INIMIGOS 1
 #define NRO_PROJETEIS 100
 #define NRO_CELS_ENERGIA 3
 
@@ -19,6 +20,16 @@
 
 #define FALSE 0
 #define TRUE 1
+
+typedef struct game{
+    JOGADOR jogador;
+    INIMIGO inimigos[NRO_INIMIGOS];
+    PROJETIL projeteis[NRO_PROJETEIS];
+    CELULA cels_energia[NRO_CELS_ENERGIA];
+    BLOCO blocos[MAPA_LINHAS][MAPA_COLUNAS];
+    int mapa[MAPA_LINHAS][MAPA_COLUNAS];
+    int segundos;
+}GAME;
 
 void SetActiveScreen(int screen_id);
 
@@ -50,7 +61,7 @@ int mapa[MAPA_LINHAS][MAPA_COLUNAS] = {
     //8-> borda lateral
     //9-> borda superior/inferior
     {8,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,8},
-    {8,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8},
+    {8,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,8},
     {8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8},
     {8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8},
     {8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8},
@@ -64,9 +75,10 @@ int mapa[MAPA_LINHAS][MAPA_COLUNAS] = {
     {8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8},
     {8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8},
     {8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8},
-    {8,10,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,8},
+    {8,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,8},
     {8,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,8}
 };
+int mapa_carregado = FALSE;
 BLOCO blocos[MAPA_LINHAS][MAPA_COLUNAS] = {0};
 
 Rectangle tanque_textura_R = {0,0,TAMANHO_TANQUES/2,TAMANHO_TANQUES/2};
@@ -74,7 +86,7 @@ Rectangle energia_textura = {0,0, 25, 25};
 
 JOGADOR jogador = {
         .jogador_R.x = 1100,
-        .jogador_R.y = 600,
+        .jogador_R.y = 0,
         .jogador_R.height = TAMANHO_TANQUES, //aqui também
         .jogador_R.width = TAMANHO_TANQUES, //aqui também
         .vidas = 3,
@@ -93,6 +105,8 @@ int altura_cel_energia = 35;
 int largura_cel_energia = 35;
 int contador_interno_cel_energia = 0;
 
+GAME jogo;
+
 void DrawGameplayScreen(){
     ClearBackground(RAYWHITE);
     int i,j,k;
@@ -101,6 +115,11 @@ void DrawGameplayScreen(){
     /**
         MAPA
     */
+    /*
+    if (!mapa_carregado){
+        carregarMapa(&mapa);
+        mapa_carregado = TRUE;
+    }*/
     for(i=0; i<MAPA_LINHAS; i++){
         for(j=0; j<MAPA_COLUNAS; j++){
             transcreverMapa(&mapa[i][j],i,j,(MAPA_LINHAS-1),(MAPA_COLUNAS-1),blocos);
@@ -129,12 +148,12 @@ void DrawGameplayScreen(){
         INIMIGOS
     */
     if(contador_inimigos < NRO_INIMIGOS){
-        if(segundos % 1 == 0 && timer_segundos == 0){
+        if(segundos % TEMPO_DE_SPAWN_INIMIGOS == 0 && timer_segundos == 0){
             criarNovoInimigo(mapa, blocos, &inimigos[contador_inimigos],TAMANHO_TANQUES,TAMANHO_TANQUES);
             contador_inimigos++;
         }
     }else{
-        if(segundos % 1 == 0 && timer_segundos == 0){
+        if(segundos % TEMPO_DE_SPAWN_INIMIGOS == 0 && timer_segundos == 0){
             bool nao_reviveu_inimigo = true;
             for(i=0;i<contador_inimigos;i++){
                 if(inimigos[i].vidas == 0 && nao_reviveu_inimigo){
@@ -159,22 +178,24 @@ void DrawGameplayScreen(){
                 }
             }
 
-            //COLISAO INIMIGOS
-            /*for(j=i+1; j<contador_inimigos; j++){
-                if(checarColisaoEntreInimigos(&inimigos[i].inimigo_R, &inimigos[j].inimigo_R)){
-                    printf("inimgios colindond\n\n");
-                    colidirInimigos(&inimigos[i].inimigo_R, &inimigos[j].inimigo_R);
-                }
-            }*/
-
             if (contador_colisao_inimigo > 0){
-                girarSentidoHorario(&inimigos[i]);
+                inverterSentidoDeMovimento(&inimigos[i]);
                 inimigos[i].colidindo = true;
             } else {
                 inimigos[i].colidindo = false;
             }
 
+            //COLISAO INIMIGOS
+            for(j=0; j<contador_inimigos; j++){
+                if (i != j){
+                    if(checarColisaoEntreInimigos(&inimigos[i].inimigo_R, &inimigos[j].inimigo_R)){
+                        colidirInimigos(&inimigos[i].inimigo_R, &inimigos[j].inimigo_R);
+                    }
+                }
+            }
+
             movimentarInimigos(&jogador, &inimigos[i]);
+
 
             Texture2D tanque_inimigo_textura;
 
@@ -293,7 +314,6 @@ void DrawGameplayScreen(){
                     if (checarColisaoProjeteisEJogador(&projeteis[i], &jogador)){
                         removerProjetil(projeteis,i);
                         jogador.vidas--;
-                        printf("vose moreu\n");
                     }
                 }
             }
@@ -388,10 +408,42 @@ void DrawGameplayScreen(){
     atualizarMapa(mapa,blocos,jogador,inimigos,contador_inimigos);
 
     if(IsKeyPressed(KEY_S)){
-        printarMapa(mapa);
+        FILE *save_fp;
+        GAME jogo_salvo;
+        jogo_salvo.jogador = jogador;
+        memcpy(jogo_salvo.inimigos, inimigos, sizeof(inimigos));
+        memcpy(jogo_salvo.projeteis, projeteis, sizeof(projeteis));
+        memcpy(jogo_salvo.cels_energia, cels_energia, sizeof(cels_energia));
+        memcpy(jogo_salvo.blocos, blocos, sizeof(blocos));
+        memcpy(jogo_salvo.mapa, mapa, sizeof(mapa));
+        jogo_salvo.segundos = segundos;
+
+        save_fp = fopen("save.txt","wb+");
+
+        if (save_fp != NULL){
+            fwrite(&jogo_salvo, sizeof(GAME), 1, save_fp);
+            rewind(save_fp);
+            if(fread(&jogo_salvo, sizeof(GAME), 1, save_fp) == 1){
+                printarMapa(jogo_salvo.mapa);
+            }else{
+                printf("erro na leitura do jogo salvo\n");
+            }
+        }
     }
 
     if(IsKeyPressed(KEY_P)){
         SetActiveScreen(111);
     }
 }
+/*
+void carregarMapa(int *mapa[][MAPA_COLUNAS]){
+    int i,j;
+    mapa[MAPA_LINHAS][MAPA_COLUNAS] = {
+        {}
+    }
+    for(i=0; i<MAPA_LINHAS; i++){
+        for(j=0; j<MAPA_COLUNAS; j++){
+
+        }
+    }
+}*/

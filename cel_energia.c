@@ -50,7 +50,7 @@ void criarCelulaDeEnergia(int mapa[][MAPA_COLUNAS] ,BLOCO blocos[][MAPA_COLUNAS]
     if (colidiu_com_o_bloco || colidiu_com_o_bloco_a_direita || colidiu_com_o_bloco_a_esquerda){
         printf("x : %d\n",novo_x);
         printf("y : %d\n",novo_y);
-        reposicionarCelEnergia(mapa,&novo_y,&novo_x);
+        reposicionarObjeto(mapa,&novo_y,&novo_x);
     }
 
     printf("novo x : %d\n",novo_x);

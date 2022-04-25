@@ -22,9 +22,13 @@ int contador_x_borda = tamanho_padrao_borda;
 int contador_y_borda = borda;
 int contador_x_blocos = tamanho_padrao_borda;
 
+/*
+    depois tem que mexer aqui
+*/
 void transcreverMapa(int *id, int y, int x, int y_max, int x_max, BLOCO blocos[][MAPA_COLUNAS]){
-    if (x == 0)
+    if (x == 0){
         contador_x_blocos = tamanho_padrao_borda;
+    }
 
     if (*id == 0){
         blocos[y][x].tipo = 0;
@@ -192,27 +196,50 @@ void posicionarJogador(int id, JOGADOR *jogador, int y, int x){
     jogador->jogador_R.y = coord_y;
 }
 
-void reposicionarInimigo(int mapa[][MAPA_COLUNAS], int *novo_y, int *novo_x){
+void reposicionarObjeto(int mapa[][MAPA_COLUNAS], int *novo_y, int *novo_x){
     int raio_procura=1;
     bool colidiu = true;
     int x = *novo_x;
     int y = *novo_y;
     int i,j;
-    printf("mpovp ingimgio\n");
-    while (colidiu){
-        int indice_comeco_linha = y-raio_procura;
-        printf("indice_comeco_linha %d\n",indice_comeco_linha);
-        int indice_fim_linha = y+raio_procura;
-        printf("indice_fim_linha %d\n",indice_fim_linha);
-        int indice_comeco_coluna = x-raio_procura;
-        printf("indice_comeco_coluna %d\n",indice_comeco_coluna);
-        int indice_fim_coluna = x+raio_procura;
-        printf("indice_fim_coluna %d\n",indice_fim_coluna);
 
-        for(i=indice_comeco_linha; i<=indice_fim_linha; i++){
-            for(j=indice_comeco_coluna; j<=indice_fim_coluna; j++){
+    int indice_comeco_linha;
+    int indice_fim_linha;
+    int indice_comeco_coluna;
+    int indice_fim_coluna;
+
+    while (colidiu){
+        if(y-raio_procura > 1){
+            indice_comeco_linha = y-raio_procura;
+        }else{
+            indice_comeco_linha = 1;
+        }
+        //printf("indice_comeco_linha %d\n",indice_comeco_linha);
+        if (y+raio_procura > MAPA_LINHAS-2){
+            indice_fim_linha = y+raio_procura;
+        }else{
+            indice_fim_linha = MAPA_LINHAS-2;
+        }
+        //printf("indice_fim_linha %d\n",indice_fim_linha);
+
+        if(x-raio_procura > 1){
+            indice_comeco_coluna = x-raio_procura;
+        }else{
+            indice_comeco_coluna = 1;
+        }
+        //printf("indice_comeco_coluna %d\n",indice_comeco_coluna);
+        int indice_fim_coluna = x+raio_procura;
+        if(x+raio_procura > MAPA_COLUNAS-2){
+            indice_fim_coluna = x+raio_procura;
+        }else{
+            indice_fim_coluna = 1;
+        }
+        //printf("indice_fim_coluna %d\n",indice_fim_coluna);
+
+        for(i=indice_comeco_linha; i<=indice_fim_linha && colidiu; i++){
+            for(j=indice_comeco_coluna; j<=indice_fim_coluna && colidiu; j++){
                 if(mapa[i][j] == 0){
-                    if(!buscarVizinhos(mapa,i,j)){
+                    if(temEmTodoORedor(mapa,i,j,0,1) && !temUmAORedor(mapa,i,j,10,5)){
                         colidiu = false;
                         *novo_x = j;
                         *novo_y = i;
@@ -224,47 +251,59 @@ void reposicionarInimigo(int mapa[][MAPA_COLUNAS], int *novo_y, int *novo_x){
     };
 }
 
-void reposicionarCelEnergia(int mapa[][MAPA_COLUNAS], int *novo_y, int *novo_x){
-    int raio_procura=1;
-    bool colidiu = true;
-    int x = *novo_x;
-    int y = *novo_y;
-    int i,j;
-    printf("mpovp ingimgio\n");
-    while (colidiu){
-        int indice_comeco_linha = y-raio_procura;
-        printf("indice_comeco_linha %d\n",indice_comeco_linha);
-        int indice_fim_linha = y+raio_procura;
-        printf("indice_fim_linha %d\n",indice_fim_linha);
-        int indice_comeco_coluna = x-raio_procura;
-        printf("indice_comeco_coluna %d\n",indice_comeco_coluna);
-        int indice_fim_coluna = x+raio_procura;
-        printf("indice_fim_coluna %d\n",indice_fim_coluna);
+//mudar essa função
+int temEmTodoORedor(int mapa[][MAPA_COLUNAS],int y, int x, int tipo, int raio_procura){
+    int tem_ao_redor = FALSE;
+    int distancia_inicial = 1;
+    int contador_ao_redor = 0;
+    int i;
 
-        for(i=indice_comeco_linha; i<=indice_fim_linha; i++){
-            for(j=indice_comeco_coluna; j<=indice_fim_coluna; j++){
-                if(mapa[i][j] == 0){
-                    if(!buscarVizinhos(mapa,i,j)){
-                        colidiu = false;
-                        *novo_x = j;
-                        *novo_y = i;
-                    }
-                }
-            }
+    for (i=distancia_inicial; i<=raio_procura; i++){
+       if (mapa[y][x]      == tipo &&
+            mapa[y][x+i]   == tipo &&
+            mapa[y][x-i]   == tipo &&
+            mapa[y+i][x]   == tipo &&
+            mapa[y-i][x]   == tipo &&
+            mapa[y-i][x-i] == tipo &&
+            mapa[y+i][x+i] == tipo ){
+            contador_ao_redor++;
         }
-        raio_procura++;
-    };
-}
-
-int buscarVizinhos(int blocos[][42],int y, int x){
-    int tem_vizinhos = TRUE;
-    if (blocos[y][x] == 0 && blocos[y][x+1] == 0 && blocos[y][x-1] == 0){
-        tem_vizinhos = FALSE;
     }
-    return tem_vizinhos;
+
+    if (contador_ao_redor > 0){
+        tem_ao_redor = TRUE;
+    }
+
+    return tem_ao_redor;
 }
 
-int proximoAoJogador(int mapa[][42],int y, int x, int distancia_minima){
+int temUmAORedor(int mapa[][MAPA_COLUNAS],int y, int x, int tipo, int raio_procura){
+    int tem_ao_redor = FALSE;
+    int distancia_inicial = 1;
+    int contador_ao_redor = 0;
+    int i;
+
+    for (i=distancia_inicial; i<=raio_procura; i++){
+       if (mapa[y][x]      == tipo ||
+            mapa[y][x+i]   == tipo ||
+            mapa[y][x-i]   == tipo ||
+            mapa[y+i][x]   == tipo ||
+            mapa[y-i][x]   == tipo ||
+            mapa[y-i][x-i] == tipo ||
+            mapa[y+i][x+i] == tipo ){
+            contador_ao_redor++;
+        }
+    }
+
+    if (contador_ao_redor > 0){
+        printf("oh, tem player\n");
+        tem_ao_redor = TRUE;
+    }
+
+    return tem_ao_redor;
+}
+
+int proximoAoJogador(int mapa[][MAPA_COLUNAS],int y, int x, int distancia_minima){
     int i,j;
     int x_jogador;
     int y_jogador;
@@ -290,7 +329,7 @@ int proximoAoJogador(int mapa[][42],int y, int x, int distancia_minima){
     return proximo;
 }
 
-int buscarLugarVazio(BLOCO blocos[][42],int y, int x){
+int buscarLugarVazio(BLOCO blocos[][MAPA_COLUNAS],int y, int x){
     int lugar_vazio = FALSE;
     if (blocos[y][x].tipo == 0){
         lugar_vazio = TRUE;
@@ -301,7 +340,6 @@ int buscarLugarVazio(BLOCO blocos[][42],int y, int x){
 int calcularDistanciaEntrePontos(int x_inimigo, int y_inimigo, int x_jogador, int y_jogador){
     float distancia = 0;
     distancia = sqrt(pow(x_jogador - x_inimigo, 2)+ pow(y_jogador - y_inimigo , 2));
-    printf("distancia eh: %.2f\n", distancia);
     return distancia;
 }
 
