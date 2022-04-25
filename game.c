@@ -7,8 +7,9 @@
 #include "construcao.h"
 #include "mapa.h"
 #include "cel_energia.h"
+#include "string.h"
 
-#define NRO_INIMIGOS 2
+#define NRO_INIMIGOS 15
 #define TEMPO_DE_SPAWN_INIMIGOS 1
 #define NRO_PROJETEIS 100
 #define NRO_CELS_ENERGIA 3
@@ -61,21 +62,21 @@ int mapa[MAPA_LINHAS][MAPA_COLUNAS] = {
     //8-> borda lateral
     //9-> borda superior/inferior
     {8,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,8},
-    {8,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,8},
-    {8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8},
-    {8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8},
-    {8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8},
-    {8,1,1,1,0,1,0,1,0,1,1,1,1,0,1,0,1,0,1,1,1,1,0,1,0,0,1,0,1,0,1,0,1,1,1,1,0,0,0,0,0,8},
-    {8,1,0,1,0,1,0,1,0,1,0,0,0,0,1,0,1,0,0,1,1,0,0,1,0,0,1,0,1,0,1,0,1,0,0,1,0,0,0,0,0,8},
-    {8,1,1,1,0,1,0,1,0,1,0,1,1,0,1,0,1,0,0,1,1,0,0,1,1,1,1,0,1,0,1,0,1,0,1,1,0,0,0,0,0,8},
-    {8,1,0,1,0,1,0,1,0,1,0,0,1,0,1,0,1,0,0,1,1,0,0,1,0,0,1,0,1,0,1,0,1,1,1,0,0,0,0,1,0,8},
-    {8,1,0,1,0,1,1,1,0,1,1,1,1,0,1,1,1,0,0,1,1,0,0,1,0,0,1,0,1,1,1,0,1,0,0,1,0,0,0,0,0,8},
     {8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8},
     {8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8},
     {8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8},
     {8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8},
     {8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8},
-    {8,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,8},
+    {8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,10,8},
+    {8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8},
+    {8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8},
+    {8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8},
+    {8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8},
+    {8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8},
+    {8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8},
+    {8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8},
+    {8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8},
+    {8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8},
     {8,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,8}
 };
 int mapa_carregado = FALSE;
@@ -111,15 +112,25 @@ void DrawGameplayScreen(){
     ClearBackground(RAYWHITE);
     int i,j,k;
     timerSegundos();
-    int fase=1;
     /**
         MAPA
     */
-    /*
+
+    int fase=1;
+    char nivel = fase+'0';
     if (!mapa_carregado){
-        carregarMapa(&mapa);
+        FILE *nivel_fp;
+        char nome_nivel[10] = {"nivelx.txt"};
+        nome_nivel[5] = nivel;
+        nivel_fp = fopen(nome_nivel,"rb");
+        if (nivel_fp != NULL){
+            carregarMapa(mapa,nivel_fp);
+        }else{
+            printf("Erro na abertura do arquivo %s",nome_nivel);
+        }
         mapa_carregado = TRUE;
-    }*/
+    }
+
     for(i=0; i<MAPA_LINHAS; i++){
         for(j=0; j<MAPA_COLUNAS; j++){
             transcreverMapa(&mapa[i][j],i,j,(MAPA_LINHAS-1),(MAPA_COLUNAS-1),blocos);
@@ -148,12 +159,12 @@ void DrawGameplayScreen(){
         INIMIGOS
     */
     if(contador_inimigos < NRO_INIMIGOS){
-        if(segundos % TEMPO_DE_SPAWN_INIMIGOS == 0 && timer_segundos == 0){
+        //if(segundos % TEMPO_DE_SPAWN_INIMIGOS == 0 && timer_segundos == 0){
             criarNovoInimigo(mapa, blocos, &inimigos[contador_inimigos],TAMANHO_TANQUES,TAMANHO_TANQUES);
             contador_inimigos++;
-        }
+        //}
     }else{
-        if(segundos % TEMPO_DE_SPAWN_INIMIGOS == 0 && timer_segundos == 0){
+        //if(segundos % TEMPO_DE_SPAWN_INIMIGOS == 0 && timer_segundos == 0){
             bool nao_reviveu_inimigo = true;
             for(i=0;i<contador_inimigos;i++){
                 if(inimigos[i].vidas == 0 && nao_reviveu_inimigo){
@@ -161,7 +172,7 @@ void DrawGameplayScreen(){
                     nao_reviveu_inimigo = false;
                 }
             }
-        }
+        //}
     }
 
     for(i=0;i<contador_inimigos;i++){
@@ -179,7 +190,7 @@ void DrawGameplayScreen(){
             }
 
             if (contador_colisao_inimigo > 0){
-                inverterSentidoDeMovimento(&inimigos[i]);
+                girarSentidoHorario(&inimigos[i]);
                 inimigos[i].colidindo = true;
             } else {
                 inimigos[i].colidindo = false;
@@ -189,7 +200,7 @@ void DrawGameplayScreen(){
             for(j=0; j<contador_inimigos; j++){
                 if (i != j){
                     if(checarColisaoEntreInimigos(&inimigos[i].inimigo_R, &inimigos[j].inimigo_R)){
-                        colidirInimigos(&inimigos[i].inimigo_R, &inimigos[j].inimigo_R);
+                        colidirInimigos(&inimigos[i], &inimigos[j]);
                     }
                 }
             }
@@ -407,9 +418,11 @@ void DrawGameplayScreen(){
     */
     atualizarMapa(mapa,blocos,jogador,inimigos,contador_inimigos);
 
+    //qause funcao de salvar
     if(IsKeyPressed(KEY_S)){
         FILE *save_fp;
         GAME jogo_salvo;
+        save_fp = fopen("ultimo-save.bin","wb+");
         jogo_salvo.jogador = jogador;
         memcpy(jogo_salvo.inimigos, inimigos, sizeof(inimigos));
         memcpy(jogo_salvo.projeteis, projeteis, sizeof(projeteis));
@@ -418,32 +431,68 @@ void DrawGameplayScreen(){
         memcpy(jogo_salvo.mapa, mapa, sizeof(mapa));
         jogo_salvo.segundos = segundos;
 
-        save_fp = fopen("save.txt","wb+");
-
         if (save_fp != NULL){
             fwrite(&jogo_salvo, sizeof(GAME), 1, save_fp);
             rewind(save_fp);
-            if(fread(&jogo_salvo, sizeof(GAME), 1, save_fp) == 1){
-                printarMapa(jogo_salvo.mapa);
+            GAME jooj;
+            if(fread(&jooj, sizeof(GAME), 1, save_fp) == 1){
+                printarMapa(jooj.mapa);
             }else{
                 printf("erro na leitura do jogo salvo\n");
             }
         }
+        fclose(save_fp);
+    }
+    //qause funcao de carregar
+    if(IsKeyPressed(KEY_C)){
+        FILE *save_fp;
+        save_fp = fopen("ultimo-save.bin","rb");
+
+        if (save_fp != NULL){
+            rewind(save_fp);
+            GAME jooj;
+            if(fread(&jooj, sizeof(GAME), 1, save_fp) == 1){
+                jogador = jooj.jogador;
+                memcpy(inimigos, jooj.inimigos, sizeof(inimigos));
+                memcpy(projeteis, jooj.projeteis, sizeof(projeteis));
+                memcpy(cels_energia, jooj.cels_energia, sizeof(cels_energia));
+                memcpy(blocos, jooj.blocos, sizeof(blocos));
+                memcpy(mapa, jooj.mapa, sizeof(mapa));
+                segundos = jooj.segundos;
+            }else{
+                printf("erro na leitura do jogo salvo\n");
+            }
+        }
+        fclose(save_fp);
     }
 
     if(IsKeyPressed(KEY_P)){
         SetActiveScreen(111);
     }
 }
-/*
-void carregarMapa(int *mapa[][MAPA_COLUNAS]){
-    int i,j;
-    mapa[MAPA_LINHAS][MAPA_COLUNAS] = {
-        {}
-    }
-    for(i=0; i<MAPA_LINHAS; i++){
-        for(j=0; j<MAPA_COLUNAS; j++){
 
+void carregarMapa(int mapa[][MAPA_COLUNAS], FILE *nivel_fp){
+    int i=1;
+    int j=1;
+    char objeto;
+    while(!feof(nivel_fp)){
+        objeto = fgetc ( nivel_fp );
+        if (objeto == '-'){
+            mapa[i][j] = 0;
+            j++;
         }
+
+        if (objeto == '#'){
+            mapa[i][j] = 1;
+            j++;
+        }
+
+        if(j == 40){
+            j = 1;
+            i++;
+        }
+        printf("%c",objeto);
     }
-}*/
+    mapa[2][2] = 1;
+    printarMapa(mapa);
+}

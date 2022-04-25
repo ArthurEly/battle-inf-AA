@@ -5,6 +5,7 @@
 #include "inimigo.h"
 #include "projetil.h"
 #include "construcao.h"
+#include "mapa.h"
 #include <math.h>
 
 #define MAPA_LINHAS 17
@@ -228,7 +229,6 @@ void reposicionarObjeto(int mapa[][MAPA_COLUNAS], int *novo_y, int *novo_x){
             indice_comeco_coluna = 1;
         }
         //printf("indice_comeco_coluna %d\n",indice_comeco_coluna);
-        int indice_fim_coluna = x+raio_procura;
         if(x+raio_procura > MAPA_COLUNAS-2){
             indice_fim_coluna = x+raio_procura;
         }else{
@@ -344,10 +344,8 @@ int calcularDistanciaEntrePontos(int x_inimigo, int y_inimigo, int x_jogador, in
 }
 
 int converterCoordenadaXParaIndice(int coord_x){
-    int altura_padrao_construcao = 40;
     int largura_padrao_construcao = 25;
     int tamanho_padrao_borda = 10;
-    int borda = 90;
 
     float indice_x = (coord_x - tamanho_padrao_borda + largura_padrao_construcao)/largura_padrao_construcao;
 
@@ -362,7 +360,6 @@ int converterCoordenadaXParaIndice(int coord_x){
 
 int converterCoordenadaYParaIndice(int coord_y){
     int altura_padrao_construcao = 40;
-    int largura_padrao_construcao = 25;
     int tamanho_padrao_borda = 10;
     int borda = 90;
 

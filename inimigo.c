@@ -21,6 +21,7 @@ void criarNovoInimigo(int mapa[][MAPA_COLUNAS], BLOCO blocos[][MAPA_COLUNAS], IN
     inimigo->multiplicador_vel = 1;
     inimigo->cor = WHITE;
     inimigo->emMovimento = 0;
+    inimigo->colidindoComInimigo = false;
 
     int coord_y_rand;
     int coord_x_rand;
@@ -40,10 +41,6 @@ void criarNovoInimigo(int mapa[][MAPA_COLUNAS], BLOCO blocos[][MAPA_COLUNAS], IN
 
     int novo_x = x_rand;
     int novo_y = y_rand;
-
-    bool colidiu_com_o_bloco = checarColisaoInimigoEBloquinho(&inimigo->inimigo_R, &blocos[y_rand][x_rand].bloco_R);
-    bool colidiu_com_o_bloco_a_direita = checarColisaoInimigoEBloquinho(&inimigo->inimigo_R, &blocos[y_rand][x_rand+1].bloco_R);
-    bool colidiu_com_o_bloco_a_esquerda = checarColisaoInimigoEBloquinho(&inimigo->inimigo_R, &blocos[y_rand][x_rand-1].bloco_R);
 
     if (temUmAORedor(mapa,y_rand,x_rand,1,1) || temUmAORedor(mapa,y_rand,x_rand,11,1) || temUmAORedor(mapa,y_rand,x_rand,10,5)){
         reposicionarObjeto(mapa,&novo_y,&novo_x);
@@ -93,25 +90,29 @@ void movimentarInimigos(JOGADOR *jogador, INIMIGO *inimigo){
         int indice_x_jogador = converterCoordenadaXParaIndice(jogador->jogador_R.x);
         int indice_y_jogador = converterCoordenadaYParaIndice(jogador->jogador_R.y);
 
-        int menor_distancia = 0;
+        int menor_distancia = 100;
         int indice_movimento = 0;
 
         for(int i=0; i<4; i++){
             int indice_x_inimigo_comparacao = indice_x_inimigo;
             int indice_y_inimigo_comparacao = indice_y_inimigo;
-            float distancia;
+            int distancia;
 
-            if (i==1)
-                indice_y_inimigo_comparacao++;
-
-            if (i==0)
+            if (i==0){
                 indice_y_inimigo_comparacao--;
+            }
 
-            if (i==2)
+            if (i==1){
+                indice_y_inimigo_comparacao++;
+            }
+
+            if (i==2){
                 indice_x_inimigo_comparacao++;
+            }
 
-            if (i==3)
+            if (i==3){
                 indice_x_inimigo_comparacao--;
+            }
 
             distancia = calcularDistanciaEntrePontos(
                 indice_x_inimigo_comparacao,
@@ -120,24 +121,12 @@ void movimentarInimigos(JOGADOR *jogador, INIMIGO *inimigo){
                 indice_y_jogador
             );
 
-            if (menor_distancia == 0 || distancia < menor_distancia){
+            if (distancia < menor_distancia){
                 menor_distancia = distancia;
                 indice_movimento = i;
             }
         }
-        /*
-        if(indice_movimento == 0)
-            printf("tenho que me mover pra cima\n");
 
-        if(indice_movimento == 1)
-            printf("tenho que me mover pra baixo\n");
-
-        if(indice_movimento == 2)
-            printf("tenho que me mover pra esquerda\n");
-
-        if(indice_movimento == 3)
-            printf("tenho que me mover pra direita\n");
-        */
         inimigo->vel.vx = movimentacoes[indice_movimento][0];
         inimigo->vel.vy = movimentacoes[indice_movimento][1];
         inimigo->angulo = movimentacoes[indice_movimento][2];
@@ -229,20 +218,20 @@ void inverterSentidoDeMovimento(INIMIGO *inimigo){
 }
 
 void colidirInimigos(INIMIGO *inimigo_a,INIMIGO *inimigo_b){
-    if(inimigo_a->angulo == 90 && inimigo_b->angulo == 270 || inimigo_a->angulo == 270 && inimigo_b->angulo == 90 ||
-       inimigo_a->angulo == 0 && inimigo_b->angulo == 180 || inimigo_a->angulo == 180 && inimigo_b->angulo == 0){
+    if((inimigo_a->angulo == 90 && inimigo_b->angulo == 270) || (inimigo_a->angulo == 270 && inimigo_b->angulo == 90) ||
+       (inimigo_a->angulo == 0 && inimigo_b->angulo == 180) || (inimigo_a->angulo == 180 && inimigo_b->angulo == 0)){
         inverterSentidoDeMovimento(inimigo_a);
         inverterSentidoDeMovimento(inimigo_b);
     }
 
-    else if(inimigo_a->angulo == 90 && inimigo_b->angulo == 0 || inimigo_a->angulo == 90 && inimigo_b->angulo == 180){
+    else if((inimigo_a->angulo == 90 && inimigo_b->angulo == 0) || (inimigo_a->angulo == 90 && inimigo_b->angulo == 180)){
         if(inimigo_a->inimigo_R.x + (inimigo_a->inimigo_R.width - 2) <= inimigo_b->inimigo_R.x){
             inverterSentidoDeMovimento(inimigo_a);
         }else if(inimigo_a->inimigo_R.x + (inimigo_a->inimigo_R.width - 2)  > inimigo_b->inimigo_R.x){
             inverterSentidoDeMovimento(inimigo_b);
         }
 
-    }else if(inimigo_a->angulo == 270 && inimigo_b->angulo == 0 || inimigo_a->angulo == 270 && inimigo_b->angulo == 180){
+    }else if((inimigo_a->angulo == 270 && inimigo_b->angulo == 0) || (inimigo_a->angulo == 270 && inimigo_b->angulo == 180)){
         if(inimigo_a->inimigo_R.x >= inimigo_b->inimigo_R.x + (inimigo_b->inimigo_R.width - 2)){
             inverterSentidoDeMovimento(inimigo_a);
         }else if(inimigo_a->inimigo_R.x < inimigo_b->inimigo_R.x + (inimigo_b->inimigo_R.width - 2)){
