@@ -13,7 +13,7 @@ typedef struct jogador{
     Vector2 origem_textura;
     bool colidindo;
     bool energizado;
-
+    int abates;
 }JOGADOR;
 
 void movimentacaoJogador(JOGADOR *jogador);

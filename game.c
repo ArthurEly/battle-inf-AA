@@ -34,6 +34,7 @@ typedef struct game{
     int contador_projeteis;
     int contador_cels_energia;
     int contador_interno_cel_energia;
+    int fase;
 }GAME;
 
 void SetActiveScreen(int screen_id);
@@ -80,7 +81,7 @@ int mapa[MAPA_LINHAS][MAPA_COLUNAS] = {
     {8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8},
     {8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8},
     {8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8},
-    {8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,10,8},
+    {8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8},
     {8,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,8}
 };
 int mapa_carregado = FALSE;
@@ -100,9 +101,10 @@ JOGADOR jogador = {
         .vel = {0,0},
         .multiplicador_vel = 1,
         .cor =  {255, 255, 255, 255},
-        .origem_textura={0,0}
+        .origem_textura={0,0},
+        .abates = 0,
 };
-int tanques_posicionados=0;
+int jogador_posicionado = FALSE;
 
 CELULA cels_energia[NRO_CELS_ENERGIA]={0};
 int contador_cels_energia = 0;
@@ -112,6 +114,7 @@ int contador_interno_cel_energia = 0;
 
 GAME jogo;
 int jogo_carregado = FALSE;
+int fase = 1;
 
 void DrawGameplayScreen(int cod_game){
     ClearBackground(RAYWHITE);
@@ -123,21 +126,44 @@ void DrawGameplayScreen(int cod_game){
     if (cod_game == 1 && !jogo_carregado){
         carregarJogoSalvo();
         jogo_carregado = TRUE;
+        mapa_carregado = TRUE;
     }
 
-    int fase=1;
+    if (jogador.abates == 5 && fase != 2){
+        printf("TA MALUUUUUUUUUUUUUUUUUUUUUUUUUCO");
+        mapa_carregado = FALSE;
+        fase++;
+    }
+
     char nivel = fase+'0';
     if (!mapa_carregado){
+        resetarJogo();
+        jogador_posicionado = FALSE;
         FILE *nivel_fp;
+
         char nome_nivel[10] = {"nivelx.txt"};
         nome_nivel[5] = nivel;
+
         nivel_fp = fopen(nome_nivel,"rb");
+
         if (nivel_fp != NULL){
             carregarMapa(mapa,nivel_fp);
         }else{
             printf("Erro na abertura do arquivo %s",nome_nivel);
         }
+
         mapa_carregado = TRUE;
+    }
+
+    if(!jogador_posicionado){
+        for(i=0; i<MAPA_LINHAS; i++){
+            for(j=0; j<MAPA_COLUNAS; j++){
+                if (mapa[i][j] == 10){
+                    posicionarJogador(mapa[i][j],&jogador,i,j);
+                }
+            }
+        }
+        jogador_posicionado = TRUE;
     }
 
     for(i=0; i<MAPA_LINHAS; i++){
@@ -151,17 +177,6 @@ void DrawGameplayScreen(int cod_game){
     DrawText(TextFormat("Pontuacao: %i", jogador.pontuacao), 250, 30, 36, DARKGRAY);
     for(i=0; i<jogador.vidas; i++){
         DrawTextureEx(escudo, (Vector2){i*65, 0}, 0, 0.11, WHITE);
-    }
-
-    if(!tanques_posicionados){
-        for(i=0; i<MAPA_LINHAS; i++){
-            for(j=0; j<MAPA_COLUNAS; j++){
-                if (mapa[i][j] == 10){
-                    posicionarJogador(mapa[i][j],&jogador,i,j);
-                }
-            }
-        }
-        tanques_posicionados = 1;
     }
 
     /**
@@ -325,6 +340,7 @@ void DrawGameplayScreen(int cod_game){
             for(j=0; j<contador_inimigos; j++){
                 if (checarColisaoProjeteisEInimigo(&projeteis[i], &inimigos[j])){
                     if(projeteis[i].tanque_de_origem == 'j'){
+                        jogador.abates++;
                         removerInimigo(inimigos,j);
                         removerProjetil(projeteis,i);
                         jogador.pontuacao += 800;
@@ -458,7 +474,7 @@ void salvarJogo(){
     jogo_salvo.contador_projeteis = contador_projeteis;
     jogo_salvo.contador_cels_energia = contador_cels_energia;
     jogo_salvo.contador_interno_cel_energia = contador_interno_cel_energia;
-
+    jogo_salvo.fase = fase;
     if (save_fp != NULL){
         fwrite(&jogo_salvo, sizeof(GAME), 1, save_fp);
         rewind(save_fp);
@@ -491,11 +507,47 @@ void carregarJogoSalvo(){
             contador_projeteis = jooj.contador_projeteis;
             contador_cels_energia = jooj.contador_cels_energia;
             contador_interno_cel_energia = jooj.contador_interno_cel_energia;
+            fase = jooj.fase;
         }else{
             printf("erro na leitura do jogo salvo\n");
         }
     }
     fclose(save_fp);
+}
+
+void resetarJogo(){
+    timer_segundos = 0;
+    segundos = 0;
+    contador_inimigos = 0;
+
+    INIMIGO z_inimigos[NRO_INIMIGOS]={0};
+    memcpy(inimigos, z_inimigos, sizeof(inimigos));
+
+    PROJETIL z_projeteis[NRO_PROJETEIS]={0};
+    memcpy(projeteis, z_projeteis, sizeof(inimigos));
+    contador_projeteis= 0;
+
+    BLOCO z_blocos[MAPA_LINHAS][MAPA_COLUNAS] = {0};
+    memcpy(blocos, z_blocos, sizeof(inimigos));
+
+    JOGADOR z_jogador = {
+            .jogador_R.height = TAMANHO_TANQUES, //aqui também
+            .jogador_R.width = TAMANHO_TANQUES, //aqui também
+            .vidas = 3,
+            .pontuacao = 0,
+            .angulo = 0,
+            .vel = {0,0},
+            .multiplicador_vel = 1,
+            .cor =  {255, 255, 255, 255},
+            .origem_textura={0,0},
+            .abates = 0,
+    };
+    jogador = z_jogador;
+
+    CELULA z_cels_energia[NRO_CELS_ENERGIA]={0};
+    memcpy(cels_energia, z_cels_energia, sizeof(inimigos));
+    contador_cels_energia = 0;
+    contador_interno_cel_energia = 0;
 }
 
 void carregarMapa(int mapa[][MAPA_COLUNAS], FILE *nivel_fp){
@@ -511,6 +563,11 @@ void carregarMapa(int mapa[][MAPA_COLUNAS], FILE *nivel_fp){
 
         if (objeto == '#'){
             mapa[i][j] = 1;
+            j++;
+        }
+
+        if (objeto == 'T'){
+            mapa[i][j] = 10;
             j++;
         }
 
