@@ -284,8 +284,7 @@ int temUmAORedor(int mapa[][MAPA_COLUNAS],int y, int x, int tipo, int raio_procu
     int i;
 
     for (i=distancia_inicial; i<=raio_procura; i++){
-       if (mapa[y][x]      == tipo ||
-            mapa[y][x+i]   == tipo ||
+       if ( mapa[y][x+i]   == tipo ||
             mapa[y][x-i]   == tipo ||
             mapa[y+i][x]   == tipo ||
             mapa[y-i][x]   == tipo ||
@@ -296,7 +295,6 @@ int temUmAORedor(int mapa[][MAPA_COLUNAS],int y, int x, int tipo, int raio_procu
     }
 
     if (contador_ao_redor > 0){
-        printf("oh, tem player\n");
         tem_ao_redor = TRUE;
     }
 
@@ -317,11 +315,6 @@ int proximoAoJogador(int mapa[][MAPA_COLUNAS],int y, int x, int distancia_minima
             }
         }
     }
-
-    printf("y jogador: %d\n",y_jogador);
-    printf("x jogador: %d\n",x_jogador);
-    printf("y inimigo: %d\n",y);
-    printf("x inimigo: %d\n",x);
 
     if (x_jogador+distancia_minima >= x && x_jogador-distancia_minima <= x && y_jogador+distancia_minima >= y && y_jogador-distancia_minima <= y){
         proximo = TRUE;

@@ -1,5 +1,7 @@
 #ifndef JOGADOR_H_INCLUDED
 #define JOGADOR_H_INCLUDED
+#include "game.h"
+
 typedef struct jogador{
     Rectangle jogador_R;
     int vidas;

@@ -7,7 +7,6 @@
 #include "construcao.h"
 
 void atirarProjetilJogador(PROJETIL *projetil, JOGADOR jogador){
-
     projetil->em_movimento = 1;
     projetil->tanque_de_origem = 'j';
     projetil->projetil_R.height = jogador.jogador_R.height*0.2;

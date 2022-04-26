@@ -16,11 +16,11 @@ typedef struct inimigo{
     Vector2 origem_textura;
     int emMovimento;
     bool colidindo;
-    bool colidindoComInimigo;
+    bool colidiuComInimigo;
 }INIMIGO;
 
 void criarNovoInimigo(int mapa[][MAPA_COLUNAS], BLOCO blocos[][MAPA_COLUNAS], INIMIGO *inimigo, int altura_tanque, int largura_tanque);
-void movimentarInimigos(JOGADOR *jogador, INIMIGO *inimigo);
+//void movimentarInimigos(JOGADOR *jogador, INIMIGO *inimigo);
 void girarSentidoHorario(INIMIGO *inimigo);
 void inverterSentidoDeMovimento(INIMIGO *inimigo);
 void colidirInimigos(INIMIGO *inimigo_a,INIMIGO *inimigo_b);

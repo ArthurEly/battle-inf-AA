@@ -11,6 +11,6 @@ typedef struct velocidade{
 
 }VELOCIDADE;
 
-void DrawGameplayScreen(void);
+void DrawGameplayScreen(int cod_game);
 void carregarMapa(int mapa[][MAPA_COLUNAS], FILE *nivel_fp);
 #endif

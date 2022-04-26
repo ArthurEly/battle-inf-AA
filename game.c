@@ -9,7 +9,7 @@
 #include "cel_energia.h"
 #include "string.h"
 
-#define NRO_INIMIGOS 15
+#define NRO_INIMIGOS 5
 #define TEMPO_DE_SPAWN_INIMIGOS 1
 #define NRO_PROJETEIS 100
 #define NRO_CELS_ENERGIA 3
@@ -30,6 +30,10 @@ typedef struct game{
     BLOCO blocos[MAPA_LINHAS][MAPA_COLUNAS];
     int mapa[MAPA_LINHAS][MAPA_COLUNAS];
     int segundos;
+    int contador_inimigos;
+    int contador_projeteis;
+    int contador_cels_energia;
+    int contador_interno_cel_energia;
 }GAME;
 
 void SetActiveScreen(int screen_id);
@@ -67,16 +71,16 @@ int mapa[MAPA_LINHAS][MAPA_COLUNAS] = {
     {8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8},
     {8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8},
     {8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8},
+    {8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8},
+    {8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8},
+    {8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8},
+    {8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8},
+    {8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8},
+    {8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8},
+    {8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8},
+    {8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8},
+    {8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8},
     {8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,10,8},
-    {8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8},
-    {8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8},
-    {8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8},
-    {8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8},
-    {8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8},
-    {8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8},
-    {8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8},
-    {8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8},
-    {8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8},
     {8,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,8}
 };
 int mapa_carregado = FALSE;
@@ -107,14 +111,19 @@ int largura_cel_energia = 35;
 int contador_interno_cel_energia = 0;
 
 GAME jogo;
+int jogo_carregado = FALSE;
 
-void DrawGameplayScreen(){
+void DrawGameplayScreen(int cod_game){
     ClearBackground(RAYWHITE);
     int i,j,k;
     timerSegundos();
     /**
         MAPA
     */
+    if (cod_game == 1 && !jogo_carregado){
+        carregarJogoSalvo();
+        jogo_carregado = TRUE;
+    }
 
     int fase=1;
     char nivel = fase+'0';
@@ -205,7 +214,7 @@ void DrawGameplayScreen(){
                 }
             }
 
-            movimentarInimigos(&jogador, &inimigos[i]);
+            movimentarInimigos(mapa,&jogador, &inimigos[i]);
 
 
             Texture2D tanque_inimigo_textura;
@@ -314,20 +323,22 @@ void DrawGameplayScreen(){
             renderizarProjeteis(&projeteis[i]);
 
             for(j=0; j<contador_inimigos; j++){
-                if(projeteis[i].tanque_de_origem == 'j'){
-                    if (checarColisaoProjeteisEInimigo(&projeteis[i], &inimigos[j])){
-                        printf("oia eu aqui de novo");
+                if (checarColisaoProjeteisEInimigo(&projeteis[i], &inimigos[j])){
+                    if(projeteis[i].tanque_de_origem == 'j'){
                         removerInimigo(inimigos,j);
                         removerProjetil(projeteis,i);
                         jogador.pontuacao += 800;
                     }
-                } else{
-                    if (checarColisaoProjeteisEJogador(&projeteis[i], &jogador)){
-                        removerProjetil(projeteis,i);
-                        jogador.vidas--;
-                    }
                 }
             }
+
+            if (checarColisaoProjeteisEJogador(&projeteis[i], &jogador)){
+                if(projeteis[i].tanque_de_origem == 'i'){
+                    removerProjetil(projeteis,i);
+                    jogador.vidas--;
+                }
+            }
+
             for(j=0; j<MAPA_LINHAS; j++){
                 for(k=0; k<MAPA_COLUNAS; k++){
                     if(blocos[j][k].tipo == 1 || blocos[j][k].tipo == 8 || blocos[j][k].tipo == 9){
@@ -420,55 +431,71 @@ void DrawGameplayScreen(){
 
     //qause funcao de salvar
     if(IsKeyPressed(KEY_S)){
-        FILE *save_fp;
-        GAME jogo_salvo;
-        save_fp = fopen("ultimo-save.bin","wb+");
-        jogo_salvo.jogador = jogador;
-        memcpy(jogo_salvo.inimigos, inimigos, sizeof(inimigos));
-        memcpy(jogo_salvo.projeteis, projeteis, sizeof(projeteis));
-        memcpy(jogo_salvo.cels_energia, cels_energia, sizeof(cels_energia));
-        memcpy(jogo_salvo.blocos, blocos, sizeof(blocos));
-        memcpy(jogo_salvo.mapa, mapa, sizeof(mapa));
-        jogo_salvo.segundos = segundos;
-
-        if (save_fp != NULL){
-            fwrite(&jogo_salvo, sizeof(GAME), 1, save_fp);
-            rewind(save_fp);
-            GAME jooj;
-            if(fread(&jooj, sizeof(GAME), 1, save_fp) == 1){
-                printarMapa(jooj.mapa);
-            }else{
-                printf("erro na leitura do jogo salvo\n");
-            }
-        }
-        fclose(save_fp);
+        salvarJogo();
     }
-    //qause funcao de carregar
-    if(IsKeyPressed(KEY_C)){
-        FILE *save_fp;
-        save_fp = fopen("ultimo-save.bin","rb");
 
-        if (save_fp != NULL){
-            rewind(save_fp);
-            GAME jooj;
-            if(fread(&jooj, sizeof(GAME), 1, save_fp) == 1){
-                jogador = jooj.jogador;
-                memcpy(inimigos, jooj.inimigos, sizeof(inimigos));
-                memcpy(projeteis, jooj.projeteis, sizeof(projeteis));
-                memcpy(cels_energia, jooj.cels_energia, sizeof(cels_energia));
-                memcpy(blocos, jooj.blocos, sizeof(blocos));
-                memcpy(mapa, jooj.mapa, sizeof(mapa));
-                segundos = jooj.segundos;
-            }else{
-                printf("erro na leitura do jogo salvo\n");
-            }
-        }
-        fclose(save_fp);
+    if(IsKeyPressed(KEY_C)){
+        carregarJogoSalvo();
     }
 
     if(IsKeyPressed(KEY_P)){
         SetActiveScreen(111);
     }
+}
+
+void salvarJogo(){
+    FILE *save_fp;
+    GAME jogo_salvo;
+    save_fp = fopen("ultimo-save.bin","wb+");
+    jogo_salvo.jogador = jogador;
+    memcpy(jogo_salvo.inimigos, inimigos, sizeof(inimigos));
+    memcpy(jogo_salvo.projeteis, projeteis, sizeof(projeteis));
+    memcpy(jogo_salvo.cels_energia, cels_energia, sizeof(cels_energia));
+    memcpy(jogo_salvo.blocos, blocos, sizeof(blocos));
+    memcpy(jogo_salvo.mapa, mapa, sizeof(mapa));
+    jogo_salvo.segundos = segundos;
+    jogo_salvo.contador_inimigos = contador_inimigos;
+    jogo_salvo.contador_projeteis = contador_projeteis;
+    jogo_salvo.contador_cels_energia = contador_cels_energia;
+    jogo_salvo.contador_interno_cel_energia = contador_interno_cel_energia;
+
+    if (save_fp != NULL){
+        fwrite(&jogo_salvo, sizeof(GAME), 1, save_fp);
+        rewind(save_fp);
+        GAME jooj;
+        if(fread(&jooj, sizeof(GAME), 1, save_fp) == 1){
+            printarMapa(jooj.mapa);
+        }else{
+            printf("erro na leitura do jogo salvo\n");
+        }
+    }
+    fclose(save_fp);
+}
+
+void carregarJogoSalvo(){
+    FILE *save_fp;
+    save_fp = fopen("ultimo-save.bin","rb");
+
+    if (save_fp != NULL){
+        rewind(save_fp);
+        GAME jooj;
+        if(fread(&jooj, sizeof(GAME), 1, save_fp) == 1){
+            jogador = jooj.jogador;
+            memcpy(inimigos, jooj.inimigos, sizeof(inimigos));
+            memcpy(projeteis, jooj.projeteis, sizeof(projeteis));
+            memcpy(cels_energia, jooj.cels_energia, sizeof(cels_energia));
+            memcpy(blocos, jooj.blocos, sizeof(blocos));
+            memcpy(mapa, jooj.mapa, sizeof(mapa));
+            segundos = jooj.segundos;
+            contador_inimigos = jooj.contador_inimigos;
+            contador_projeteis = jooj.contador_projeteis;
+            contador_cels_energia = jooj.contador_cels_energia;
+            contador_interno_cel_energia = jooj.contador_interno_cel_energia;
+        }else{
+            printf("erro na leitura do jogo salvo\n");
+        }
+    }
+    fclose(save_fp);
 }
 
 void carregarMapa(int mapa[][MAPA_COLUNAS], FILE *nivel_fp){
@@ -493,6 +520,5 @@ void carregarMapa(int mapa[][MAPA_COLUNAS], FILE *nivel_fp){
         }
         printf("%c",objeto);
     }
-    mapa[2][2] = 1;
     printarMapa(mapa);
 }

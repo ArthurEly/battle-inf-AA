@@ -95,7 +95,7 @@ void DrawScreen(int screen_id){
             break;
 
         case 11:
-            DrawGameplayScreen();
+            DrawGameplayScreen(0);
             break;
 
         case 111:
@@ -103,7 +103,7 @@ void DrawScreen(int screen_id){
             break;
 
         case 12:
-            DrawGameplayScreen();
+            DrawGameplayScreen(1);
             break;
 
         case 13:

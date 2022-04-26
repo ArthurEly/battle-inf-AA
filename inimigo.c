@@ -21,7 +21,7 @@ void criarNovoInimigo(int mapa[][MAPA_COLUNAS], BLOCO blocos[][MAPA_COLUNAS], IN
     inimigo->multiplicador_vel = 1;
     inimigo->cor = WHITE;
     inimigo->emMovimento = 0;
-    inimigo->colidindoComInimigo = false;
+    inimigo->colidiuComInimigo = false;
 
     int coord_y_rand;
     int coord_x_rand;
@@ -50,10 +50,14 @@ void criarNovoInimigo(int mapa[][MAPA_COLUNAS], BLOCO blocos[][MAPA_COLUNAS], IN
     inimigo->inimigo_R.y = converterIndiceYParaCoordenada(novo_y);
 
     inimigos_qtde++;
-    printf("inimigo %d",inimigos_qtde);
 }
 
-void movimentarInimigos(JOGADOR *jogador, INIMIGO *inimigo){
+void movimentarInimigos(int mapa[][MAPA_COLUNAS], JOGADOR *jogador, INIMIGO *inimigo){
+    if(inimigo->colidiuComInimigo){
+        inimigo->emMovimento = 1;
+        inimigo->colidiuComInimigo = false;
+    }
+
     int velocidade = 1*inimigo->multiplicador_vel;
     int movimentacoes[4][5]={
         {      0      ,(-velocidade),  0  ,            0             ,            0              }, //cima
@@ -132,6 +136,7 @@ void movimentarInimigos(JOGADOR *jogador, INIMIGO *inimigo){
         inimigo->angulo = movimentacoes[indice_movimento][2];
         inimigo->origem_textura.x = movimentacoes[indice_movimento][3];
         inimigo->origem_textura.y = movimentacoes[indice_movimento][4];
+
     }
 
     inimigo->inimigo_R.x += inimigo->vel.vx;
@@ -218,6 +223,9 @@ void inverterSentidoDeMovimento(INIMIGO *inimigo){
 }
 
 void colidirInimigos(INIMIGO *inimigo_a,INIMIGO *inimigo_b){
+    inimigo_a->colidiuComInimigo = true;
+    inimigo_b->colidiuComInimigo = true;
+
     if((inimigo_a->angulo == 90 && inimigo_b->angulo == 270) || (inimigo_a->angulo == 270 && inimigo_b->angulo == 90) ||
        (inimigo_a->angulo == 0 && inimigo_b->angulo == 180) || (inimigo_a->angulo == 180 && inimigo_b->angulo == 0)){
         inverterSentidoDeMovimento(inimigo_a);
