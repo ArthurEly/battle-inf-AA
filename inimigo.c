@@ -18,7 +18,7 @@ void criarNovoInimigo(int mapa[][MAPA_COLUNAS], BLOCO blocos[][MAPA_COLUNAS], IN
     inimigo->inimigo_R.height = altura_tanque;
     inimigo->inimigo_R.width = largura_tanque;
     inimigo->vidas = 1;
-    inimigo->multiplicador_vel = 1;
+    inimigo->multiplicador_vel = 0;
     inimigo->cor = WHITE;
     inimigo->emMovimento = 0;
     inimigo->colidiuComInimigo = false;
@@ -42,7 +42,7 @@ void criarNovoInimigo(int mapa[][MAPA_COLUNAS], BLOCO blocos[][MAPA_COLUNAS], IN
     int novo_x = x_rand;
     int novo_y = y_rand;
 
-    if (temUmAORedor(mapa,y_rand,x_rand,1,1) || temUmAORedor(mapa,y_rand,x_rand,11,1) || temUmAORedor(mapa,y_rand,x_rand,10,5)){
+    if (temUmAORedor(mapa,y_rand,x_rand,1,1) || temUmAORedor(mapa,y_rand,x_rand,11,1) || temUmAORedor(mapa,y_rand,x_rand,10,3)){
         reposicionarObjeto(mapa,&novo_y,&novo_x);
     }
 

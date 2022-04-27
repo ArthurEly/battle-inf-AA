@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1650948610 source:c:\battle inf\battle-inf-aa\main.c
+1651042847 source:c:\battle inf\battle-inf-aa\main.c
 	"raylib.h"
 	"menu.h"
 	"game.h"
@@ -23,7 +23,7 @@
 	"raylib.h"
 	"stdio.h"
 
-1650936960 c:\battle inf\battle-inf-aa\game.h
+1651037973 c:\battle inf\battle-inf-aa\game.h
 	"stdio.h"
 
 1650170154 c:\battle inf\battle-inf-aa\options.h
@@ -50,7 +50,7 @@
 
 1650883779 c:\battle inf\battle-inf-aa\pause_menu.h
 
-1650948059 source:c:\battle inf\battle-inf-aa\game.c
+1651043467 source:c:\battle inf\battle-inf-aa\game.c
 	"game.h"
 	"raylib.h"
 	"stdio.h"
@@ -67,10 +67,11 @@
 	"stdio.h"
 	"highscores.h"
 
-1650883779 source:c:\battle inf\battle-inf-aa\menu.c
+1651034371 source:c:\battle inf\battle-inf-aa\menu.c
 	"raylib.h"
 	"stdio.h"
 	"menu.h"
+	"game.h"
 
 1650170154 source:c:\battle inf\battle-inf-aa\options.c
 	"raylib.h"
@@ -130,7 +131,7 @@
 	"cel_energia.h"
 	"mapa.h"
 
-1650944790 source:c:\battle inf\battle-inf-aa\inimigo.c
+1651043151 source:c:\battle inf\battle-inf-aa\inimigo.c
 	"game.h"
 	"raylib.h"
 	"stdio.h"
@@ -234,10 +235,11 @@
 1650891797 c:\battle inf\battle-inf-aa\mapa.h
 	"construcao.h"
 
-1650883779 source:c:\battle inf\battle-inf-aa\carregar.c
+1651039177 source:c:\battle inf\battle-inf-aa\carregar.c
 	"raylib.h"
 	"stdio.h"
 	"carregar.h"
+	"game.h"
 
 1650883779 c:\battle inf\battle-inf-aa\carregar.h
 

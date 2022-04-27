@@ -1,6 +1,7 @@
 #include "raylib.h"
 #include "stdio.h"
 #include "menu.h"
+#include "game.h"
 
 #define TEXTOS 5
 
@@ -8,7 +9,7 @@ void SetActiveScreen(int screen_id);
 extern Font fonte_legal;
 extern Texture2D texture;
 const int menu_items[TEXTOS]={
-    11,
+    110,
     12,
     13,
     14,
@@ -92,10 +93,12 @@ void DrawMainMenuScreen(){
             }
 
     if(IsKeyPressed(KEY_ENTER)){
-        if(menu_items[menu_option] != 999)
+        if(menu_items[menu_option] != 999){
             SetActiveScreen(menu_items[menu_option]);
-        else
+        }
+        else{
             CloseWindow();
+        }
     }
 }
 

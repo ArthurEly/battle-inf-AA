@@ -22,9 +22,10 @@ Texture2D g_textura_jogador;
 Texture2D g_textura_inimigo_patrulha;
 Texture2D g_textura_inimigo_perseguicao;
 
-int g_screens[6]={
+int g_screens[7]={
         10, //Main Menu Screen
-        11, //Gameplay Screen
+        110, //Gameplay Screen
+        11,
         111, //menu de pausa dentro do jogo
         12, //Continue Screen
         13, //Load Map Screen
@@ -92,6 +93,10 @@ void DrawScreen(int screen_id){
     switch(screen_id){
         case 10:
             DrawMainMenuScreen();
+            break;
+
+        case 110:
+            DrawNewGameplayScreen(0);
             break;
 
         case 11:
