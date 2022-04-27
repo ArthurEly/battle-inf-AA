@@ -10,6 +10,9 @@
 
 void SetActiveScreen(int screen_id);
 void DrawScreen(int screen_id);
+void DrawLoadMapGameplayScreen(FILE *mapa_fp);
+void DrawNewGameplayScreen();
+
 
 Texture2D energia;
 Texture2D tijolo;
@@ -17,6 +20,7 @@ Texture2D escudo;
 Texture2D texture;
 Texture2D pause;
 Texture2D highscore;
+Texture2D carregar;
 Font fonte_legal;
 Texture2D g_textura_jogador;
 Texture2D g_textura_inimigo_patrulha;
@@ -51,6 +55,7 @@ int main(void)
     texture = LoadTexture("assets/FUNDO JOGO.png");
     pause = LoadTexture("assets/Tela pause.png");
     highscore = LoadTexture("assets/Highscores.png");
+    carregar = LoadTexture("assets/Carregar mapa.png");
     escudo = LoadTexture("assets/shield.png");
     tijolo = LoadTexture("assets/brick_texture2.png");
     tijolo.height = 25;

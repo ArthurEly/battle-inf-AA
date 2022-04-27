@@ -4,6 +4,9 @@
 #include "game.h"
 
 void SetActiveScreen(int screen_id);
+void DrawLoadMapGameplayScreen(FILE *mapa_fp);
+
+extern Texture2D carregar;
 
 int count = 0;
 char **droppedFiles = { 0 };
@@ -18,9 +21,9 @@ void att(void){
 void DrawCarregarScreen(){
         att();
         ClearBackground(RAYWHITE);
+        DrawTextureEx(carregar, (Vector2){-75,0}, 0, 1, WHITE);
         char objeto;
         if (count == 0) {
-            DrawText("Drop your files to this window!", 100, 40, 20, DARKGRAY);
         }
         else
         {

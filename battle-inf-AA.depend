@@ -28,7 +28,7 @@
 
 1650170154 c:\battle inf\battle-inf-aa\options.h
 
-1650915909 source:c:\users\user\documents\ufrgs\algoritmos e programacao\trabalho final\battle-inf-aa\main.c
+1651078140 source:c:\users\user\documents\ufrgs\algoritmos e programacao\trabalho final\battle-inf-aa\main.c
 	"raylib.h"
 	"menu.h"
 	"game.h"
@@ -39,7 +39,7 @@
 
 1649680450 c:\users\user\documents\ufrgs\algoritmos e programacao\trabalho final\battle-inf-aa\menu.h
 
-1650892692 c:\users\user\documents\ufrgs\algoritmos e programacao\trabalho final\battle-inf-aa\game.h
+1651076578 c:\users\user\documents\ufrgs\algoritmos e programacao\trabalho final\battle-inf-aa\game.h
 	"stdio.h"
 
 1649680450 c:\users\user\documents\ufrgs\algoritmos e programacao\trabalho final\battle-inf-aa\options.h
@@ -86,7 +86,7 @@
 	"raylib.h"
 	"stdio.h"
 
-1650892692 source:c:\users\user\documents\ufrgs\algoritmos e programacao\trabalho final\battle-inf-aa\game.c
+1651076578 source:c:\users\user\documents\ufrgs\algoritmos e programacao\trabalho final\battle-inf-aa\game.c
 	"game.h"
 	"raylib.h"
 	"stdio.h"
@@ -98,7 +98,7 @@
 	"cel_energia.h"
 	"string.h"
 
-1649680450 source:c:\users\user\documents\ufrgs\algoritmos e programacao\trabalho final\battle-inf-aa\highscores.c
+1650917321 source:c:\users\user\documents\ufrgs\algoritmos e programacao\trabalho final\battle-inf-aa\highscores.c
 	"raylib.h"
 	"stdio.h"
 	"highscores.h"
@@ -107,10 +107,11 @@
 
 1649680450 c:\users\user\documents\ufrgs\algoritmos e programacao\trabalho final\battle-inf-aa\pause_menu.h
 
-1650916563 source:c:\users\user\documents\ufrgs\algoritmos e programacao\trabalho final\battle-inf-aa\menu.c
+1651076578 source:c:\users\user\documents\ufrgs\algoritmos e programacao\trabalho final\battle-inf-aa\menu.c
 	"raylib.h"
 	"stdio.h"
 	"menu.h"
+	"game.h"
 
 1649680450 source:c:\users\user\documents\ufrgs\algoritmos e programacao\trabalho final\battle-inf-aa\options.c
 	"raylib.h"
@@ -175,13 +176,14 @@
 	"cel_energia.h"
 	"mapa.h"
 
-1650388693 c:\users\user\documents\ufrgs\algoritmos e programacao\trabalho final\battle-inf-aa\jogador.h
+1650976821 c:\users\user\documents\ufrgs\algoritmos e programacao\trabalho final\battle-inf-aa\jogador.h
+	"game.h"
 
-1650892692 c:\users\user\documents\ufrgs\algoritmos e programacao\trabalho final\battle-inf-aa\inimigo.h
+1650976821 c:\users\user\documents\ufrgs\algoritmos e programacao\trabalho final\battle-inf-aa\inimigo.h
 	"jogador.h"
 	"construcao.h"
 
-1650892692 source:c:\users\user\documents\ufrgs\algoritmos e programacao\trabalho final\battle-inf-aa\inimigo.c
+1651076578 source:c:\users\user\documents\ufrgs\algoritmos e programacao\trabalho final\battle-inf-aa\inimigo.c
 	"game.h"
 	"raylib.h"
 	"stdio.h"
@@ -199,7 +201,7 @@
 	"inimigo.h"
 	"cel_energia.h"
 
-1650892692 source:c:\users\user\documents\ufrgs\algoritmos e programacao\trabalho final\battle-inf-aa\projetil.c
+1650976821 source:c:\users\user\documents\ufrgs\algoritmos e programacao\trabalho final\battle-inf-aa\projetil.c
 	"game.h"
 	"raylib.h"
 	"stdio.h"
@@ -243,10 +245,11 @@
 
 1650883779 c:\battle inf\battle-inf-aa\carregar.h
 
-1650291202 source:c:\users\user\documents\ufrgs\algoritmos e programacao\trabalho final\battle-inf-aa\carregar.c
+1651078078 source:c:\users\user\documents\ufrgs\algoritmos e programacao\trabalho final\battle-inf-aa\carregar.c
 	"raylib.h"
 	"stdio.h"
 	"carregar.h"
+	"game.h"
 
 1650290929 c:\users\user\documents\ufrgs\algoritmos e programacao\trabalho final\battle-inf-aa\carregar.h
 
@@ -262,7 +265,7 @@
 1650892692 c:\users\user\documents\ufrgs\algoritmos e programacao\trabalho final\battle-inf-aa\mapa.h
 	"construcao.h"
 
-1650892692 source:c:\users\user\documents\ufrgs\algoritmos e programacao\trabalho final\battle-inf-aa\mapa.c
+1650976821 source:c:\users\user\documents\ufrgs\algoritmos e programacao\trabalho final\battle-inf-aa\mapa.c
 	"game.h"
 	"raylib.h"
 	"stdio.h"
