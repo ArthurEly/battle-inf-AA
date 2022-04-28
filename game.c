@@ -12,8 +12,8 @@
 #define NRO_INIMIGOS 15
 #define TEMPO_DE_SPAWN_INIMIGOS 1
 #define NRO_PROJETEIS 100
-#define NRO_CELS_ENERGIA 0
-
+#define NRO_CELS_ENERGIA 3
+#define TEMPO_DE_SPAWN_CELS_ENERGIA 1
 #define MAPA_LINHAS 17
 #define MAPA_COLUNAS 42
 
@@ -115,6 +115,7 @@ int largura_cel_energia = 35;
 int contador_interno_cel_energia = 0;
 
 GAME jogo;
+//int nro_abates = 5;
 int jogo_carregado = FALSE;
 int fase = 1;
 int novo_jogo;
@@ -126,14 +127,14 @@ void DrawGameplayScreen(int cod_game){
     /**
         MAPA
     */
-
-    if(jogador.vidas == 0 && !mapa_foi_pre_carregado){
+    //VIDAS jogador
+    /*if(jogador.vidas == 0 && !mapa_foi_pre_carregado){
         resetarJogo();
     }else if (jogador.vidas == 0 && mapa_foi_pre_carregado){
         int guardarMapa[MAPA_LINHAS][MAPA_COLUNAS];
         resetarJogo();
         memcpy(mapa, mapa_pre_carregado, sizeof(mapa));
-    }
+    }*/
 
     if (cod_game == 1 && !jogo_carregado){
         carregarJogoSalvo();
@@ -141,7 +142,7 @@ void DrawGameplayScreen(int cod_game){
         mapa_carregado = TRUE;
     }
 
-    if (jogador.abates == 2 && fase != 2 && !mapa_foi_pre_carregado){
+    if (jogador.abates == NRO_INIMIGOS && fase != 2 && !mapa_foi_pre_carregado){
         fase++;
         passarDeFase();
     }
@@ -199,6 +200,9 @@ void DrawGameplayScreen(int cod_game){
     }
 
     DrawText(TextFormat("Fase: %i", fase), 600, 20, 48, ORANGE);
+    DrawText(TextFormat("%ds", segundos), 1025, 20, 48, ORANGE);
+    DrawText(TextFormat("Kills"), 1025, 400, 48, ORANGE);
+    DrawText(TextFormat("%d", jogador.abates), 1063, 450, 48, ORANGE);
     DrawText(TextFormat("Pontuacao: %i", jogador.pontuacao), 250, 30, 36, DARKGRAY);
     for(i=0; i<jogador.vidas; i++){
         DrawTextureEx(escudo, (Vector2){i*65, 0}, 0, 0.11, WHITE);
@@ -208,20 +212,20 @@ void DrawGameplayScreen(int cod_game){
         INIMIGOS
     */
     if(contador_inimigos < NRO_INIMIGOS){
-        //if(segundos % TEMPO_DE_SPAWN_INIMIGOS == 0 && timer_segundos == 0){
+        if(segundos % TEMPO_DE_SPAWN_INIMIGOS == 0 && timer_segundos == 0){
             criarNovoInimigo(mapa, blocos, &inimigos[contador_inimigos],TAMANHO_TANQUES,TAMANHO_TANQUES);
             contador_inimigos++;
-        //}
+        }
     }else{
-        //if(segundos % TEMPO_DE_SPAWN_INIMIGOS == 0 && timer_segundos == 0){
+        if(segundos % TEMPO_DE_SPAWN_INIMIGOS == 0 && timer_segundos == 0){
             bool nao_reviveu_inimigo = true;
             for(i=0;i<contador_inimigos;i++){
-                if(inimigos[i].vidas == 0 && nao_reviveu_inimigo){
+                if(inimigos[i].vidas == 0 && nao_reviveu_inimigo &&!inimigos[i].abatidoPeloJogador){
                     criarNovoInimigo(mapa, blocos, &inimigos[i],TAMANHO_TANQUES,TAMANHO_TANQUES);
                     nao_reviveu_inimigo = false;
                 }
             }
-        //}
+        }
     }
 
     for(i=0;i<contador_inimigos;i++){
@@ -269,7 +273,7 @@ void DrawGameplayScreen(int cod_game){
                     contador_projeteis = 0;
                 }
 
-                //atirarProjetilInimigo(&projeteis[contador_projeteis],inimigos[i]);
+                atirarProjetilInimigo(&projeteis[contador_projeteis],inimigos[i]);
             }
             else{
                 tanque_inimigo_textura = g_textura_inimigo_patrulha;
@@ -370,6 +374,7 @@ void DrawGameplayScreen(int cod_game){
                         jogador.abates++;
                         removerInimigo(inimigos,j);
                         removerProjetil(projeteis,i);
+                        inimigos[j].abatidoPeloJogador = true;
                         jogador.pontuacao += 800;
                     }
                 }
@@ -408,13 +413,18 @@ void DrawGameplayScreen(int cod_game){
     /**
         CELULAS DE ENERGIA
     */
+    int rand;
     if(contador_cels_energia < NRO_CELS_ENERGIA){
-        if(segundos % 1 == 0 && timer_segundos == 0){
+        rand = GetRandomValue(0,60);
+        if(rand == 0){
+        //if(segundos % TEMPO_DE_SPAWN_CELS_ENERGIA == 0 && timer_segundos == 0){
             criarCelulaDeEnergia(mapa, blocos, &cels_energia[contador_cels_energia],altura_cel_energia,largura_cel_energia);
             contador_cels_energia++;
         }
     }else{
-        if(segundos % 1 == 0 && timer_segundos == 0){
+        rand = GetRandomValue(0,60);
+        if(rand == 0){
+        //if(segundos % TEMPO_DE_SPAWN_CELS_ENERGIA == 0 && timer_segundos == 0){
             for(i=0; i<NRO_CELS_ENERGIA; i++){
                 if (cels_energia[i].ativa == false){
                     criarCelulaDeEnergia(mapa, blocos, &cels_energia[i],altura_cel_energia,largura_cel_energia);
@@ -472,7 +482,7 @@ void DrawGameplayScreen(int cod_game){
     */
     atualizarMapa(mapa,blocos,jogador,inimigos,contador_inimigos);
 
-    //qause funcao de salvar
+
     if(IsKeyPressed(KEY_S)){
         salvarJogo();
     }

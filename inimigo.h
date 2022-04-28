@@ -11,12 +11,13 @@ typedef struct inimigo{
     int vidas;
     int angulo;
     VELOCIDADE vel;
-    int multiplicador_vel;
+    float multiplicador_vel;
     Color cor;
     Vector2 origem_textura;
     int emMovimento;
     bool colidindo;
     bool colidiuComInimigo;
+    bool abatidoPeloJogador;
 }INIMIGO;
 
 void criarNovoInimigo(int mapa[][MAPA_COLUNAS], BLOCO blocos[][MAPA_COLUNAS], INIMIGO *inimigo, int altura_tanque, int largura_tanque);

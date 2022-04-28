@@ -18,7 +18,7 @@ void criarNovoInimigo(int mapa[][MAPA_COLUNAS], BLOCO blocos[][MAPA_COLUNAS], IN
     inimigo->inimigo_R.height = altura_tanque;
     inimigo->inimigo_R.width = largura_tanque;
     inimigo->vidas = 1;
-    inimigo->multiplicador_vel = 0;
+    inimigo->multiplicador_vel = 1;
     inimigo->cor = WHITE;
     inimigo->emMovimento = 0;
     inimigo->colidiuComInimigo = false;
@@ -58,8 +58,8 @@ void movimentarInimigos(int mapa[][MAPA_COLUNAS], JOGADOR *jogador, INIMIGO *ini
         inimigo->colidiuComInimigo = false;
     }
 
-    int velocidade = 1*inimigo->multiplicador_vel;
-    int movimentacoes[4][5]={
+    float velocidade = 1*inimigo->multiplicador_vel;
+    float movimentacoes[4][5]={
         {      0      ,(-velocidade),  0  ,            0             ,            0              }, //cima
         {      0      ,  velocidade , 180 , inimigo->inimigo_R.width , inimigo->inimigo_R.height }, //baixo
         {  velocidade ,      0      ,  90 ,            0             , inimigo->inimigo_R.height }, //direita
@@ -94,7 +94,7 @@ void movimentarInimigos(int mapa[][MAPA_COLUNAS], JOGADOR *jogador, INIMIGO *ini
         int indice_x_jogador = converterCoordenadaXParaIndice(jogador->jogador_R.x);
         int indice_y_jogador = converterCoordenadaYParaIndice(jogador->jogador_R.y);
 
-        int menor_distancia = 100;
+        int menor_distancia = 0;
         int indice_movimento = 0;
 
         for(int i=0; i<4; i++){
@@ -125,12 +125,11 @@ void movimentarInimigos(int mapa[][MAPA_COLUNAS], JOGADOR *jogador, INIMIGO *ini
                 indice_y_jogador
             );
 
-            if (distancia < menor_distancia){
+            if (distancia < menor_distancia || menor_distancia == 0){
                 menor_distancia = distancia;
                 indice_movimento = i;
             }
         }
-
         inimigo->vel.vx = movimentacoes[indice_movimento][0];
         inimigo->vel.vy = movimentacoes[indice_movimento][1];
         inimigo->angulo = movimentacoes[indice_movimento][2];

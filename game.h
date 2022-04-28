@@ -6,8 +6,8 @@
 #define MAPA_COLUNAS 42
 
 typedef struct velocidade{
-    int vx;
-    int vy;
+    float vx;
+    float vy;
 
 }VELOCIDADE;
 
