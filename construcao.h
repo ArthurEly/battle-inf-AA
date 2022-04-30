@@ -1,6 +1,23 @@
 #ifndef CONSTRUCAO_H_INCLUDED
 #define CONSTRUCAO_H_INCLUDED
 #include "raylib.h"
+#include "game.h"
+
+#define MAPA_LINHAS 17
+#define MAPA_COLUNAS 42
+
+typedef struct texturas{
+    Texture2D energia;
+    Texture2D tijolo;
+    Texture2D escudo;
+    Texture2D texture;
+    Texture2D pause;
+    Texture2D highscore;
+    Texture2D carregar;
+    Texture2D jogador;
+    Texture2D inimigo_patrulha;
+    Texture2D inimigo_perseguicao;
+}TEXTURAS;
 
 typedef struct id{
     Rectangle bloco_R;
@@ -10,9 +27,10 @@ typedef struct id{
     bool destrutivel;
     bool destruido;
     int tipo;
-
+    bool mudou_de_cor;
 }BLOCO;
 
-void renderizarBloquinho(BLOCO id);
+void renderizarBloquinho(TEXTURAS *texturas, BLOCO bloco);
+void mudarCorBorda(BLOCO blocos[MAPA_LINHAS][MAPA_COLUNAS], Color nova_cor);
 void removerBloquinho(BLOCO *id);
 #endif

@@ -55,40 +55,36 @@ void atirarProjetilInimigo(PROJETIL *projetil, INIMIGO inimigo){
     int velocidade = 10;
     int variacao = inimigo.inimigo_R.height*0.075;
 
-    int atirar = GetRandomValue(0,100);
+    switch(inimigo.angulo){
+        case 0:
+            projetil->projetil_R.x = inimigo.inimigo_R.x+((float)(inimigo.inimigo_R.width/2)-variacao);
+            projetil->projetil_R.y = inimigo.inimigo_R.y;
+            projetil->vel.vx = 0;
+            projetil->vel.vy = -velocidade;
+            break;
 
-    if (atirar == 0){
-        switch(inimigo.angulo){
-            case 0:
-                projetil->projetil_R.x = inimigo.inimigo_R.x+((float)(inimigo.inimigo_R.width/2)-variacao);
-                projetil->projetil_R.y = inimigo.inimigo_R.y;
-                projetil->vel.vx = 0;
-                projetil->vel.vy = -velocidade;
-                break;
-
-            case 90:
-                projetil->projetil_R.x = inimigo.inimigo_R.x+((float)(inimigo.inimigo_R.width)-variacao);
-                projetil->projetil_R.y = inimigo.inimigo_R.y+((float)(inimigo.inimigo_R.height/2)-variacao);
-                projetil->vel.vx = velocidade;
-                projetil->vel.vy = 0;
-                break;
+        case 90:
+            projetil->projetil_R.x = inimigo.inimigo_R.x+((float)(inimigo.inimigo_R.width)-variacao);
+            projetil->projetil_R.y = inimigo.inimigo_R.y+((float)(inimigo.inimigo_R.height/2)-variacao);
+            projetil->vel.vx = velocidade;
+            projetil->vel.vy = 0;
+            break;
 
 
-            case 180:
-                projetil->projetil_R.x = inimigo.inimigo_R.x+((float)(inimigo.inimigo_R.width/2)-variacao);
-                projetil->projetil_R.y = inimigo.inimigo_R.y+((float)(inimigo.inimigo_R.height)-variacao);
-                projetil->vel.vx = 0;
-                projetil->vel.vy = velocidade;
-                break;
+        case 180:
+            projetil->projetil_R.x = inimigo.inimigo_R.x+((float)(inimigo.inimigo_R.width/2)-variacao);
+            projetil->projetil_R.y = inimigo.inimigo_R.y+((float)(inimigo.inimigo_R.height)-variacao);
+            projetil->vel.vx = 0;
+            projetil->vel.vy = velocidade;
+            break;
 
 
-            case 270:
-                projetil->projetil_R.x = inimigo.inimigo_R.x;
-                projetil->projetil_R.y = inimigo.inimigo_R.y+((float)(inimigo.inimigo_R.height/2)-variacao);
-                projetil->vel.vx = -velocidade;
-                projetil->vel.vy = 0;
-                break;
-        }
+        case 270:
+            projetil->projetil_R.x = inimigo.inimigo_R.x;
+            projetil->projetil_R.y = inimigo.inimigo_R.y+((float)(inimigo.inimigo_R.height/2)-variacao);
+            projetil->vel.vx = -velocidade;
+            projetil->vel.vy = 0;
+            break;
     }
 }
 

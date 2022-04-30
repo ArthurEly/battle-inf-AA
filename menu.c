@@ -9,7 +9,7 @@ void SetActiveScreen(int screen_id);
 extern Font fonte_legal;
 extern Texture2D texture;
 const int menu_items[TEXTOS]={
-    110,
+    11,
     12,
     13,
     14,
@@ -33,11 +33,11 @@ int i;
 }
 int spacing = 2;*/
 
-void DrawMainMenuScreen(){
+void DrawMainMenuScreen(GAME *jogo){
     ClearBackground(BLUE);
     Color optionColor = LIGHTGRAY;
    // DrawTexture(texture, 0, 0, GRAY);
-    DrawTextureEx(texture, (Vector2){-75,0}, 0, 1, WHITE);
+    DrawTextureEx(jogo->texturas.texture, (Vector2){-75,0}, 0, 1, WHITE);
 
     if(IsKeyPressed(KEY_DOWN) &&menu_option<MENU_ITEMS_QTDY-1){
        menu_option++;
@@ -87,7 +87,7 @@ void DrawMainMenuScreen(){
             }else{
             optionColor = LIGHTGRAY;
             }
-                DrawTextEx(fonte_legal, escrita[i], (Vector2){(565 - (MeasureTextEx(fonte_legal, escrita[i], 36, 2).x)/2), 400 + 50*i}, 36, 2, optionColor);
+                DrawTextEx(jogo->fontes.fonte_legal, escrita[i], (Vector2){(565 - (MeasureTextEx(jogo->fontes.fonte_legal, escrita[i], 36, 2).x)/2), 400 + 50*i}, 36, 2, optionColor);
                            //(MeasureText(escrita[i], 40)/2), 400 + 50*i}, 40, 2, optionColor);
                 //DrawText(escrita[i], 500 - (MeasureText(escrita[i], 40)/2), 400 + 50*i, 40, optionColor);
             }

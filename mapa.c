@@ -14,151 +14,92 @@
 #define FALSE 0
 #define TRUE 1
 
-const int altura_padrao_construcao = 40;
-const int largura_padrao_construcao = 25;
-const int tamanho_padrao_borda = 10;
-const int borda = 90;
-
-int contador_x_borda = tamanho_padrao_borda;
-int contador_y_borda = borda;
-int contador_x_blocos = tamanho_padrao_borda;
-
 /*
     depois tem que mexer aqui
 */
 void transcreverMapa(int *id, int y, int x, int y_max, int x_max, BLOCO blocos[][MAPA_COLUNAS]){
-    if (x == 0){
-        contador_x_blocos = tamanho_padrao_borda;
-    }
-
-    if (*id == 0){
-        blocos[y][x].tipo = 0;
-        contador_x_blocos += largura_padrao_construcao;
-    }
-
+    /*
+    printf("blocos[%d][%d]:\n",y,x);
+    printf("x: %.2f\n",blocos[y][x].bloco_R.x);
+    printf("y: %.2f\n",blocos[y][x].bloco_R.y);
+    printf("width: %.2f\n",blocos[y][x].bloco_R.width);
+    printf("height: %.2f\n",blocos[y][x].bloco_R.height);
+    printf("cabei!\n");
+    */
     if(*id == 1){
-        blocos[y][x].bloco_R.x = contador_x_blocos;
-        blocos[y][x].bloco_R.y = (borda+tamanho_padrao_borda)+((y-1)*altura_padrao_construcao);
-        blocos[y][x].bloco_R.width = largura_padrao_construcao;
-        blocos[y][x].bloco_R.height = altura_padrao_construcao;
+        blocos[y][x].bloco_R.x = converterIndiceXParaCoordenada(x);
+        blocos[y][x].bloco_R.y = converterIndiceYParaCoordenada(y);
+        blocos[y][x].bloco_R.width = LARGURA_BLOCO;
+        blocos[y][x].bloco_R.height = ALTURA_BLOCO;
         blocos[y][x].cor = BROWN;
         blocos[y][x].tipo = 1;
         blocos[y][x].destrutivel = true;
-        contador_x_blocos += largura_padrao_construcao;
     }
+    /*da pra deixar mais enxuto isso aqui*/
+    if(*id == 7){
+        if(y == 0){
+            blocos[y][x].bloco_R.y = converterIndiceYParaCoordenada(y) - TAMANHO_BORDA_MAPA;
+        }else{
+            blocos[y][x].bloco_R.y = converterIndiceYParaCoordenada(y);
+        }
 
-    if(*id == 2){
-        blocos[y][x].bloco_R.x = contador_x_blocos;
-        blocos[y][x].bloco_R.y = (borda+tamanho_padrao_borda)+((y-1)*altura_padrao_construcao);
-        blocos[y][x].bloco_R.width = largura_padrao_construcao;
-        blocos[y][x].bloco_R.height = altura_padrao_construcao;
-        blocos[y][x].cor = RED;
-        blocos[y][x].tipo = 2;
-        blocos[y][x].destrutivel = true;
-        contador_x_blocos += largura_padrao_construcao;
+        if(x == 0){
+            blocos[y][x].bloco_R.x = converterIndiceXParaCoordenada(x) - TAMANHO_BORDA_MAPA;
+        }else{
+            blocos[y][x].bloco_R.x = converterIndiceXParaCoordenada(x);
+        }
+        blocos[y][x].bloco_R.width = TAMANHO_BORDA_MAPA;
+        blocos[y][x].bloco_R.height = TAMANHO_BORDA_MAPA;
+        if(!blocos[y][x].mudou_de_cor){
+            blocos[y][x].cor = GRAY;
+        }
+        blocos[y][x].tipo = 7;
+        blocos[y][x].destrutivel = false;
     }
 
     if(*id == 8){
         //borda lateral
-        blocos[y][x].bloco_R.y = contador_y_borda;
-        blocos[y][x].cor = GRAY;
+        if(!blocos[y][x].mudou_de_cor){
+            blocos[y][x].cor = GRAY;
+        }
         blocos[y][x].tipo = 8;
         blocos[y][x].destrutivel = false;
-
-        int coord_x;
-        if(x == 0 && y == 0){
-            coord_x = x*largura_padrao_construcao;
-            blocos[y][x].bloco_R.x = coord_x;
-            blocos[y][x].bloco_R.width = tamanho_padrao_borda;
-            blocos[y][x].bloco_R.height = tamanho_padrao_borda;
+        blocos[y][x].bloco_R.y = converterIndiceYParaCoordenada(y);
+        if (x == 0){
+            blocos[y][x].bloco_R.x = converterIndiceXParaCoordenada(x) - TAMANHO_BORDA_MAPA;
+        }else{
+            blocos[y][x].bloco_R.x = converterIndiceXParaCoordenada(x);
         }
-        else if(x == x_max && y == 0){
-            coord_x = x*largura_padrao_construcao-largura_padrao_construcao+tamanho_padrao_borda;
-
-            blocos[y][x].bloco_R.x = coord_x;
-            blocos[y][x].bloco_R.width = tamanho_padrao_borda;
-            blocos[y][x].bloco_R.height = tamanho_padrao_borda;
-
-            contador_y_borda+=tamanho_padrao_borda;
-
-        }
-        else{
-            if(x == 0 && y != 0 && x == 0 && y != y_max){
-                coord_x = x*largura_padrao_construcao, //x
-
-                blocos[y][x].bloco_R.x = coord_x;
-                blocos[y][x].bloco_R.width = tamanho_padrao_borda;
-                blocos[y][x].bloco_R.height = altura_padrao_construcao;
-            }
-            else if(x == x_max && y != y_max){
-                coord_x = x*largura_padrao_construcao-largura_padrao_construcao+tamanho_padrao_borda, //x
-
-                blocos[y][x].bloco_R.x = coord_x;
-                blocos[y][x].bloco_R.width = tamanho_padrao_borda;
-                blocos[y][x].bloco_R.height = altura_padrao_construcao;
-
-                contador_y_borda += altura_padrao_construcao;
-            }
-        }
-
-        if(x == 0 && y == y_max){
-            coord_x = x*largura_padrao_construcao;
-            blocos[y][x].bloco_R.x = coord_x;
-            blocos[y][x].bloco_R.width = tamanho_padrao_borda;
-            blocos[y][x].bloco_R.height = tamanho_padrao_borda;
-        }
-
-        if(x == x_max && y == y_max){
-            coord_x = x*largura_padrao_construcao-largura_padrao_construcao+tamanho_padrao_borda;
-
-            blocos[y][x].bloco_R.x = coord_x;
-            blocos[y][x].bloco_R.y = borda+600+tamanho_padrao_borda; //fiquei com preguiça me perdoa
-            blocos[y][x].bloco_R.width = tamanho_padrao_borda;
-            blocos[y][x].bloco_R.height = tamanho_padrao_borda;
-        }
-
-        //resetar
-        if (y == y_max)
-            contador_y_borda = borda;
+        blocos[y][x].bloco_R.width = TAMANHO_BORDA_MAPA;
+        blocos[y][x].bloco_R.height = ALTURA_BLOCO;
     }
 
     if(*id == 9){
-        //borda superior
-        float coord_y = 0;
-
-        if (y == 0){
-            coord_y = borda+(y*altura_padrao_construcao);
+        //borda superior e inferior
+        blocos[y][x].bloco_R.x = converterIndiceXParaCoordenada(x);
+        if(y == 0){
+            blocos[y][x].bloco_R.y = converterIndiceYParaCoordenada(y) - TAMANHO_BORDA_MAPA ;
+        }else{
+            blocos[y][x].bloco_R.y = converterIndiceYParaCoordenada(y);
         }
-        else{
-            coord_y = borda+(y-1)*altura_padrao_construcao+tamanho_padrao_borda;
+        blocos[y][x].bloco_R.width = LARGURA_BLOCO;
+        blocos[y][x].bloco_R.height = TAMANHO_BORDA_MAPA;
+        if(!blocos[y][x].mudou_de_cor){
+            blocos[y][x].cor = GRAY;
         }
-
-        blocos[y][x].bloco_R.x = contador_x_borda;
-        blocos[y][x].bloco_R.y = coord_y;
-        blocos[y][x].bloco_R.width = largura_padrao_construcao;
-        blocos[y][x].bloco_R.height = tamanho_padrao_borda;
-        blocos[y][x].cor = GRAY;
         blocos[y][x].tipo = 9;
         blocos[y][x].destrutivel = false;
-        contador_x_borda += largura_padrao_construcao;
-
-        if (x == 40)
-            contador_x_borda = tamanho_padrao_borda;
-    }
-
-    if (*id >= 10 && *id <= 12){
-        contador_x_blocos += largura_padrao_construcao;
     }
 }
 
-void atualizarMapa(int mapa[][MAPA_COLUNAS], BLOCO blocos[][MAPA_COLUNAS], JOGADOR jogador, INIMIGO inimigos[], int contador_inimigos){
+/*repartir isso em mais funções*/
+void atualizarMapa(int mapa[][MAPA_COLUNAS], BLOCO blocos[][MAPA_COLUNAS], JOGADOR jogador, INIMIGO inimigos[], int contador_inimigos, CELULA cels_energia[], int contador_cels_energia){
     int i,j;
     for(i=0; i<MAPA_LINHAS; i++){
         for(j=0; j<MAPA_COLUNAS; j++){
             mapa[i][j] = blocos[i][j].tipo;
         }
     }
-
     int jogador_x = converterCoordenadaXParaIndice((int)jogador.jogador_R.x);
     int jogador_y = converterCoordenadaYParaIndice((int)jogador.jogador_R.y);
 
@@ -176,6 +117,17 @@ void atualizarMapa(int mapa[][MAPA_COLUNAS], BLOCO blocos[][MAPA_COLUNAS], JOGAD
             mapa[inimigo_y][inimigo_x] = 11;
         }
     }
+
+    int cel_energia_x;
+    int cel_energia_y;
+
+    for(i=0; i<contador_cels_energia; i++){
+        cel_energia_x = converterCoordenadaXParaIndice((int)cels_energia[i].cel_energia_R.x);
+        cel_energia_y = converterCoordenadaYParaIndice((int)cels_energia[i].cel_energia_R.y);
+        if (mapa[cel_energia_y][cel_energia_x] == 0){
+            mapa[cel_energia_y][cel_energia_x] = 12;
+        }
+    }
 }
 
 void posicionarJogador(int id, JOGADOR *jogador, int y, int x){
@@ -183,25 +135,27 @@ void posicionarJogador(int id, JOGADOR *jogador, int y, int x){
     int coord_y;
 
     if(x != 40)
-        coord_x = tamanho_padrao_borda + (x-1)*largura_padrao_construcao;
+        coord_x = TAMANHO_BORDA_MAPA + (x-1)*LARGURA_BLOCO;
      else
-        coord_x = (x-1)*largura_padrao_construcao;
+        coord_x = (x-1)*LARGURA_BLOCO;
 
 
     if(y != 15)
-        coord_y = borda + tamanho_padrao_borda + (y-1)*altura_padrao_construcao;
+        coord_y = CABECALHO + TAMANHO_BORDA_MAPA + (y-1)*ALTURA_BLOCO;
     else
-        coord_y = borda + tamanho_padrao_borda + (y-1)*altura_padrao_construcao + 5;
+        coord_y = CABECALHO + TAMANHO_BORDA_MAPA + (y-1)*ALTURA_BLOCO + 5;
 
     jogador->jogador_R.x = coord_x;
     jogador->jogador_R.y = coord_y;
 }
 
-void reposicionarObjeto(int mapa[][MAPA_COLUNAS], int *novo_y, int *novo_x){
+int reposicionarObjeto(int mapa[][MAPA_COLUNAS], int *novo_y, int *novo_x){
     int raio_procura=1;
-    bool colidiu = true;
+    bool loop = true;
     int x = *novo_x;
     int y = *novo_y;
+    printf("entrei com esse x: %d\n",x);
+    printf("entrei com esse y: %d\n",y);
     int i,j;
 
     int indice_comeco_linha;
@@ -209,49 +163,73 @@ void reposicionarObjeto(int mapa[][MAPA_COLUNAS], int *novo_y, int *novo_x){
     int indice_comeco_coluna;
     int indice_fim_coluna;
 
-    while (colidiu){
-        if(y-raio_procura > 1){
+    int objeto_posicionado = FALSE;
+    while (loop){
+        if(y-raio_procura > 1)
             indice_comeco_linha = y-raio_procura;
-        }else{
+        else
             indice_comeco_linha = 1;
-        }
+
         //printf("indice_comeco_linha %d\n",indice_comeco_linha);
-        if (y+raio_procura > MAPA_LINHAS-2){
+        if (y+raio_procura < MAPA_LINHAS-2)
             indice_fim_linha = y+raio_procura;
-        }else{
+        else
             indice_fim_linha = MAPA_LINHAS-2;
-        }
+
         //printf("indice_fim_linha %d\n",indice_fim_linha);
 
-        if(x-raio_procura > 1){
+        if(x-raio_procura > 1)
             indice_comeco_coluna = x-raio_procura;
-        }else{
+        else
             indice_comeco_coluna = 1;
-        }
+
         //printf("indice_comeco_coluna %d\n",indice_comeco_coluna);
-        if(x+raio_procura > MAPA_COLUNAS-2){
+        if(x+raio_procura < MAPA_COLUNAS-2)
             indice_fim_coluna = x+raio_procura;
-        }else{
-            indice_fim_coluna = 1;
-        }
+        else
+            indice_fim_coluna = MAPA_COLUNAS-2;
+
         //printf("indice_fim_coluna %d\n",indice_fim_coluna);
 
-        for(i=indice_comeco_linha; i<=indice_fim_linha && colidiu; i++){
-            for(j=indice_comeco_coluna; j<=indice_fim_coluna && colidiu; j++){
-                if(mapa[i][j] == 0){
-                    if(temEmTodoORedor(mapa,i,j,0,1) && !temUmAORedor(mapa,i,j,10,5)){
-                        colidiu = false;
-                        *novo_x = j;
-                        *novo_y = i;
+        if(indice_comeco_linha  == 1              &&
+           indice_comeco_coluna == 1              &&
+           indice_fim_linha     == MAPA_LINHAS-2  &&
+           indice_fim_coluna    == MAPA_COLUNAS-2 ){
+                printf("MEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEUDEEEEEEEEEEEEEEEEEEEEEEEEEEEUS\n");
+                objeto_posicionado = FALSE;
+                loop = false;
+           }
+
+        for(i=indice_comeco_linha; i<=indice_fim_linha && loop; i++){
+            for(j=indice_comeco_coluna; j<=indice_fim_coluna && loop; j++){
+                if(temEmTodoORedor(mapa,i,j,0,1) && !temUmAORedor(mapa,i,j,10,5)){
+                    loop = false;
+                    *novo_x = j;
+                    *novo_y = i;
+                    objeto_posicionado = TRUE;
+                    printf("[!!]\n");
+                    printf("%d,%d\n",i,j);
+                }
+                else{
+                    if(mapa[i][j]==11){
+                        printf("[I]");
+                    }else if(mapa[i][j]==10){
+                        printf("[J]");
+                    }else{
+                        printf("[%d]",mapa[i][j]);
                     }
                 }
             }
+            printf("\n");
         }
+        printf("\n");
         raio_procura++;
     };
+    printf("sai com esse x: %d\n",*novo_x);
+    printf("sai com esse y: %d\n",*novo_y);
+    return objeto_posicionado;
 }
 
-//mudar essa função
 int temEmTodoORedor(int mapa[][MAPA_COLUNAS],int y, int x, int tipo, int raio_procura){
     int tem_ao_redor = FALSE;
     int distancia_inicial = 1;
@@ -259,7 +237,7 @@ int temEmTodoORedor(int mapa[][MAPA_COLUNAS],int y, int x, int tipo, int raio_pr
     int i;
 
     for (i=distancia_inicial; i<=raio_procura; i++){
-       if (mapa[y][x]      == tipo &&
+       if ( mapa[y][x]     == tipo &&
             mapa[y][x+i]   == tipo &&
             mapa[y][x-i]   == tipo &&
             mapa[y+i][x]   == tipo &&
@@ -284,7 +262,8 @@ int temUmAORedor(int mapa[][MAPA_COLUNAS],int y, int x, int tipo, int raio_procu
     int i;
 
     for (i=distancia_inicial; i<=raio_procura; i++){
-       if ( mapa[y][x+i]   == tipo ||
+       if ( mapa[y][x]     == tipo ||
+            mapa[y][x+i]   == tipo ||
             mapa[y][x-i]   == tipo ||
             mapa[y+i][x]   == tipo ||
             mapa[y-i][x]   == tipo ||
@@ -301,35 +280,6 @@ int temUmAORedor(int mapa[][MAPA_COLUNAS],int y, int x, int tipo, int raio_procu
     return tem_ao_redor;
 }
 
-int proximoAoJogador(int mapa[][MAPA_COLUNAS],int y, int x, int distancia_minima){
-    int i,j;
-    int x_jogador;
-    int y_jogador;
-    int proximo = FALSE;
-
-    for(i=0; i<MAPA_LINHAS; i++){
-        for(j=0; j<MAPA_COLUNAS; j++){
-            if(mapa[i][j] == 10){
-                y_jogador = i;
-                x_jogador = j;
-            }
-        }
-    }
-
-    if (x_jogador+distancia_minima >= x && x_jogador-distancia_minima <= x && y_jogador+distancia_minima >= y && y_jogador-distancia_minima <= y){
-        proximo = TRUE;
-    }
-    return proximo;
-}
-
-int buscarLugarVazio(BLOCO blocos[][MAPA_COLUNAS],int y, int x){
-    int lugar_vazio = FALSE;
-    if (blocos[y][x].tipo == 0){
-        lugar_vazio = TRUE;
-    }
-    return lugar_vazio;
-}
-
 int calcularDistanciaEntrePontos(int x_inimigo, int y_inimigo, int x_jogador, int y_jogador){
     float distancia = 0;
     distancia = sqrt(pow(x_jogador - x_inimigo, 2)+ pow(y_jogador - y_inimigo , 2));
@@ -337,10 +287,7 @@ int calcularDistanciaEntrePontos(int x_inimigo, int y_inimigo, int x_jogador, in
 }
 
 int converterCoordenadaXParaIndice(int coord_x){
-    int largura_padrao_construcao = 25;
-    int tamanho_padrao_borda = 10;
-
-    float indice_x = (coord_x - tamanho_padrao_borda + largura_padrao_construcao)/largura_padrao_construcao;
+    float indice_x = (coord_x - TAMANHO_BORDA_MAPA + LARGURA_BLOCO)/LARGURA_BLOCO;
 
     int x = ceil(indice_x);
     if (x < 1)
@@ -352,11 +299,7 @@ int converterCoordenadaXParaIndice(int coord_x){
 }
 
 int converterCoordenadaYParaIndice(int coord_y){
-    int altura_padrao_construcao = 40;
-    int tamanho_padrao_borda = 10;
-    int borda = 90;
-
-    float indice_y = (coord_y - borda - tamanho_padrao_borda + altura_padrao_construcao)/altura_padrao_construcao;
+    float indice_y = (coord_y - CABECALHO - TAMANHO_BORDA_MAPA + ALTURA_BLOCO)/ALTURA_BLOCO;
 
     int y = ceil(indice_y);
 
@@ -370,12 +313,18 @@ int converterCoordenadaYParaIndice(int coord_y){
 }
 
 int converterIndiceXParaCoordenada(int indice_x){
-    int coord_x = tamanho_padrao_borda + (indice_x-1)*largura_padrao_construcao;
+    if(indice_x > 0){
+        indice_x--;
+    }
+    int coord_x = TAMANHO_BORDA_MAPA + indice_x*LARGURA_BLOCO;
     return coord_x;
 }
 
 int converterIndiceYParaCoordenada(int indice_y){
-    int coord_y = borda + tamanho_padrao_borda + (indice_y-1)*altura_padrao_construcao;
+    if(indice_y > 0){
+        indice_y--;
+    }
+    int coord_y = CABECALHO + TAMANHO_BORDA_MAPA + indice_y*ALTURA_BLOCO;
     return coord_y;
 }
 

@@ -1,6 +1,13 @@
 #ifndef JOGADOR_H_INCLUDED
 #define JOGADOR_H_INCLUDED
+
 #include "game.h"
+
+typedef struct velocidade{
+    float vx;
+    float vy;
+
+}VELOCIDADE;
 
 typedef struct jogador{
     Rectangle jogador_R;
@@ -14,6 +21,7 @@ typedef struct jogador{
     bool colidindo;
     bool energizado;
     int abates;
+    bool jogador_posicionado;
 }JOGADOR;
 
 void movimentacaoJogador(JOGADOR *jogador);

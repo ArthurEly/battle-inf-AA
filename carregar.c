@@ -4,9 +4,7 @@
 #include "game.h"
 
 void SetActiveScreen(int screen_id);
-void DrawLoadMapGameplayScreen(FILE *mapa_fp);
-
-extern Texture2D carregar;
+//void DrawLoadMapGameplayScreen(GAME *jogo, FILE *mapa_fp);
 
 int count = 0;
 char **droppedFiles = { 0 };
@@ -18,20 +16,27 @@ void att(void){
         }
 }
 
-void DrawCarregarScreen(){
+void DrawCarregarScreen(GAME *jogo){
         att();
         ClearBackground(RAYWHITE);
-        DrawTextureEx(carregar, (Vector2){-75,0}, 0, 1, WHITE);
-        char objeto;
+        DrawTextureEx(jogo->texturas.carregar, (Vector2){-75,0}, 0, 1, WHITE);
         if (count == 0) {
         }
         else
         {
             FILE *mapa_fp;
             mapa_fp = fopen(droppedFiles[0],"r");
-            DrawLoadMapGameplayScreen(mapa_fp);
-            printf("opafsdaaaaaafaafdsadsfafsdfsd\n");
+            if(mapa_fp != NULL){
+                printf("%s\n",droppedFiles[0]);
+                carregarMapa(jogo->mapa_inicial,mapa_fp);
+            }else{
+                perror("erro ao carregar um mapa ");
+            }
             fclose(mapa_fp);
+            jogo->mapa_foi_pre_carregado = TRUE;
+            droppedFiles[0] = 0;
+            count = 0;
+            SetActiveScreen(11);
         }
 
     if(IsKeyPressed(KEY_P)){
@@ -76,4 +81,5 @@ void DrawCarregarScreen(){
 
                 DrawText("Drop new files...", 100, 110 + 40*count, 20, DARKGRAY);
             }
+    }
 */

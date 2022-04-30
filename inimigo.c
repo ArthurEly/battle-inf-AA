@@ -6,22 +6,23 @@
 #include "construcao.h"
 #include "mapa.h"
 #include "math.h"
+#include "string.h"
 
 #define MAPA_LINHAS 17
 #define MAPA_COLUNAS 42
 
 #define FALSE 0
 #define TRUE 1
-int inimigos_qtde = 0;
-
+int qtde_inimigos = 0;
 void criarNovoInimigo(int mapa[][MAPA_COLUNAS], BLOCO blocos[][MAPA_COLUNAS], INIMIGO *inimigo, int altura_tanque, int largura_tanque){
     inimigo->inimigo_R.height = altura_tanque;
     inimigo->inimigo_R.width = largura_tanque;
     inimigo->vidas = 1;
-    inimigo->multiplicador_vel = 1;
+    inimigo->multiplicador_vel = 0;
     inimigo->cor = WHITE;
     inimigo->emMovimento = 0;
     inimigo->colidiuComInimigo = false;
+    inimigo->inimigo_posicionado = TRUE;
 
     int coord_y_rand;
     int coord_x_rand;
@@ -42,14 +43,23 @@ void criarNovoInimigo(int mapa[][MAPA_COLUNAS], BLOCO blocos[][MAPA_COLUNAS], IN
     int novo_x = x_rand;
     int novo_y = y_rand;
 
-    if (temUmAORedor(mapa,y_rand,x_rand,1,1) || temUmAORedor(mapa,y_rand,x_rand,11,1) || temUmAORedor(mapa,y_rand,x_rand,10,3)){
-        reposicionarObjeto(mapa,&novo_y,&novo_x);
+    if (!temEmTodoORedor(mapa,y_rand,x_rand,0,1) || temUmAORedor(mapa,y_rand,x_rand,10,3)){
+        if (!reposicionarObjeto(mapa,&novo_y,&novo_x)){
+            inimigo->inimigo_posicionado = FALSE;
+        }
     }
 
-    inimigo->inimigo_R.x = converterIndiceXParaCoordenada(novo_x);
-    inimigo->inimigo_R.y = converterIndiceYParaCoordenada(novo_y);
-
-    inimigos_qtde++;
+    if (inimigo->inimigo_posicionado){
+        printf("conseguiu colocar inimigo %d\n",qtde_inimigos);
+        inimigo->inimigo_R.x = converterIndiceXParaCoordenada(novo_x);
+        inimigo->inimigo_R.y = converterIndiceYParaCoordenada(novo_y);
+        qtde_inimigos++;
+    }else{
+        printf("não conseguiu colocar inimigo %d\n",qtde_inimigos);
+        INIMIGO z_inimigo = {0};
+        *inimigo = z_inimigo;
+    }
+    printf("\n\n");
 }
 
 void movimentarInimigos(int mapa[][MAPA_COLUNAS], JOGADOR *jogador, INIMIGO *inimigo){
@@ -94,7 +104,7 @@ void movimentarInimigos(int mapa[][MAPA_COLUNAS], JOGADOR *jogador, INIMIGO *ini
         int indice_x_jogador = converterCoordenadaXParaIndice(jogador->jogador_R.x);
         int indice_y_jogador = converterCoordenadaYParaIndice(jogador->jogador_R.y);
 
-        int menor_distancia = 0;
+        int menor_distancia = 100;
         int indice_movimento = 0;
 
         for(int i=0; i<4; i++){
@@ -125,7 +135,7 @@ void movimentarInimigos(int mapa[][MAPA_COLUNAS], JOGADOR *jogador, INIMIGO *ini
                 indice_y_jogador
             );
 
-            if (distancia < menor_distancia || menor_distancia == 0){
+            if (distancia < menor_distancia){
                 menor_distancia = distancia;
                 indice_movimento = i;
             }

@@ -1,6 +1,7 @@
-#ifndef OPTIONS_H_INCLUDED
-#define OPTIONS_H_INCLUDED
+#ifndef CARREGAR_H_INCLUDED
+#define CARREGAR_H_INCLUDED
+#include "game.h"
 
-void DrawCarregarScreen(void);
+void DrawCarregarScreen(GAME *jogo);
 
 #endif

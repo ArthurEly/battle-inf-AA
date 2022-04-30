@@ -1,5 +1,6 @@
 #ifndef PROJETIL_H_INCLUDED
 #define PROJETIL_H_INCLUDED
+
 typedef struct projetil{
     Rectangle projetil_R;
     VELOCIDADE vel;

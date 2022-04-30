@@ -1,7 +1,7 @@
 #ifndef HIGHSCORES_H_INCLUDED
 #define HIGHSCORES_H_INCLUDED
-
-void DrawHighScoresScreen(void);
+#include "game.h"
+void DrawHighScoresScreen(GAME *jogo);
 
 #endif
 

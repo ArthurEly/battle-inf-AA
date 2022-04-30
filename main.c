@@ -1,77 +1,152 @@
 #include "raylib.h"
-#include "menu.h"
 #include "game.h"
+#include "menu.h"
 #include "carregar.h"
 #include "highscores.h"
 #include "pause_menu.h"
 #include "stdio.h"
+#include "string.h"
 
 #define TAMANHO_TANQUES 35
 
 void SetActiveScreen(int screen_id);
-void DrawScreen(int screen_id);
+void DrawScreen(GAME *jogo, int screen_id);
 void DrawLoadMapGameplayScreen(FILE *mapa_fp);
 void DrawNewGameplayScreen();
-
-
-Texture2D energia;
-Texture2D tijolo;
-Texture2D escudo;
-Texture2D texture;
-Texture2D pause;
-Texture2D highscore;
-Texture2D carregar;
-Font fonte_legal;
-Texture2D g_textura_jogador;
-Texture2D g_textura_inimigo_patrulha;
-Texture2D g_textura_inimigo_perseguicao;
+void timerSegundos(int *segundos, float *milisegundos);
 
 int g_screens[7]={
         10, //Main Menu Screen
-        110, //Gameplay Screen
         11,
         111, //menu de pausa dentro do jogo
         12, //Continue Screen
         13, //Load Map Screen
         14,  //HighScore Screen
     };
-int g_active_screen = 11;
-
+int g_active_screen = 10;
 const int SCREENS_QTDY = sizeof(g_screens)/sizeof(g_screens[0]);
 
 int main(void)
 {
-    const int screenHeight = 710;
-    const int screenWidth = 1130;
+    GAME g_jogo;
+    const int screenHeight = 600 + (2*TAMANHO_BORDA_MAPA) + CABECALHO;
+    const int screenWidth = 1000 + TAMANHO_LAYOUT_LATERAL;
 
     InitWindow(screenWidth, screenHeight, "Battle INF");
 
     SetTargetFPS(60);
+    /**
+    * PLANOS DE FUNDO
+    */
+    g_jogo.texturas.texture = LoadTexture("assets/FUNDO JOGO.png");
+    g_jogo.texturas.pause = LoadTexture("assets/Tela pause.png");
+    g_jogo.texturas.highscore = LoadTexture("assets/Highscores.png");
+    g_jogo.texturas.carregar = LoadTexture("assets/Carregar mapa.png");
 
-    energia = LoadTexture("assets/energy_drop.png");
-    energia.height = 25;
-    energia.width = 25;
-    fonte_legal = LoadFontEx("assets/ironmonger-fb-black.otf", 72, 0, 0);
-    texture = LoadTexture("assets/FUNDO JOGO.png");
-    pause = LoadTexture("assets/Tela pause.png");
-    highscore = LoadTexture("assets/Highscores.png");
-    carregar = LoadTexture("assets/Carregar mapa.png");
-    escudo = LoadTexture("assets/shield.png");
-    tijolo = LoadTexture("assets/brick_texture2.png");
-    tijolo.height = 25;
-    tijolo.width = 25;
+    g_jogo.texturas.energia = LoadTexture("assets/energy_drop.png");
+    g_jogo.texturas.energia.height = ALTURA_CELS_ENERGIA;
+    g_jogo.texturas.energia.width = LARGURA_CELS_ENERGIA;
 
-    g_textura_jogador = LoadTexture("assets/tanque_player.png");
-    g_textura_jogador.height = TAMANHO_TANQUES/2;
-    g_textura_jogador.width = TAMANHO_TANQUES/2;
+    g_jogo.texturas.escudo = LoadTexture("assets/shield.png");
 
-    g_textura_inimigo_patrulha = LoadTexture("assets/tanque_verde.png");
-    g_textura_inimigo_patrulha.height = TAMANHO_TANQUES/2;
-    g_textura_inimigo_patrulha.width = TAMANHO_TANQUES/2;
+    g_jogo.texturas.tijolo = LoadTexture("assets/brick_texture2.png");
+    g_jogo.texturas.tijolo.height = 25;
+    g_jogo.texturas.tijolo.width = 25;
 
-    g_textura_inimigo_perseguicao = LoadTexture("assets/tanque_inimigo.png");
-    g_textura_inimigo_perseguicao.height = TAMANHO_TANQUES/2;
-    g_textura_inimigo_perseguicao.width = TAMANHO_TANQUES/2;
+    g_jogo.fontes.fonte_legal = LoadFontEx("assets/ironmonger-fb-black.otf", 72, 0, 0);
+
+    g_jogo.texturas.jogador = LoadTexture("assets/tanque_player.png");
+    g_jogo.texturas.jogador.height = TAMANHO_TANQUES/2;
+    g_jogo.texturas.jogador.width = TAMANHO_TANQUES/2;
+
+    g_jogo.texturas.inimigo_patrulha = LoadTexture("assets/tanque_verde.png");
+    g_jogo.texturas.inimigo_patrulha.height = TAMANHO_TANQUES/2;
+    g_jogo.texturas.inimigo_patrulha.width = TAMANHO_TANQUES/2;
+
+    g_jogo.texturas.inimigo_perseguicao = LoadTexture("assets/tanque_inimigo.png");
+    g_jogo.texturas.inimigo_perseguicao.height = TAMANHO_TANQUES/2;
+    g_jogo.texturas.inimigo_perseguicao.width = TAMANHO_TANQUES/2;
+
+
+    JOGADOR jogador = {
+        .jogador_R.x = 1100,
+        .jogador_R.y = 0,
+        .jogador_R.height = TAMANHO_TANQUES,
+        .jogador_R.width = TAMANHO_TANQUES,
+        .vidas = 3,
+        .pontuacao = 0,
+        .angulo = 0,
+        .vel = {0,0},
+        .multiplicador_vel = 1,
+        .cor =  {255, 255, 255, 255},
+        .origem_textura={0,0},
+        .abates = 0,
+        .energizado = false,
+        .jogador_posicionado = false
+    };
+
+    INIMIGO inimigos[NRO_INIMIGOS]={0};
+    int contador_inimigos = 0;
+
+    PROJETIL projeteis[NRO_PROJETEIS]={0};
+    int contador_projeteis= 0;
+
+    CELULA cels_energia[NRO_CELS_ENERGIA]={0};
+    int contador_cels_energia = 0;
+    int contador_interno_cel_energia = 0;
+
+
+    BLOCO blocos[MAPA_LINHAS][MAPA_COLUNAS] = {0};
+    int mapa[MAPA_LINHAS][MAPA_COLUNAS] = {
+        //8-> borda lateral
+        //9-> borda superior/inferior
+        {7,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,7},
+        {8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8},
+        {8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8},
+        {8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8},
+        {8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8},
+        {8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8},
+        {8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8},
+        {8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8},
+        {8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8},
+        {8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8},
+        {8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8},
+        {8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8},
+        {8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8},
+        {8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8},
+        {8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8},
+        {8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8},
+        {7,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,7},
+    };
+    int mapa_foi_pre_carregado = FALSE;
+    int mapa_carregado = FALSE;
+    int mapa_inicial[MAPA_LINHAS][MAPA_COLUNAS];
+    memcpy(mapa_inicial,mapa,sizeof(mapa));
+    int jogo_carregado = FALSE;
+    int fase = 1;
+
+    int segundos = 0;
+    float milisegundos = 0.0f;
+
+    //GAME jogo = {
+    g_jogo.jogador = jogador;
+    g_jogo.contador_inimigos = contador_inimigos;
+    g_jogo.contador_projeteis = contador_projeteis;
+    g_jogo.contador_cels_energia = contador_cels_energia;
+    g_jogo.contador_interno_cel_energia = contador_interno_cel_energia;
+    g_jogo.segundos = segundos;
+    g_jogo.milisegundos = milisegundos;
+    g_jogo.fase = fase;
+    g_jogo.mapa_foi_pre_carregado = mapa_foi_pre_carregado;
+    g_jogo.jogo_carregado = jogo_carregado;
+    g_jogo.mapa_carregado = mapa_carregado;
+    //};
+    memcpy(g_jogo.inimigos, inimigos, sizeof(inimigos));
+    memcpy(g_jogo.projeteis, projeteis, sizeof(projeteis));
+    memcpy(g_jogo.cels_energia, cels_energia, sizeof(cels_energia));
+    memcpy(g_jogo.mapa, mapa, sizeof(mapa));
+    memcpy(g_jogo.mapa_inicial, mapa_inicial, sizeof(mapa));
+    memcpy(g_jogo.blocos, blocos, sizeof(blocos));
 
     //feito pra teste
     Camera2D camera = { 0 };
@@ -84,7 +159,7 @@ int main(void)
     {
         BeginDrawing();
             BeginMode2D(camera);
-            DrawScreen(g_active_screen);
+            DrawScreen(&g_jogo, g_active_screen);
             EndMode2D();
         EndDrawing();
     }
@@ -94,34 +169,44 @@ int main(void)
     return 0;
 }
 
-void DrawScreen(int screen_id){
+void timerSegundos(int *segundos, float *milisegundos){
+    *milisegundos += 16.6666666666667;
+    if(*milisegundos > 1000){
+        *segundos+=1;
+        *milisegundos = 0;
+    }
+}
+
+void DrawScreen(GAME *jogo, int screen_id){
     switch(screen_id){
         case 10:
-            DrawMainMenuScreen();
+            DrawMainMenuScreen(jogo);
             break;
 
         case 110:
-            DrawNewGameplayScreen(0);
+            DrawNewGameplayScreen(jogo);
             break;
 
         case 11:
-            DrawGameplayScreen(0);
+            timerSegundos(&jogo->segundos, &jogo->milisegundos);
+            DrawGameplayScreen(jogo, 0);
             break;
 
         case 111:
-            DrawPauseMenu();
+            DrawPauseMenu(jogo);
             break;
 
         case 12:
-            DrawGameplayScreen(1);
+            timerSegundos(&jogo->segundos, &jogo->milisegundos);
+            DrawSavedGameGameplayScreen(jogo);
             break;
 
         case 13:
-            DrawCarregarScreen();
+            DrawCarregarScreen(jogo);
             break;
 
         case 14:
-            DrawHighScoresScreen();
+            DrawHighScoresScreen(jogo);
             break;
 
         default:

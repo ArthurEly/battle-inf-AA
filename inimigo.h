@@ -18,10 +18,11 @@ typedef struct inimigo{
     bool colidindo;
     bool colidiuComInimigo;
     bool abatidoPeloJogador;
+    int inimigo_posicionado;
 }INIMIGO;
 
 void criarNovoInimigo(int mapa[][MAPA_COLUNAS], BLOCO blocos[][MAPA_COLUNAS], INIMIGO *inimigo, int altura_tanque, int largura_tanque);
-//void movimentarInimigos(JOGADOR *jogador, INIMIGO *inimigo);
+void movimentarInimigos(int mapa[][MAPA_COLUNAS], JOGADOR *jogador, INIMIGO *inimigo);
 void girarSentidoHorario(INIMIGO *inimigo);
 void inverterSentidoDeMovimento(INIMIGO *inimigo);
 void colidirInimigos(INIMIGO *inimigo_a,INIMIGO *inimigo_b);
