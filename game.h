@@ -35,6 +35,11 @@ typedef struct fontes{
     Font fonte_legal;
 }FONTES;
 
+typedef struct sons{
+    Sound boom;
+    Sound hit;
+}SONS;
+
 /*typedef struct texturas{
     Texture2D energia;
     Texture2D tijolo;
@@ -68,6 +73,12 @@ typedef struct game{
     int mapa_carregado;
     TEXTURAS texturas;
     FONTES fontes;
+    SONS sons;
+    int frames;
+    int currentFrame;
+    int currentLine;
+    bool active;
+    Vector2 explosao;
 }GAME;
 
 void DrawGameplayScreen(GAME *jogo, int cod_game);

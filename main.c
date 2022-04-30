@@ -7,12 +7,12 @@
 #include "stdio.h"
 #include "string.h"
 
-#define TAMANHO_TANQUES 35
 
 void SetActiveScreen(int screen_id);
 void DrawScreen(GAME *jogo, int screen_id);
 void DrawLoadMapGameplayScreen(FILE *mapa_fp);
 void DrawNewGameplayScreen();
+void DrawMainMenuScreen();
 void timerSegundos(int *segundos, float *milisegundos);
 
 int g_screens[7]={
@@ -33,6 +33,7 @@ int main(void)
     const int screenWidth = 1000 + TAMANHO_LAYOUT_LATERAL;
 
     InitWindow(screenWidth, screenHeight, "Battle INF");
+    InitAudioDevice();
 
     SetTargetFPS(60);
     /**
@@ -48,6 +49,11 @@ int main(void)
     g_jogo.texturas.energia.width = LARGURA_CELS_ENERGIA;
 
     g_jogo.texturas.escudo = LoadTexture("assets/shield.png");
+
+    g_jogo.texturas.explosa = LoadTexture("assets/explosao.png");
+
+    g_jogo.sons.boom = LoadSound("assets/boom.wav");
+    g_jogo.sons.hit = LoadSound("assets/hit.wav");
 
     g_jogo.texturas.tijolo = LoadTexture("assets/brick_texture2.png");
     g_jogo.texturas.tijolo.height = 25;

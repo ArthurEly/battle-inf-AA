@@ -9,20 +9,31 @@
 #include "cel_energia.h"
 #include "string.h"
 
+
+#define NUM_FRAMES_PER_LINE     4
+#define NUM_LINES               4
+
 void SetActiveScreen(int screen_id);
+
 
 /*da pra mudar isso dps*/
 const Rectangle tanque_textura_R = {0,0,TAMANHO_TANQUES/2,TAMANHO_TANQUES/2};
 const Rectangle energia_textura = {0,0, ALTURA_CELS_ENERGIA, LARGURA_CELS_ENERGIA};
 
 void DrawGameplayScreen(GAME *jogo, int cod_game){
+
+
     //printf("%d.%.2f\n",jogo->segundos, jogo->milisegundos);
 
+    float frameWidth = (float)(jogo->texturas.explosa.width/NUM_FRAMES_PER_LINE);
+    float frameHeight = (float)(jogo->texturas.explosa.height/NUM_LINES);
+    Rectangle explosao_R = {0,0, frameWidth, frameHeight};
 
     ClearBackground(RAYWHITE);
     int i,j,k;
 
     if(jogo->jogador.vidas == 0){
+        PlaySound(jogo->sons.boom);
         reiniciarJogo(jogo);
     }
     //tirar esse NRO_INIMIGOS != 0 depois
@@ -221,6 +232,8 @@ void DrawGameplayScreen(GAME *jogo, int cod_game){
     for(i=0; i<jogo->contador_inimigos; i++){
         if (checarColisaoJogadorEInimigo(&jogo->jogador.jogador_R, &jogo->inimigos[i].inimigo_R)){
             removerInimigo(jogo->inimigos,i);
+            PlaySound(jogo->sons.boom);
+            PlaySound(jogo->sons.hit);
             if (jogo->jogador.vidas > 0){
                 jogo->jogador.vidas--;
             }
@@ -255,7 +268,12 @@ void DrawGameplayScreen(GAME *jogo, int cod_game){
     /**
         PROJETEIS
     */
+
     for(i=0; i<NRO_PROJETEIS; i++){
+
+
+
+
         if (jogo->projeteis[i].em_movimento == 1){
             movimentarProjeteis(&jogo->projeteis[i]);
             renderizarProjeteis(&jogo->projeteis[i]);
@@ -264,7 +282,11 @@ void DrawGameplayScreen(GAME *jogo, int cod_game){
                 if (checarColisaoProjeteisEInimigo(&jogo->projeteis[i], &jogo->inimigos[j])){
                     if(jogo->projeteis[i].tanque_de_origem == 'j'){
                         jogo->jogador.abates++;
+                        jogo->active = true;
+                        jogo->explosao.x = jogo->inimigos[j].inimigo_R.x-TAMANHO_TANQUES;
+                        jogo->explosao.y = jogo->inimigos[j].inimigo_R.y-TAMANHO_TANQUES;
                         removerInimigo(jogo->inimigos,j);
+                        PlaySound(jogo->sons.boom);
                         removerProjetil(jogo->projeteis,i);
                         jogo->inimigos[j].abatidoPeloJogador = true;
                         jogo->jogador.pontuacao += 800;
@@ -301,6 +323,32 @@ void DrawGameplayScreen(GAME *jogo, int cod_game){
                 }
             }
         }
+    }
+
+    if (jogo->active){
+
+            jogo->frames++;
+            if (jogo->frames > 2){
+                jogo->currentFrame++;
+
+                if (jogo->currentFrame >= NUM_FRAMES_PER_LINE){
+                    jogo->currentFrame = 0;
+                    jogo->currentLine++;
+
+                    if (jogo->currentLine >= NUM_LINES)
+                    {
+                        jogo->currentLine = 0;
+                        jogo->active = false;
+                    }
+                }
+                jogo->frames = 0;
+        }
+    }
+    explosao_R.x = frameWidth*jogo->currentFrame;
+    explosao_R.y = frameHeight*jogo->currentLine;
+
+    if (jogo->active){
+            DrawTextureRec(jogo->texturas.explosa, explosao_R, jogo->explosao, WHITE);
     }
 
     /**
@@ -548,6 +596,10 @@ void reiniciarJogo(GAME *jogo){
     jogo->segundos = 0;
     jogo->jogo_carregado = FALSE;
     jogo->fase = 1;
+    jogo->frames = 0;
+    jogo->currentFrame = 0;
+    jogo->currentLine = 0;
+    jogo->active = false;
 
     JOGADOR z_jogador = {
             .jogador_R.height = TAMANHO_TANQUES, //aqui também
