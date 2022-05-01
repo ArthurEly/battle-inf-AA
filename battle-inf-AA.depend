@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1651306884 source:c:\battle inf\battle-inf-aa\main.c
+1651411090 source:c:\battle inf\battle-inf-aa\main.c
 	"raylib.h"
 	"game.h"
 	"menu.h"
@@ -24,7 +24,7 @@
 	"raylib.h"
 	"stdio.h"
 
-1651306416 c:\battle inf\battle-inf-aa\game.h
+1651411143 c:\battle inf\battle-inf-aa\game.h
 	"stdio.h"
 	"raylib.h"
 	"jogador.h"
@@ -68,7 +68,7 @@
 1651306779 c:\battle inf\battle-inf-aa\pause_menu.h
 	"game.h"
 
-1651308469 source:c:\battle inf\battle-inf-aa\game.c
+1651411119 source:c:\battle inf\battle-inf-aa\game.c
 	"game.h"
 	"raylib.h"
 	"stdio.h"
@@ -80,11 +80,12 @@
 	"cel_energia.h"
 	"string.h"
 
-1651305687 source:c:\battle inf\battle-inf-aa\highscores.c
+1651407388 source:c:\battle inf\battle-inf-aa\highscores.c
 	"raylib.h"
 	"stdio.h"
 	"highscores.h"
 	"game.h"
+	"construcao.h"
 
 1651289446 source:c:\battle inf\battle-inf-aa\menu.c
 	"raylib.h"
@@ -157,7 +158,7 @@
 	"cel_energia.h"
 	"mapa.h"
 
-1651304422 source:c:\battle inf\battle-inf-aa\inimigo.c
+1651410890 source:c:\battle inf\battle-inf-aa\inimigo.c
 	"game.h"
 	"raylib.h"
 	"stdio.h"
@@ -241,13 +242,13 @@
 
 1651324424 c:\users\user\documents\ufrgs\algoritmos e programacao\trabalho final\battle-inf-aa\projetil.h
 
-1651306847 source:c:\battle inf\battle-inf-aa\construcao.c
+1651404857 source:c:\battle inf\battle-inf-aa\construcao.c
 	"game.h"
 	"raylib.h"
 	"stdio.h"
 	"construcao.h"
 
-1651306409 c:\battle inf\battle-inf-aa\construcao.h
+1651404882 c:\battle inf\battle-inf-aa\construcao.h
 	"raylib.h"
 	"game.h"
 
@@ -316,4 +317,12 @@
 1651324424 c:\users\user\documents\ufrgs\algoritmos e programacao\trabalho final\battle-inf-aa\cel_energia.h
 	"jogador.h"
 	"construcao.h"
+
+1651411200 source:c:\battle inf\battle-inf-aa\explosoes.c
+	"game.h"
+	"raylib.h"
+	"stdio.h"
+	"explosoes.h"
+
+1651404841 c:\battle inf\battle-inf-aa\explosoes.h
 

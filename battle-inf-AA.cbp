@@ -79,7 +79,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="projetil.h" />
-		<Unit filename="states.h" />
 		<Extensions>
 			<lib_finder disable_auto="1" />
 		</Extensions>

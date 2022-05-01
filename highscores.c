@@ -22,7 +22,7 @@ void DrawHighScoresScreen(GAME *jogo){
     if (som == 47){
         som = 0;
     }
-
+    /*
     float frameWidth = (float)(jogo->texturas.explosa.width/NUM_FRAMES_PER_LINE);
     float frameHeight = (float)(jogo->texturas.explosa.height/NUM_LINES);
     Rectangle frameRec = {0, 0, frameWidth, frameHeight};
@@ -50,7 +50,7 @@ void DrawHighScoresScreen(GAME *jogo){
     frameRec.x = frameWidth*currentFrame;
     frameRec.y = frameHeight*currentLine;
     DrawTextureRec(jogo->texturas.explosa, frameRec, (Vector2){0,0}, WHITE);
-    //DrawText("PONTNIHOS", 20, 140, 40, WHITE);
+    //DrawText("PONTNIHOS", 20, 140, 40, WHITE);*/
     DrawTextEx(jogo->fontes.fonte_legal, "Pontos: ", (Vector2){(565 - (MeasureTextEx(jogo->fontes.fonte_legal, "Pontos: ", 36, 2).x)/2), 300}, 36, 2, WHITE);
 
     if(IsKeyPressed(KEY_P)){

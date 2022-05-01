@@ -18,7 +18,7 @@ void criarNovoInimigo(int mapa[][MAPA_COLUNAS], BLOCO blocos[][MAPA_COLUNAS], IN
     inimigo->inimigo_R.height = altura_tanque;
     inimigo->inimigo_R.width = largura_tanque;
     inimigo->vidas = 1;
-    inimigo->multiplicador_vel = 0;
+    inimigo->multiplicador_vel = 1;
     inimigo->cor = WHITE;
     inimigo->emMovimento = 0;
     inimigo->colidiuComInimigo = false;
@@ -92,7 +92,7 @@ void movimentarInimigos(int mapa[][MAPA_COLUNAS], JOGADOR *jogador, INIMIGO *ini
         bool perto_do_y = jogador->jogador_R.y+5 >= inimigo->inimigo_R.y && jogador->jogador_R.y-5 <= inimigo->inimigo_R.y;
 
         if(perto_do_x || perto_do_y){
-            inimigo->emMovimento = 2;
+            inimigo->emMovimento = 1;
         }
 
     } else if (inimigo->emMovimento == 2){

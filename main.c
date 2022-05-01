@@ -101,6 +101,8 @@ int main(void)
     int contador_cels_energia = 0;
     int contador_interno_cel_energia = 0;
 
+    EXPLOSAO explosoes[NRO_EXPLOSOES] = {0};
+    int contador_explosoes = 0;
 
     BLOCO blocos[MAPA_LINHAS][MAPA_COLUNAS] = {0};
     int mapa[MAPA_LINHAS][MAPA_COLUNAS] = {
@@ -129,7 +131,7 @@ int main(void)
     int mapa_inicial[MAPA_LINHAS][MAPA_COLUNAS];
     memcpy(mapa_inicial,mapa,sizeof(mapa));
     int jogo_carregado = FALSE;
-    int fase = 1;
+    int fase = 5;
 
     int segundos = 0;
     float milisegundos = 0.0f;
@@ -140,6 +142,7 @@ int main(void)
     g_jogo.contador_projeteis = contador_projeteis;
     g_jogo.contador_cels_energia = contador_cels_energia;
     g_jogo.contador_interno_cel_energia = contador_interno_cel_energia;
+    g_jogo.contador_explosoes = contador_explosoes;
     g_jogo.segundos = segundos;
     g_jogo.milisegundos = milisegundos;
     g_jogo.fase = fase;
@@ -153,6 +156,7 @@ int main(void)
     memcpy(g_jogo.mapa, mapa, sizeof(mapa));
     memcpy(g_jogo.mapa_inicial, mapa_inicial, sizeof(mapa));
     memcpy(g_jogo.blocos, blocos, sizeof(blocos));
+    memcpy(g_jogo.explosoes, explosoes, sizeof(explosoes));
 
     //feito pra teste
     Camera2D camera = { 0 };

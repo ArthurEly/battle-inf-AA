@@ -18,11 +18,15 @@
 #define TAMANHO_LAYOUT_LATERAL 150
 #define TAMANHO_BORDA_MAPA 10
 
-#define NRO_INIMIGOS 15
+#define NRO_INIMIGOS 100
 #define TEMPO_DE_SPAWN_INIMIGOS 1
 #define NRO_PROJETEIS 100
 #define NRO_CELS_ENERGIA 5
 #define TEMPO_DE_SPAWN_CELS_ENERGIA 1
+
+#define NRO_EXPLOSOES 30
+#define NUM_FRAMES_PER_LINE     4
+#define NUM_LINES               4
 
 #define TAMANHO_TANQUES 35
 #define ALTURA_CELS_ENERGIA 35
@@ -30,6 +34,15 @@
 
 #define FALSE 0
 #define TRUE 1
+
+typedef struct explosao{
+    Rectangle explosao_R;
+    bool ativa;
+    int frames;
+    int currentFrame;
+    int currentLine;
+    Texture2D textura;
+}EXPLOSAO;
 
 typedef struct fontes{
     Font fonte_legal;
@@ -39,19 +52,6 @@ typedef struct sons{
     Sound boom;
     Sound hit;
 }SONS;
-
-/*typedef struct texturas{
-    Texture2D energia;
-    Texture2D tijolo;
-    Texture2D escudo;
-    Texture2D texture;
-    Texture2D pause;
-    Texture2D highscore;
-    Texture2D carregar;
-    Texture2D jogador;
-    Texture2D inimigo_patrulha;
-    Texture2D inimigo_perseguicao;
-}TEXTURAS;*/
 
 typedef struct game{
     JOGADOR jogador;
@@ -74,11 +74,8 @@ typedef struct game{
     TEXTURAS texturas;
     FONTES fontes;
     SONS sons;
-    int frames;
-    int currentFrame;
-    int currentLine;
-    bool active;
-    Vector2 explosao;
+    EXPLOSAO explosoes[NRO_EXPLOSOES];
+    int contador_explosoes;
 }GAME;
 
 void DrawGameplayScreen(GAME *jogo, int cod_game);
