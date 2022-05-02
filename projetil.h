@@ -6,7 +6,9 @@ typedef struct projetil{
     VELOCIDADE vel;
     char tanque_de_origem;
     int em_movimento;
-
+    Texture2D textura;
+    Vector2 origem_textura;
+    Rectangle projetil_textura_R;
 }PROJETIL;
 
 void atirarProjetilJogador(PROJETIL *projetil, JOGADOR jogador);

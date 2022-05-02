@@ -7,6 +7,7 @@
 #include "construcao.h"
 #include "mapa.h"
 #include "cel_energia.h"
+#include "highscores.h"
 #include "string.h"
 
 void SetActiveScreen(int screen_id);
@@ -14,32 +15,43 @@ void SetActiveScreen(int screen_id);
 /*da pra mudar isso dps*/
 const Rectangle tanque_textura_R = {0,0,TAMANHO_TANQUES/2,TAMANHO_TANQUES/2};
 const Rectangle energia_textura = {0,0, ALTURA_CELS_ENERGIA, LARGURA_CELS_ENERGIA};
+const Rectangle bala_textura_R = {0,0, 35, 35};
+const Rectangle bala_R = {0,0, 35, 35};
 
-void DrawGameplayScreen(GAME *jogo, int cod_game){
-
-
+void DrawGameplayScreen(GAME *jogo){
     //printf("%d.%.2f\n",jogo->segundos, jogo->milisegundos);
 
     ClearBackground(RAYWHITE);
     int i,j,k;
 
     if(jogo->jogador.vidas == 0){
-        PlaySound(jogo->sons.boom);
-        reiniciarJogo(jogo);
+        PlaySound(jogo->sons.explosao_inimigo);
+        SetActiveScreen(112);
     }
     //tirar esse NRO_INIMIGOS != 0 depois
-    if ((jogo->jogador.abates == NRO_INIMIGOS && NRO_INIMIGOS != 0) && jogo->fase != 2){
-        jogo->fase++;
-        passarDeFase(jogo);
+    if ((jogo->jogador.abates == NRO_INIMIGOS && NRO_INIMIGOS != 0) && jogo->fase != 6){
+        if (!jogo->mapa.passagem_aberta){
+            abrirPassagem(jogo->mapa.mapa_atual);
+            jogo->mapa.passagem_aberta = TRUE;
+        }else{
+            for (i=0; i<MAPA_LINHAS; i++){
+                if (jogo->blocos[i][MAPA_COLUNAS-1].tipo == 6){
+                    if(checarColisaoJogadorEPassagem(&jogo->jogador.jogador_R, &jogo->blocos[i][MAPA_COLUNAS-1].bloco_R)){
+                        jogo->fase++;
+                        passarDeFase(jogo);
+                    }
+                }
+            }
+        }
     }
 
-    if (!jogo->mapa_carregado){
+    if (!jogo->mapa.mapa_carregado){
         char nivel = jogo->fase+'0';
         int guardarFase = jogo->fase;
         int guardarVidas = jogo->jogador.vidas;
         int guardarPontuacao = jogo->jogador.pontuacao;
-
-        if(!jogo->mapa_foi_pre_carregado){
+        printarMapa(jogo->mapa.mapa_inicial);
+        if(!jogo->mapa.mapa_foi_pre_carregado){
             FILE *nivel_fp;
             printf("oia\n");
             char nome_nivel[17+1] = {"niveis/nivelx.txt"};
@@ -48,27 +60,27 @@ void DrawGameplayScreen(GAME *jogo, int cod_game){
             nivel_fp = fopen(nome_nivel,"r");
 
             if (nivel_fp != NULL){
-                carregarMapa(jogo->mapa,nivel_fp);
-                carregarMapa(jogo->mapa_inicial,nivel_fp);
+                carregarMapa(jogo->mapa.mapa_atual,nivel_fp);
+                carregarMapa(jogo->mapa.mapa_inicial,nivel_fp);
             }else{
                 perror("main Erro na abertura do arquivo");
             }
         }else{
-            memcpy(jogo->mapa,jogo->mapa_inicial, sizeof(jogo->mapa));
+            memcpy(jogo->mapa.mapa_atual,jogo->mapa.mapa_inicial, sizeof(jogo->mapa.mapa_atual));
         }
         reiniciarJogo(jogo);
         jogo->fase = guardarFase;
         jogo->jogador.vidas = guardarVidas;
         jogo->jogador.pontuacao = guardarPontuacao;
 
-        jogo->mapa_carregado = TRUE;
+        jogo->mapa.mapa_carregado = TRUE;
     }
 
     if(!jogo->jogador.jogador_posicionado){
         for(i=0; i<MAPA_LINHAS; i++){
             for(j=0; j<MAPA_COLUNAS; j++){
-                if (jogo->mapa[i][j] == 10){
-                    posicionarJogador(jogo->mapa[i][j],&jogo->jogador,i,j);
+                if (jogo->mapa.mapa_atual[i][j] == 10){
+                    posicionarJogador(jogo->mapa.mapa_atual[i][j],&jogo->jogador,i,j);
                 }
             }
         }
@@ -80,40 +92,112 @@ void DrawGameplayScreen(GAME *jogo, int cod_game){
     */
     for(i=0; i<MAPA_LINHAS; i++){
         for(j=0; j<MAPA_COLUNAS; j++){
-            transcreverMapa(&jogo->mapa[i][j],i,j,(MAPA_LINHAS-1),(MAPA_COLUNAS-1),jogo->blocos);
+            transcreverMapa(&jogo->mapa.mapa_atual[i][j],i,j,(MAPA_LINHAS-1),(MAPA_COLUNAS-1),jogo->blocos);
             renderizarBloquinho(&jogo->texturas,jogo->blocos[i][j]);
         }
     }
 
     DrawText(TextFormat("Fase: %i", jogo->fase), 600, 20, 48, ORANGE);
     DrawText(TextFormat("%ds", jogo->segundos), 1025, 20, 48, ORANGE);
-    DrawText(TextFormat("Kills"), 1025, 400, 48, ORANGE);
-    DrawText(TextFormat("%d", jogo->jogador.abates), 1063, 450, 48, ORANGE);
+    if(!jogo->mapa.passagem_aberta){
+        DrawText(TextFormat("Kills"), 1025, 400, 48, ORANGE);
+        DrawText(TextFormat("%d", jogo->jogador.abates), 1063, 450, 48, ORANGE);
+    }else{
+        DrawText(TextFormat("Entra ai", jogo->jogador.abates), 1025, 625, 24, ORANGE);
+    }
     DrawText(TextFormat("Pontuacao: %i", jogo->jogador.pontuacao), 250, 30, 36, DARKGRAY);
     for(i=0; i<jogo->jogador.vidas; i++){
         DrawTextureEx(jogo->texturas.escudo, (Vector2){i*65, 0}, 0, 0.11, WHITE);
     }
     /**
+    JOGADOR
+    */
+    DrawRectangle(
+        jogo->jogador.jogador_R.x,
+        jogo->jogador.jogador_R.y,
+        jogo->jogador.jogador_R.width,
+        jogo->jogador.jogador_R.height,
+        SKYBLUE
+    );
+
+    DrawTexturePro(
+        jogo->texturas.jogador,
+        tanque_textura_R,
+        jogo->jogador.jogador_R,
+        jogo->jogador.origem_textura,
+        jogo->jogador.angulo,
+        jogo->jogador.cor
+    );
+
+    if (IsKeyDown(KEY_LEFT) ||
+        IsKeyDown(KEY_RIGHT)||
+        IsKeyDown(KEY_DOWN) ||
+        IsKeyDown(KEY_UP)   ){
+            if(jogo->jogador.colidindo == false){
+                movimentacaoJogador(&jogo->jogador);
+            }
+    }
+
+    for(i=0; i<jogo->contador_inimigos; i++){
+        if (checarColisaoJogadorEInimigo(&jogo->jogador.jogador_R, &jogo->inimigos[i].inimigo_R)){
+            criarExplosao(&jogo->explosoes[jogo->contador_explosoes], jogo->inimigos[i].inimigo_R, jogo->texturas.explosa);
+            jogo->contador_explosoes++;
+            removerInimigo(jogo->inimigos,i);
+            PlaySound(jogo->sons.explosao_inimigo);
+            if (jogo->jogador.vidas > 0){
+                PlaySound(jogo->sons.hit_jogador);
+                jogo->jogador.vidas--;
+            }
+        }
+    }
+
+    int contador_colisoes = 0;
+    for(i=0; i<MAPA_LINHAS; i++){
+        for(j=0; j<MAPA_COLUNAS; j++){
+            if (jogo->blocos[i][j].tipo != 0){
+                if(checarColisaoJogadorEBloquinho(&jogo->jogador.jogador_R, &jogo->blocos[i][j].bloco_R)){
+                    contador_colisoes++;
+                }
+            }
+        }
+    }
+
+    if(contador_colisoes > 0)
+        pararJogador(&jogo->jogador);
+    else
+        retomarJogador(&jogo->jogador);
+
+    if(IsKeyPressed(KEY_SPACE)){
+        PlaySound(jogo->sons.tiro);
+        if(jogo->contador_projeteis < NRO_PROJETEIS){
+            jogo->contador_projeteis++;
+        }
+        else{
+            jogo->contador_projeteis = 0;
+        }
+        atirarProjetilJogador(&jogo->projeteis[jogo->contador_projeteis],jogo->jogador);
+    }
+    /**
         INIMIGOS
     */
     if(jogo->contador_inimigos < NRO_INIMIGOS){
-        //if(jogo->segundos % TEMPO_DE_SPAWN_INIMIGOS == 0 && jogo->milisegundos == 0){
-            criarNovoInimigo(jogo->mapa, jogo->blocos, &jogo->inimigos[jogo->contador_inimigos],TAMANHO_TANQUES,TAMANHO_TANQUES);
+        if(jogo->segundos % TEMPO_DE_SPAWN_INIMIGOS == 0 && jogo->milisegundos == 0){
+            criarNovoInimigo(jogo->mapa.mapa_atual, jogo->blocos, &jogo->inimigos[jogo->contador_inimigos],TAMANHO_TANQUES,TAMANHO_TANQUES);
             jogo->contador_inimigos++;
-        //}
+        }
     }else{
-        //if(jogo->segundos % TEMPO_DE_SPAWN_INIMIGOS == 0 && jogo->milisegundos == 0){
+        if(jogo->segundos % TEMPO_DE_SPAWN_INIMIGOS == 0 && jogo->milisegundos == 0){
             bool nao_reviveu_inimigo = true;
             for(i=0;i<jogo->contador_inimigos;i++){
                 if(jogo->inimigos[i].vidas == 0 && nao_reviveu_inimigo && !jogo->inimigos[i].abatidoPeloJogador){
-                    criarNovoInimigo(jogo->mapa, jogo->blocos, &jogo->inimigos[i],TAMANHO_TANQUES,TAMANHO_TANQUES);
+                    criarNovoInimigo(jogo->mapa.mapa_atual, jogo->blocos, &jogo->inimigos[i],TAMANHO_TANQUES,TAMANHO_TANQUES);
                     nao_reviveu_inimigo = false;
                 }
+                else if(jogo->inimigos[i].vidas == 0 && nao_reviveu_inimigo && jogo->mapa.mapa_foi_pre_carregado){
+                    criarNovoInimigo(jogo->mapa.mapa_atual, jogo->blocos, &jogo->inimigos[i],TAMANHO_TANQUES,TAMANHO_TANQUES);
+                }
             }
-            if(jogo->mapa_foi_pre_carregado){
-                jogo->contador_inimigos = 0;
-            }
-        //}
+        }
     }
 
     for(i=0;i<jogo->contador_inimigos;i++){
@@ -147,7 +231,7 @@ void DrawGameplayScreen(GAME *jogo, int cod_game){
             }
 
             if (jogo->inimigos[i].vidas > 0){
-                movimentarInimigos(jogo->mapa,&jogo->jogador, &jogo->inimigos[i]);
+                movimentarInimigos(jogo->mapa.mapa_atual,&jogo->jogador, &jogo->inimigos[i]);
             }
 
             Texture2D tanque_inimigo_textura;
@@ -189,74 +273,6 @@ void DrawGameplayScreen(GAME *jogo, int cod_game){
             );
         }
     }
-
-    /**
-        JOGADOR
-    */
-    DrawRectangle(
-        jogo->jogador.jogador_R.x,
-        jogo->jogador.jogador_R.y,
-        jogo->jogador.jogador_R.width,
-        jogo->jogador.jogador_R.height,
-        SKYBLUE
-    );
-
-    DrawTexturePro(
-        jogo->texturas.jogador,
-        tanque_textura_R,
-        jogo->jogador.jogador_R,
-        jogo->jogador.origem_textura,
-        jogo->jogador.angulo,
-        jogo->jogador.cor
-    );
-
-    if (IsKeyDown(KEY_LEFT) ||
-        IsKeyDown(KEY_RIGHT)||
-        IsKeyDown(KEY_DOWN) ||
-        IsKeyDown(KEY_UP)   ){
-            if(jogo->jogador.colidindo == false){
-                movimentacaoJogador(&jogo->jogador);
-            }
-    }
-
-    for(i=0; i<jogo->contador_inimigos; i++){
-        if (checarColisaoJogadorEInimigo(&jogo->jogador.jogador_R, &jogo->inimigos[i].inimigo_R)){
-            criarExplosao(&jogo->explosoes[jogo->contador_explosoes], jogo->inimigos[i].inimigo_R, jogo->texturas.explosa);
-            jogo->contador_explosoes++;
-            removerInimigo(jogo->inimigos,i);
-            PlaySound(jogo->sons.boom);
-            PlaySound(jogo->sons.hit);
-            if (jogo->jogador.vidas > 0){
-                //jogo->jogador.vidas--;
-            }
-        }
-    }
-
-    int contador_colisoes = 0;
-    for(i=0; i<MAPA_LINHAS; i++){
-        for(j=0; j<MAPA_COLUNAS; j++){
-            if (jogo->blocos[i][j].tipo != 0){
-                if(checarColisaoJogadorEBloquinho(&jogo->jogador.jogador_R, &jogo->blocos[i][j].bloco_R)){
-                    contador_colisoes++;
-                }
-            }
-        }
-    }
-
-    if(contador_colisoes > 0)
-        pararJogador(&jogo->jogador);
-    else
-        retomarJogador(&jogo->jogador);
-
-    if(IsKeyPressed(KEY_SPACE)){
-        if(jogo->contador_projeteis < NRO_PROJETEIS){
-            jogo->contador_projeteis++;
-        }
-        else{
-            jogo->contador_projeteis = 0;
-        }
-        atirarProjetilJogador(&jogo->projeteis[jogo->contador_projeteis],jogo->jogador);
-    }
     /**
         PROJETEIS
     */
@@ -270,7 +286,7 @@ void DrawGameplayScreen(GAME *jogo, int cod_game){
             for(j=0; j<jogo->contador_inimigos; j++){
                 if (checarColisaoProjeteisEInimigo(&jogo->projeteis[i], &jogo->inimigos[j])){
                     if(jogo->projeteis[i].tanque_de_origem == 'j'){
-                        PlaySound(jogo->sons.boom);
+                        PlaySound(jogo->sons.explosao_inimigo);
                         criarExplosao(&jogo->explosoes[jogo->contador_explosoes], jogo->inimigos[j].inimigo_R, jogo->texturas.explosa);
                         jogo->contador_explosoes++;
                         jogo->jogador.abates++;
@@ -285,6 +301,8 @@ void DrawGameplayScreen(GAME *jogo, int cod_game){
             if (checarColisaoProjeteisEJogador(&jogo->projeteis[i], &jogo->jogador)){
                 if(jogo->projeteis[i].tanque_de_origem == 'i'){
                     removerProjetil(jogo->projeteis,i);
+                    criarExplosao(&jogo->explosoes[jogo->contador_explosoes], jogo->projeteis[i].projetil_R, jogo->texturas.explosa);
+                    PlaySound(jogo->sons.hit_jogador);
                     jogo->jogador.vidas--;
                 }
             }
@@ -295,6 +313,7 @@ void DrawGameplayScreen(GAME *jogo, int cod_game){
                         if (checarColisaoProjeteisEBlocos(&jogo->projeteis[i], &jogo->blocos[j][k])){
                             if(jogo->blocos[j][k].destrutivel){
                                 removerBloquinho(&jogo->blocos[j][k]);
+                                PlaySound(jogo->sons.construcao);
                             }
                             removerProjetil(jogo->projeteis,i);
                         }
@@ -322,7 +341,7 @@ void DrawGameplayScreen(GAME *jogo, int cod_game){
         if(jogo->contador_cels_energia < NRO_CELS_ENERGIA){
             //if(jogo->segundos % TEMPO_DE_SPAWN_CELS_ENERGIA == 0 && jogo->milisegundos == 0){
                 if(jogo->cels_energia[i].cel_energia_posicionada == FALSE){
-                    criarCelulaDeEnergia(jogo->mapa, jogo->blocos, &jogo->cels_energia[jogo->contador_cels_energia]);
+                    criarCelulaDeEnergia(jogo->mapa.mapa_atual, jogo->blocos, &jogo->cels_energia[jogo->contador_cels_energia]);
                     jogo->contador_cels_energia++;
                 }
             //}
@@ -330,7 +349,7 @@ void DrawGameplayScreen(GAME *jogo, int cod_game){
             //if(jogo->segundos % TEMPO_DE_SPAWN_CELS_ENERGIA == 0 && jogo->milisegundos == 0){
                 for(i=0; i<NRO_CELS_ENERGIA; i++){
                     if (jogo->cels_energia[i].ativa == false && jogo->cels_energia[i].cel_energia_posicionada == FALSE){
-                        criarCelulaDeEnergia(jogo->mapa, jogo->blocos, &jogo->cels_energia[i]);
+                        criarCelulaDeEnergia(jogo->mapa.mapa_atual, jogo->blocos, &jogo->cels_energia[i]);
                     }
                 }
            // }
@@ -359,6 +378,7 @@ void DrawGameplayScreen(GAME *jogo, int cod_game){
                 if (jogo->contador_interno_cel_energia < 20){
                     jogo->contador_interno_cel_energia += 10;
                 }
+                PlaySound(jogo->sons.power_up);
                 energizarJogador(&jogo->jogador,&jogo->cels_energia[i]);
                 removerCelEnergia(&jogo->cels_energia[i]);
             }
@@ -402,7 +422,7 @@ void DrawGameplayScreen(GAME *jogo, int cod_game){
     /**
         MAPA DNV
     */
-    atualizarMapa(jogo->mapa,jogo->blocos,jogo->jogador,jogo->inimigos,jogo->contador_inimigos,jogo->cels_energia, jogo->contador_cels_energia);
+    atualizarMapa(jogo->mapa.mapa_atual,jogo->blocos,jogo->jogador,jogo->inimigos,jogo->contador_inimigos,jogo->cels_energia, jogo->contador_cels_energia);
 
     if(IsKeyPressed(KEY_S)){
         salvarJogo(jogo);
@@ -413,7 +433,7 @@ void DrawGameplayScreen(GAME *jogo, int cod_game){
     }
 
     if(IsKeyPressed(KEY_I)){
-        printarMapa(jogo->mapa_inicial);
+        printarMapa(jogo->mapa.mapa_inicial);
     }
 
     if(IsKeyPressed(KEY_C)){
@@ -421,7 +441,7 @@ void DrawGameplayScreen(GAME *jogo, int cod_game){
     }
 
     if(IsKeyPressed(KEY_M)){
-        printarMapa(jogo->mapa);
+        printarMapa(jogo->mapa.mapa_atual);
     }
 
     if(IsKeyPressed(KEY_P)){
@@ -436,7 +456,7 @@ void DrawNewGameplayScreen(GAME *jogo){
 
 void DrawSavedGameGameplayScreen(GAME *jogo){
     carregarJogoSalvo(jogo);
-
+    printf("segundasiodas %d\n",jogo->segundos);
     SetActiveScreen(11);
 }
 
@@ -454,21 +474,20 @@ void salvarJogo(GAME *jogo){
     jogo_salvo.contador_projeteis = jogo->contador_projeteis;
 
     memcpy(jogo_salvo.cels_energia, jogo->cels_energia, sizeof(jogo->cels_energia));
-
     jogo_salvo.contador_cels_energia = jogo->contador_cels_energia;
     jogo_salvo.contador_interno_cel_energia = jogo->contador_interno_cel_energia;
 
+    memcpy(jogo_salvo.explosoes, jogo->explosoes, sizeof(jogo->explosoes));
+    jogo_salvo.contador_explosoes = jogo->contador_explosoes;
+
     memcpy(jogo_salvo.blocos, jogo->blocos, sizeof(jogo->blocos));
-    memcpy(jogo_salvo.mapa,jogo->mapa, sizeof(jogo->mapa));
-    memcpy(jogo_salvo.mapa_inicial,jogo->mapa_inicial, sizeof(jogo->mapa));
+    jogo_salvo.mapa = jogo->mapa;
 
     jogo_salvo.segundos = jogo->segundos;
     jogo_salvo.fase = jogo->fase;
     jogo_salvo.milisegundos = jogo->milisegundos;
 
-    jogo_salvo.mapa_foi_pre_carregado = jogo->mapa_foi_pre_carregado;
     jogo_salvo.jogo_carregado = jogo->jogo_carregado;
-    jogo_salvo.mapa_carregado = jogo->mapa_carregado;
 
     jogo_salvo.texturas = jogo->texturas;
 
@@ -479,7 +498,7 @@ void salvarJogo(GAME *jogo){
         rewind(save_fp);
         GAME jooj;
         if(fread(&jooj, sizeof(GAME), 1, save_fp) == 1){
-            printarMapa(jooj.mapa);
+            printarMapa(jooj.mapa.mapa_atual);
         }else{
             perror("erro na leitura do jogo salvo\n");
         }
@@ -488,13 +507,12 @@ void salvarJogo(GAME *jogo){
 }
 
 void carregarJogoSalvo(GAME *jogo){
-    printf("carregando o jogo salvo\n");
     FILE *save_fp;
     save_fp = fopen("saves/ultimo-save.bin","rb");
-
     if (save_fp != NULL){
         rewind(save_fp);
         GAME jooj;
+        printf("3\n");
         if(fread(&jooj, sizeof(GAME), 1, save_fp) == 1){
             jogo->jogador = jooj.jogador;
             memcpy(jogo->inimigos, jooj.inimigos, sizeof(jogo->inimigos));
@@ -507,18 +525,17 @@ void carregarJogoSalvo(GAME *jogo){
             jogo->contador_cels_energia = jooj.contador_cels_energia;
             jogo->contador_interno_cel_energia = jooj.contador_interno_cel_energia;
 
+            memcpy(jogo->explosoes, jooj.explosoes, sizeof(jogo->explosoes));
+            jogo->contador_explosoes = jooj.contador_explosoes;
+
             memcpy(jogo->blocos, jooj.blocos, sizeof(jogo->blocos));
-            memcpy(jogo->mapa, jooj.mapa, sizeof(jogo->mapa));
-            memcpy(jogo->mapa_inicial, jooj.mapa_inicial, sizeof(jogo->mapa));
-            jogo->mapa_foi_pre_carregado = jooj.mapa_foi_pre_carregado;
+
+            jogo->mapa = jooj.mapa;
 
             jogo->segundos = jooj.segundos;
             jogo->milisegundos = jooj.milisegundos;
             jogo->fase = jooj.fase;
-
-            jogo->mapa_foi_pre_carregado = jooj.mapa_foi_pre_carregado;
             jogo->jogo_carregado = jooj.jogo_carregado;
-            jogo->mapa_carregado = jooj.mapa_carregado;
 
             jogo->texturas = jooj.texturas;
         }else{
@@ -540,13 +557,16 @@ void passarDeFase(GAME *jogo){
 
     nivel_fp = fopen(nome_nivel,"r");
     if (nivel_fp != NULL){
-        carregarMapa(jogo->mapa,nivel_fp);
+        carregarMapa(jogo->mapa.mapa_atual,nivel_fp);
     }else{
         perror("passar Erro na abertura do arquivo");
     }
+    fecharPassagem(jogo->mapa.mapa_atual);
+    jogo->mapa.passagem_aberta = FALSE;
 
     INIMIGO z_inimigos[NRO_INIMIGOS]={0};
     memcpy(jogo->inimigos, z_inimigos, sizeof(jogo->inimigos));
+
 
     PROJETIL z_projeteis[NRO_PROJETEIS]={0};
     memcpy(jogo->projeteis, z_projeteis, sizeof(jogo->projeteis));
@@ -561,6 +581,10 @@ void passarDeFase(GAME *jogo){
     memcpy(jogo->cels_energia, z_cels_energia, sizeof(jogo->cels_energia));
     jogo->contador_cels_energia = 0;
     jogo->contador_interno_cel_energia = 0;
+
+    EXPLOSAO z_explosoes[NRO_EXPLOSOES]={0};
+    memcpy(jogo->explosoes, z_explosoes, sizeof(jogo->explosoes));
+    jogo->contador_explosoes = 0;
 
     jogo->jogador.jogador_posicionado = false;
 }
@@ -582,7 +606,8 @@ void reiniciarJogo(GAME *jogo){
             .cor =  {255, 255, 255, 255},
             .origem_textura={0,0},
             .abates = 0,
-            .jogador_posicionado = false
+            .jogador_posicionado = false,
+            .nome = {"NUMERO UNO"}
     };
     jogo->jogador = z_jogador;
 
@@ -597,18 +622,22 @@ void reiniciarJogo(GAME *jogo){
     BLOCO z_blocos[MAPA_LINHAS][MAPA_COLUNAS] = {0};
     memcpy(jogo->blocos, z_blocos, sizeof(jogo->blocos));
 
-    memcpy(jogo->mapa, jogo->mapa_inicial, sizeof(jogo->mapa));
-    jogo->mapa_carregado = FALSE;
+    memcpy(jogo->mapa.mapa_atual, jogo->mapa.mapa_inicial, sizeof(jogo->mapa.mapa_atual));
+    jogo->mapa.mapa_carregado = FALSE;
 
     CELULA z_cels_energia[NRO_CELS_ENERGIA]={0};
     memcpy(jogo->cels_energia, z_cels_energia, sizeof(jogo->cels_energia));
     jogo->contador_cels_energia = 0;
     jogo->contador_interno_cel_energia = 0;
+
+    EXPLOSAO z_explosoes[NRO_EXPLOSOES]={0};
+    memcpy(jogo->explosoes, z_explosoes, sizeof(jogo->explosoes));
+    jogo->contador_explosoes = 0;
 }
 
 void resetarJogo(GAME *jogo){
     reiniciarJogo(jogo);
-    jogo->mapa_foi_pre_carregado = FALSE;
+    jogo->mapa.mapa_foi_pre_carregado = FALSE;
 }
 
 void carregarMapa(int mapa[][MAPA_COLUNAS], FILE *nivel_fp){

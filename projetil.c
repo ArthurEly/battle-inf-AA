@@ -11,6 +11,14 @@ void atirarProjetilJogador(PROJETIL *projetil, JOGADOR jogador){
     projetil->tanque_de_origem = 'j';
     projetil->projetil_R.height = jogador.jogador_R.height*0.2;
     projetil->projetil_R.width = jogador.jogador_R.width*0.2;
+
+    projetil->projetil_textura_R.x = 0;
+    projetil->projetil_textura_R.y = 0;
+    projetil->projetil_textura_R.height = jogador.jogador_R.height*0.2;
+    projetil->projetil_textura_R.width  = jogador.jogador_R.width*0.2;
+    projetil->origem_textura.x  = 0;
+    projetil->origem_textura.y  = 0;
+
     int velocidade = 10*jogador.multiplicador_vel;
     int variacao = jogador.jogador_R.height*0.075;
 

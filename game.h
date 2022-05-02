@@ -18,7 +18,7 @@
 #define TAMANHO_LAYOUT_LATERAL 150
 #define TAMANHO_BORDA_MAPA 10
 
-#define NRO_INIMIGOS 100
+#define NRO_INIMIGOS 2
 #define TEMPO_DE_SPAWN_INIMIGOS 1
 #define NRO_PROJETEIS 100
 #define NRO_CELS_ENERGIA 5
@@ -49,8 +49,11 @@ typedef struct fontes{
 }FONTES;
 
 typedef struct sons{
-    Sound boom;
-    Sound hit;
+    Sound construcao;
+    Sound explosao_inimigo;
+    Sound hit_jogador;
+    Sound power_up;
+    Sound tiro;
 }SONS;
 
 typedef struct game{
@@ -63,14 +66,11 @@ typedef struct game{
     int contador_cels_energia;
     int contador_interno_cel_energia;
     BLOCO blocos[MAPA_LINHAS][MAPA_COLUNAS];
-    int mapa[MAPA_LINHAS][MAPA_COLUNAS];
-    int mapa_inicial[MAPA_LINHAS][MAPA_COLUNAS];
+    MAPA mapa;
+    int fase;
     int segundos;
     float milisegundos;
-    int fase;
-    int mapa_foi_pre_carregado;
     int jogo_carregado;
-    int mapa_carregado;
     TEXTURAS texturas;
     FONTES fontes;
     SONS sons;
@@ -78,7 +78,7 @@ typedef struct game{
     int contador_explosoes;
 }GAME;
 
-void DrawGameplayScreen(GAME *jogo, int cod_game);
+void DrawGameplayScreen(GAME *jogo);
 void DrawNewGameplayScreen(GAME *jogo);
 void DrawSavedGameGameplayScreen(GAME *jogo);
 void salvarJogo(GAME *jogo);

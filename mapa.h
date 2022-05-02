@@ -6,6 +6,14 @@
 #define MAPA_LINHAS 17
 #define MAPA_COLUNAS 42
 
+typedef struct mapa{
+    int mapa_atual[MAPA_LINHAS][MAPA_COLUNAS];
+    int mapa_inicial[MAPA_LINHAS][MAPA_COLUNAS];
+    int mapa_carregado;
+    int mapa_foi_pre_carregado;
+    int passagem_aberta;
+}MAPA;
+
 void transcreverMapa(int *id, int y, int x, int y_max, int x_max, BLOCO blocos[][MAPA_COLUNAS]);
 /*repartir isso em mais funcoes*/
 void atualizarMapa(int mapa[][MAPA_COLUNAS], BLOCO blocos[][MAPA_COLUNAS], JOGADOR jogador, INIMIGO inimigos[], int contador_inimigos, CELULA cels_energia[], int contador_cels_energia);

@@ -28,12 +28,13 @@ void DrawCarregarScreen(GAME *jogo){
             mapa_fp = fopen(droppedFiles[0],"r");
             if(mapa_fp != NULL){
                 printf("%s\n",droppedFiles[0]);
-                carregarMapa(jogo->mapa_inicial,mapa_fp);
+                carregarMapa(jogo->mapa.mapa_inicial,mapa_fp);
+                printarMapa(jogo->mapa.mapa_inicial);
             }else{
                 perror("erro ao carregar um mapa ");
             }
             fclose(mapa_fp);
-            jogo->mapa_foi_pre_carregado = TRUE;
+            jogo->mapa.mapa_foi_pre_carregado = TRUE;
             droppedFiles[0] = 0;
             count = 0;
             SetActiveScreen(11);

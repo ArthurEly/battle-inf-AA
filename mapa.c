@@ -74,6 +74,21 @@ void transcreverMapa(int *id, int y, int x, int y_max, int x_max, BLOCO blocos[]
         blocos[y][x].bloco_R.height = ALTURA_BLOCO;
     }
 
+    if(*id == 6){
+        //saída lateral
+        blocos[y][x].tipo = 6;
+        blocos[y][x].destrutivel = true;
+        blocos[y][x].bloco_R.y = converterIndiceYParaCoordenada(y);
+        if (x == 0){
+            blocos[y][x].bloco_R.x = converterIndiceXParaCoordenada(x) - TAMANHO_BORDA_MAPA;
+        }else{
+            blocos[y][x].bloco_R.x = converterIndiceXParaCoordenada(x);
+        }
+        blocos[y][x].bloco_R.width = TAMANHO_BORDA_MAPA;
+        blocos[y][x].bloco_R.height = ALTURA_BLOCO;
+        blocos[y][x].cor = DARKGRAY;
+    }
+
     if(*id == 9){
         //borda superior e inferior
         blocos[y][x].bloco_R.x = converterIndiceXParaCoordenada(x);
@@ -130,6 +145,24 @@ void atualizarMapa(int mapa[][MAPA_COLUNAS], BLOCO blocos[][MAPA_COLUNAS], JOGAD
     }
 }
 
+void abrirPassagem(int mapa[][MAPA_COLUNAS]){
+    int y_inicial = 13;
+    int y_final = 15;
+    int i;
+    for(i=y_inicial; i<=y_final; i++){
+        mapa[i][41] = 6;
+    }
+}
+
+void fecharPassagem(int mapa[][MAPA_COLUNAS]){
+    int y_inicial = 13;
+    int y_final = 15;
+    int i;
+    for(i=y_inicial; i<=y_final; i++){
+        mapa[i][41] = 8;
+    }
+}
+
 void posicionarJogador(int id, JOGADOR *jogador, int y, int x){
     int coord_x;
     int coord_y;
@@ -154,8 +187,6 @@ int reposicionarObjeto(int mapa[][MAPA_COLUNAS], int *novo_y, int *novo_x){
     bool loop = true;
     int x = *novo_x;
     int y = *novo_y;
-    printf("entrei com esse x: %d\n",x);
-    printf("entrei com esse y: %d\n",y);
     int i,j;
 
     int indice_comeco_linha;
@@ -195,7 +226,6 @@ int reposicionarObjeto(int mapa[][MAPA_COLUNAS], int *novo_y, int *novo_x){
            indice_comeco_coluna == 1              &&
            indice_fim_linha     == MAPA_LINHAS-2  &&
            indice_fim_coluna    == MAPA_COLUNAS-2 ){
-                printf("MEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEUDEEEEEEEEEEEEEEEEEEEEEEEEEEEUS\n");
                 objeto_posicionado = FALSE;
                 loop = false;
            }
@@ -207,26 +237,24 @@ int reposicionarObjeto(int mapa[][MAPA_COLUNAS], int *novo_y, int *novo_x){
                     *novo_x = j;
                     *novo_y = i;
                     objeto_posicionado = TRUE;
-                    printf("[!!]\n");
-                    printf("%d,%d\n",i,j);
+                    //printf("[!!]\n");
+                    //printf("%d,%d\n",i,j);
                 }
                 else{
-                    if(mapa[i][j]==11){
-                        printf("[I]");
-                    }else if(mapa[i][j]==10){
-                        printf("[J]");
-                    }else{
-                        printf("[%d]",mapa[i][j]);
-                    }
+                    //if(mapa[i][j]==11){
+                     //   printf("[I]");
+                    //}else if(mapa[i][j]==10){
+                    //    printf("[J]");
+                    //}else{
+                     //   printf("[%d]",mapa[i][j]);
+                    //}
                 }
             }
-            printf("\n");
+            //printf("\n");
         }
-        printf("\n");
+        //printf("\n");
         raio_procura++;
     };
-    printf("sai com esse x: %d\n",*novo_x);
-    printf("sai com esse y: %d\n",*novo_y);
     return objeto_posicionado;
 }
 

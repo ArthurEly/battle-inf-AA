@@ -22,6 +22,7 @@ typedef struct jogador{
     bool energizado;
     int abates;
     bool jogador_posicionado;
+    char nome[15+1];
 }JOGADOR;
 
 void movimentacaoJogador(JOGADOR *jogador);

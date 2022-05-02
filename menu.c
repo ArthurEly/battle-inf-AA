@@ -19,7 +19,7 @@ const int MENU_ITEMS_QTDY = sizeof(menu_items)/sizeof(menu_items[0]);
 int menu_option=0;
 //Font fonte = GetFontDefault();
 const char *escrita[TEXTOS] = { "Novo Jogo",
-                                "Continuar",
+                                "Carregar jogo",
                                 "Carregar Mapa",
                                 "Highscores",
                                 "Sair"};
@@ -36,6 +36,7 @@ int spacing = 2;*/
 void DrawMainMenuScreen(GAME *jogo){
     ClearBackground(BLUE);
     Color optionColor = LIGHTGRAY;
+    int tamanho_fonte = 36;
    // DrawTexture(texture, 0, 0, GRAY);
     DrawTextureEx(jogo->texturas.texture, (Vector2){-75,0}, 0, 1, WHITE);
 
@@ -46,48 +47,15 @@ void DrawMainMenuScreen(GAME *jogo){
     if(IsKeyPressed(KEY_UP) &&menu_option>0){
        menu_option--;
     }
-
- /*   if(menu_option == 0){
-        optionColor = YELLOW;
-    }else{
-        optionColor = LIGHTGRAY;
-    }
-   // DrawText("Novo jogo", 400, 400, 40, optionColor);
-
-    if(menu_option == 1){
-        optionColor = YELLOW;
-    }else{
-        optionColor = LIGHTGRAY;
-    }
-    //DrawText("Continuar", 400, 450, 40, optionColor);
-
-    if(menu_option == 2){
-        optionColor = YELLOW;
-    }else{
-        optionColor = LIGHTGRAY;
-    }    DrawTextEx(GetFontDefault(), "Carregar Mapa", (Vector2){400.0f, 500.0f}, 40.0, 5, optionColor);
-
-    if(menu_option == 3){
-        optionColor = YELLOW;
-    }else{
-        optionColor = LIGHTGRAY;
-    }
-    DrawText("Highscores", 400, 550, 40, optionColor);
-
-    if(menu_option == 4){
-        optionColor = YELLOW;
-    }else{
-        optionColor = LIGHTGRAY;
-    }
-    DrawText("Sair", 400, 600, 40, optionColor);*/
-
     for (int i = 0; i < TEXTOS; i++){
             if(menu_option == i){
-            optionColor = YELLOW;
+                optionColor = YELLOW;
+                tamanho_fonte = 38;
             }else{
-            optionColor = LIGHTGRAY;
+                optionColor = LIGHTGRAY;
+                tamanho_fonte = 36;
             }
-                DrawTextEx(jogo->fontes.fonte_legal, escrita[i], (Vector2){(565 - (MeasureTextEx(jogo->fontes.fonte_legal, escrita[i], 36, 2).x)/2), 400 + 50*i}, 36, 2, optionColor);
+                DrawTextEx(jogo->fontes.fonte_legal, escrita[i], (Vector2){(565 - (MeasureTextEx(jogo->fontes.fonte_legal, escrita[i], tamanho_fonte, 2).x)/2), 400 + 50*i}, tamanho_fonte, 2, optionColor);
                            //(MeasureText(escrita[i], 40)/2), 400 + 50*i}, 40, 2, optionColor);
                 //DrawText(escrita[i], 500 - (MeasureText(escrita[i], 40)/2), 400 + 50*i, 40, optionColor);
             }

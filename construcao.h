@@ -18,6 +18,8 @@ typedef struct texturas{
     Texture2D inimigo_patrulha;
     Texture2D inimigo_perseguicao;
     Texture2D explosa;
+    Texture2D morte;
+    Texture2D bala;
 }TEXTURAS;
 
 typedef struct id{

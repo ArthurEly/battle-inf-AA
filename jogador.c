@@ -82,3 +82,8 @@ bool checarColisaoJogadorECelEnergia(Rectangle *jogador_R, Rectangle *cel_energi
     bool colidiu = CheckCollisionRecs(*jogador_R,*cel_energia_R);
     return colidiu;
 }
+
+bool checarColisaoJogadorEPassagem(Rectangle *jogador_R, Rectangle *passagem_R){
+    bool colidiu = CheckCollisionRecs(*jogador_R,*passagem_R);
+    return colidiu;
+}

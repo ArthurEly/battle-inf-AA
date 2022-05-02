@@ -18,7 +18,7 @@ void criarNovoInimigo(int mapa[][MAPA_COLUNAS], BLOCO blocos[][MAPA_COLUNAS], IN
     inimigo->inimigo_R.height = altura_tanque;
     inimigo->inimigo_R.width = largura_tanque;
     inimigo->vidas = 1;
-    inimigo->multiplicador_vel = 1;
+    inimigo->multiplicador_vel = 0;
     inimigo->cor = WHITE;
     inimigo->emMovimento = 0;
     inimigo->colidiuComInimigo = false;
@@ -50,16 +50,13 @@ void criarNovoInimigo(int mapa[][MAPA_COLUNAS], BLOCO blocos[][MAPA_COLUNAS], IN
     }
 
     if (inimigo->inimigo_posicionado){
-        printf("conseguiu colocar inimigo %d\n",qtde_inimigos);
         inimigo->inimigo_R.x = converterIndiceXParaCoordenada(novo_x);
         inimigo->inimigo_R.y = converterIndiceYParaCoordenada(novo_y);
         qtde_inimigos++;
     }else{
-        printf("não conseguiu colocar inimigo %d\n",qtde_inimigos);
         INIMIGO z_inimigo = {0};
         *inimigo = z_inimigo;
     }
-    printf("\n\n");
 }
 
 void movimentarInimigos(int mapa[][MAPA_COLUNAS], JOGADOR *jogador, INIMIGO *inimigo){

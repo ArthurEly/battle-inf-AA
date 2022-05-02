@@ -27,7 +27,7 @@ void renderizarBloquinho(TEXTURAS *texturas, BLOCO bloco){
         //DrawTextureTiled(tijolo, sourceRec, (Rectangle){0, 2, 4, 9}, (Vector2){id.bloco_R.x,  id.bloco_R.y}, 0, 1, WHITE);
     }
 
-    if(bloco.tipo >= 7 && bloco.tipo <= 9){
+    if(bloco.tipo >= 6 && bloco.tipo <= 9){
         DrawRectangle(
             bloco.bloco_R.x,
             bloco.bloco_R.y,

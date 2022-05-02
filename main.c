@@ -7,7 +7,6 @@
 #include "stdio.h"
 #include "string.h"
 
-
 void SetActiveScreen(int screen_id);
 void DrawScreen(GAME *jogo, int screen_id);
 void DrawLoadMapGameplayScreen(FILE *mapa_fp);
@@ -17,13 +16,14 @@ void timerSegundos(int *segundos, float *milisegundos);
 
 int g_screens[7]={
         10, //Main Menu Screen
-        11,
+        11, //jogo
         111, //menu de pausa dentro do jogo
+        112, //tela de morte
         12, //Continue Screen
         13, //Load Map Screen
         14,  //HighScore Screen
     };
-int g_active_screen = 10;
+int g_active_screen = 11;
 const int SCREENS_QTDY = sizeof(g_screens)/sizeof(g_screens[0]);
 
 int main(void)
@@ -43,6 +43,7 @@ int main(void)
     g_jogo.texturas.pause = LoadTexture("assets/Tela pause.png");
     g_jogo.texturas.highscore = LoadTexture("assets/Highscores.png");
     g_jogo.texturas.carregar = LoadTexture("assets/Carregar mapa.png");
+    g_jogo.texturas.morte = LoadTexture("assets/Tela morte.png");
 
     g_jogo.texturas.energia = LoadTexture("assets/energy_drop.png");
     g_jogo.texturas.energia.height = ALTURA_CELS_ENERGIA;
@@ -52,8 +53,20 @@ int main(void)
 
     g_jogo.texturas.explosa = LoadTexture("assets/explosao.png");
 
-    g_jogo.sons.boom = LoadSound("assets/boom.wav");
-    g_jogo.sons.hit = LoadSound("assets/hit.wav");
+    g_jogo.sons.construcao = LoadSound("assets/sons/construcao.wav");
+    SetSoundVolume(g_jogo.sons.construcao,0.1);
+
+    g_jogo.sons.explosao_inimigo = LoadSound("assets/sons/explosao_inimigo.wav");
+    SetSoundVolume(g_jogo.sons.explosao_inimigo,0.3);
+
+    g_jogo.sons.hit_jogador = LoadSound("assets/sons/hit_jogador.wav");
+    SetSoundVolume(g_jogo.sons.hit_jogador,0.5);
+
+    g_jogo.sons.power_up = LoadSound("assets/sons/power_up.wav");
+    SetSoundVolume(g_jogo.sons.power_up,0.5);
+
+    g_jogo.sons.tiro = LoadSound("assets/sons/tiro.wav");
+    SetSoundVolume(g_jogo.sons.tiro,0.2);
 
     g_jogo.texturas.tijolo = LoadTexture("assets/brick_texture2.png");
     g_jogo.texturas.tijolo.height = 25;
@@ -79,16 +92,16 @@ int main(void)
         .jogador_R.y = 0,
         .jogador_R.height = TAMANHO_TANQUES,
         .jogador_R.width = TAMANHO_TANQUES,
-        .vidas = 3,
+        .vidas = 1,
         .pontuacao = 0,
         .angulo = 0,
         .vel = {0,0},
         .multiplicador_vel = 1,
         .cor =  {255, 255, 255, 255},
-        .origem_textura={0,0},
+        .origem_textura = {0,0},
         .abates = 0,
         .energizado = false,
-        .jogador_posicionado = false
+        .jogador_posicionado = false,
     };
 
     INIMIGO inimigos[NRO_INIMIGOS]={0};
@@ -105,7 +118,12 @@ int main(void)
     int contador_explosoes = 0;
 
     BLOCO blocos[MAPA_LINHAS][MAPA_COLUNAS] = {0};
-    int mapa[MAPA_LINHAS][MAPA_COLUNAS] = {
+
+    MAPA mapa;
+    mapa.mapa_foi_pre_carregado = FALSE;
+    mapa.mapa_carregado = FALSE;
+    mapa.passagem_aberta = FALSE;
+    int mapa_base[MAPA_LINHAS][MAPA_COLUNAS] = {
         //8-> borda lateral
         //9-> borda superior/inferior
         {7,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,7},
@@ -126,17 +144,15 @@ int main(void)
         {8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8},
         {7,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,7},
     };
-    int mapa_foi_pre_carregado = FALSE;
-    int mapa_carregado = FALSE;
-    int mapa_inicial[MAPA_LINHAS][MAPA_COLUNAS];
-    memcpy(mapa_inicial,mapa,sizeof(mapa));
+    memcpy(mapa.mapa_atual, mapa_base, sizeof(mapa_base));
+    memcpy(mapa.mapa_inicial, mapa_base, sizeof(mapa_base));
+
     int jogo_carregado = FALSE;
-    int fase = 5;
+    int fase = 1;
 
     int segundos = 0;
     float milisegundos = 0.0f;
 
-    //GAME jogo = {
     g_jogo.jogador = jogador;
     g_jogo.contador_inimigos = contador_inimigos;
     g_jogo.contador_projeteis = contador_projeteis;
@@ -146,15 +162,12 @@ int main(void)
     g_jogo.segundos = segundos;
     g_jogo.milisegundos = milisegundos;
     g_jogo.fase = fase;
-    g_jogo.mapa_foi_pre_carregado = mapa_foi_pre_carregado;
     g_jogo.jogo_carregado = jogo_carregado;
-    g_jogo.mapa_carregado = mapa_carregado;
-    //};
+    g_jogo.mapa = mapa;
+
     memcpy(g_jogo.inimigos, inimigos, sizeof(inimigos));
     memcpy(g_jogo.projeteis, projeteis, sizeof(projeteis));
     memcpy(g_jogo.cels_energia, cels_energia, sizeof(cels_energia));
-    memcpy(g_jogo.mapa, mapa, sizeof(mapa));
-    memcpy(g_jogo.mapa_inicial, mapa_inicial, sizeof(mapa));
     memcpy(g_jogo.blocos, blocos, sizeof(blocos));
     memcpy(g_jogo.explosoes, explosoes, sizeof(explosoes));
 
@@ -199,15 +212,18 @@ void DrawScreen(GAME *jogo, int screen_id){
 
         case 11:
             timerSegundos(&jogo->segundos, &jogo->milisegundos);
-            DrawGameplayScreen(jogo, 0);
+            DrawGameplayScreen(jogo);
             break;
 
         case 111:
             DrawPauseMenu(jogo);
             break;
 
+        case 112:
+            DrawDeathScreen(jogo);
+            break;
+
         case 12:
-            timerSegundos(&jogo->segundos, &jogo->milisegundos);
             DrawSavedGameGameplayScreen(jogo);
             break;
 
