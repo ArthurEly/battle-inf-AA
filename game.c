@@ -10,6 +10,7 @@
 #include "highscores.h"
 #include "string.h"
 
+
 void SetActiveScreen(int screen_id);
 
 /*da pra mudar isso dps*/
