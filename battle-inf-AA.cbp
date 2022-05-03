@@ -83,6 +83,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="projetil.h" />
+		<Unit filename="tela_morte.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="tela_morte.h" />
 		<Extensions>
 			<lib_finder disable_auto="1" />
 		</Extensions>

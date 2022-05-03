@@ -43,8 +43,9 @@ int main(void)
     g_jogo.texturas.texture = LoadTexture("assets/FUNDO JOGO.png");
     g_jogo.texturas.pause = LoadTexture("assets/Tela pause.png");
     g_jogo.texturas.highscore = LoadTexture("assets/Highscores.png");
+    g_jogo.texturas.fundo = LoadTexture("assets/Highscores.png");
     g_jogo.texturas.carregar = LoadTexture("assets/Carregar mapa.png");
-    g_jogo.texturas.morte = LoadTexture("assets/Tela morte.png");
+    g_jogo.texturas.morte = LoadTexture("assets/fundo.png");
 
     g_jogo.texturas.energia = LoadTexture("assets/energy_drop.png");
     g_jogo.texturas.energia.height = ALTURA_CELS_ENERGIA;

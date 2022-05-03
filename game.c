@@ -23,6 +23,8 @@ void DrawGameplayScreen(GAME *jogo){
     //printf("%d.%.2f\n",jogo->segundos, jogo->milisegundos);
 
     ClearBackground(RAYWHITE);
+    DrawTextureEx(jogo->texturas.fundo, (Vector2){0,0}, 0, 1, WHITE);
+
     int i,j,k;
 
     if(jogo->jogador.vidas == 0){

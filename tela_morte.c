@@ -3,6 +3,7 @@
 #include "pause_menu.h"
 #include "game.h"
 #include "highscores.h"
+#include "string.h"
 
 #define TEXTOS 3
 

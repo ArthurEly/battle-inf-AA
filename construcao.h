@@ -20,6 +20,7 @@ typedef struct texturas{
     Texture2D explosa;
     Texture2D morte;
     Texture2D bala;
+    Texture2D fundo;
 }TEXTURAS;
 
 typedef struct id{
