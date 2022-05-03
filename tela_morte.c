@@ -15,12 +15,11 @@ void DrawDeathScreen(GAME *jogo){
     const int pause_menu_items[2]={11,10};
     const int PAUSE_MENU_ITEMS_QTDY = sizeof(pause_menu_items)/sizeof(pause_menu_items[0]);
 
-    const char *escrito[3] = {"Novo jogo",
-                              "Voltar ao menu",
-                              " "};
+    const char *escrito[2] = {"Novo jogo",
+                              "Voltar ao menu"};
 
     ClearBackground(RED);
-    DrawTextureEx(jogo->texturas.morte, (Vector2){0,0}, 0, 1, WHITE);
+    DrawTextureEx(jogo->texturas.morte, (Vector2){-50,0}, 0, 1, WHITE);
     Color optionColor = LIGHTGRAY;
     int tamanho_fonte = 36;
 
@@ -58,26 +57,6 @@ void DrawDeathScreen(GAME *jogo){
     novo_highscore.pontuacao = jogo->jogador.pontuacao;
     novo_highscore.segundos = jogo->segundos;
 
-    //serve pra teste, nao apaga ainda
-    /*printf("nome jogador -> %s\n",novo_highscore.nome);
-    printf("pontuacao jogador -> %d\n",novo_highscore.pontuacao);
-    printf("ultimo_highscore.pontuacao -> %d\n",ultimo_highscore.pontuacao);
-
-    if(novo_highscore.pontuacao > ultimo_highscore.pontuacao){
-
-    }else if (jogo->jogador.pontuacao == ultimo_highscore.pontuacao){
-        if(jogo->segundos < ultimo_highscore.segundos){
-
-
-        }else if (jogo->segundos > ultimo_highscore.pontuacao){
-            printf("bah, n melhora esse tempo ai\n");
-        }else{
-            printf("deu empate. quem chego primeiro tem preferencia kkkkkkkkk\n");
-        }
-    }else{
-        printf("horrivel\n");
-    }*/
-
     int nova_opcao = 0;
     if(novo_highscore.pontuacao >= ultimo_highscore.pontuacao && novo_highscore.pontuacao !=0 && !jogo->mapa.mapa_foi_pre_carregado){
         nova_opcao = 1;
@@ -111,6 +90,8 @@ void DrawDeathScreen(GAME *jogo){
         DrawRectangleRec(input_nome,WHITE);
         DrawText(jogo->jogador.nome, (int)input_nome.x + 15, (int)input_nome.y + 30, 70, BLACK);
         if(IsKeyDown(KEY_ENTER) && death_menu_option == 2){
+            death_menu_option = 0;
+            nova_opcao = 0;
             strcpy(novo_highscore.nome,jogo->jogador.nome);
             atualizarHighscore(&novo_highscore);
             printf("parabens!!!!!\n");

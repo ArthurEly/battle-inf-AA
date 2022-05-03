@@ -77,10 +77,7 @@ void escreverHighscores(HIGHSCORE highscores[]){
         rewind(highscores_fp);
         for(i=0; i<QTDE_HIGHSCORES; i++){
             if(fwrite(&highscores[i],sizeof(HIGHSCORE),1,highscores_fp) != (-1)){
-                printf("%o lugar: \n",i);
-                printf("nome: %s\n",highscores[i].nome);
-                printf("pontuacao: %d\n",highscores[i].pontuacao);
-                printf("segundos: %d\n",highscores[i].segundos);
+
             }else{
                 perror("big problema: ");
             }
@@ -105,9 +102,6 @@ void lerHighscores(HIGHSCORE highscores[]){
                 strcpy(highscores[i].nome,highscore.nome);
                 highscores[i].pontuacao = highscore.pontuacao;
                 highscores[i].segundos = highscore.segundos;
-                printf("nome: %s\n",highscores[i].nome);
-                printf("pontuacao: %d\n",highscores[i].pontuacao);
-                printf("segundos: %d\n",highscores[i].segundos);
             }
             i++;
         }
@@ -126,10 +120,7 @@ void lerUltimoColocado(HIGHSCORE *highscore){
         //posicao varia de 0 a 4
         fseek(highscores_fp,(QTDE_HIGHSCORES-1)*sizeof(HIGHSCORE),SEEK_SET);
         if(fread(&ultimo_highscore,sizeof(HIGHSCORE),1,highscores_fp) != (-1)){
-            printf("POOOOOOOOOOOOOOOOOOOOOOOORAAAAAAAAAA\n\n\n\n\n\n");
-            printf("nome: %s\n",ultimo_highscore.nome);
-            printf("pontuacao: %d\n",ultimo_highscore.pontuacao);
-            printf("segundos: %d\n",ultimo_highscore.segundos);
+
         }
         *highscore = ultimo_highscore;
     }else{
@@ -148,14 +139,6 @@ void atualizarHighscore(HIGHSCORE *novo_highscore){
 
     FILE *highscores_fp;
     highscores_fp = fopen("highscore.bin","wb+");
-
-    printf("vamo ve come q ta os atualizado\n");
-    for (i=0; i<QTDE_HIGHSCORES ; i++){
-        printf("%o lugar: \n",i);
-        printf("nome: %s\n",highscores_atualizados[i].nome);
-        printf("pontuacao: %d\n",highscores_atualizados[i].pontuacao);
-        printf("segundos: %d\n",highscores_atualizados[i].segundos);
-    }
 
     int posicionado = FALSE;
 
@@ -176,14 +159,6 @@ void atualizarHighscore(HIGHSCORE *novo_highscore){
             highscores_atualizados[i] = highscores_antigos[j];
             j++;
         }
-    }
-
-    printf("aqui mano puta que pariu\n");
-    for (i=0; i<QTDE_HIGHSCORES ; i++){
-        printf("%o lugar: \n",(i+1));
-        printf("nome: %s\n",highscores_atualizados[i].nome);
-        printf("pontuacao: %d\n",highscores_atualizados[i].pontuacao);
-        printf("segundos: %d\n",highscores_atualizados[i].segundos);
     }
 
     escreverHighscores(highscores_atualizados);

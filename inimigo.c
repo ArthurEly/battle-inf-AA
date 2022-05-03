@@ -13,7 +13,7 @@
 
 #define FALSE 0
 #define TRUE 1
-int qtde_inimigos = 0;
+
 void criarNovoInimigo(int mapa[][MAPA_COLUNAS], BLOCO blocos[][MAPA_COLUNAS], INIMIGO *inimigo, int altura_tanque, int largura_tanque){
     inimigo->inimigo_R.height = altura_tanque;
     inimigo->inimigo_R.width = largura_tanque;
@@ -52,7 +52,6 @@ void criarNovoInimigo(int mapa[][MAPA_COLUNAS], BLOCO blocos[][MAPA_COLUNAS], IN
     if (inimigo->inimigo_posicionado){
         inimigo->inimigo_R.x = converterIndiceXParaCoordenada(novo_x);
         inimigo->inimigo_R.y = converterIndiceYParaCoordenada(novo_y);
-        qtde_inimigos++;
     }else{
         INIMIGO z_inimigo = {0};
         *inimigo = z_inimigo;

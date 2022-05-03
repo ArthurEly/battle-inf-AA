@@ -431,7 +431,7 @@ void DrawGameplayScreen(GAME *jogo){
     DrawRectangle(1020,CABECALHO+200,130,420,DARKGRAY);
     if(!jogo->mapa.passagem_aberta){
         DrawText(TextFormat("Kills"), 1040, CABECALHO+220, 48, ORANGE);
-        DrawText(TextFormat("%d", jogo->jogador.abates), 1075, CABECALHO+270, 48, ORANGE);
+        DrawText(TextFormat("%d", (NRO_INIMIGOS*(jogo->fase-1)+jogo->jogador.abates)), 1075, CABECALHO+270, 48, ORANGE);
         int linha = 0;
         int coluna = 0;
         for (i=0; i<jogo->contador_inimigos;i++){
@@ -466,8 +466,11 @@ void DrawGameplayScreen(GAME *jogo){
                 coluna = 0;
             }
         }
+        DrawText(TextFormat("Faltam"), 1050, 625, 24, ORANGE);
+        DrawText(TextFormat("%d inimigos",(NRO_INIMIGOS - jogo->jogador.abates)), 1030, 660, 24, ORANGE);
     }else{
-        DrawText(TextFormat("Entra ai", jogo->jogador.abates), 1035, 625, 24, ORANGE);
+        DrawText(TextFormat("Prox. fase!", jogo->jogador.abates), 1020, 625, 24, ORANGE);
+        DrawText(TextFormat("<----------",(NRO_INIMIGOS - jogo->jogador.abates)), 1020, 660, 24, ORANGE);
     }
 
     if(IsKeyPressed(KEY_S)){
@@ -501,7 +504,11 @@ void DrawNewGameplayScreen(GAME *jogo){
 }
 
 void DrawSavedGameGameplayScreen(GAME *jogo){
+    printf("altura morte DrawSavedGameGameplayScreen: %d\n",jogo->texturas.morte.height);
+    printf("largura morte DrawSavedGameGameplayScreen: %d\n",jogo->texturas.morte.width);
     carregarJogoSalvo(jogo);
+    printf("altura morte DrawSavedGameGameplayScreen: %d\n",jogo->texturas.morte.height);
+    printf("largura morte DrawSavedGameGameplayScreen: %d\n",jogo->texturas.morte.width);
     SetActiveScreen(11);
 }
 
@@ -533,8 +540,6 @@ void salvarJogo(GAME *jogo){
     jogo_salvo.milisegundos = jogo->milisegundos;
 
     jogo_salvo.jogo_carregado = jogo->jogo_carregado;
-
-    jogo_salvo.texturas = jogo->texturas;
 
     if (save_fp != NULL){
         if (fwrite(&jogo_salvo, sizeof(GAME), 1, save_fp) != 1){
@@ -581,8 +586,6 @@ void carregarJogoSalvo(GAME *jogo){
             jogo->milisegundos = jooj.milisegundos;
             jogo->fase = jooj.fase;
             jogo->jogo_carregado = jooj.jogo_carregado;
-
-            jogo->texturas = jooj.texturas;
         }else{
             perror("erro na leitura do save ");
         }
