@@ -71,21 +71,16 @@ void atirarProjetilJogador(PROJETIL *projetil, JOGADOR jogador){
 void atirarProjetilInimigo(PROJETIL *projetil, INIMIGO inimigo){
     projetil->em_movimento = 1;
     projetil->tanque_de_origem = 'i';
-    projetil->projetil_R.height = inimigo.inimigo_R.height*0.8;
-    projetil->projetil_R.width = inimigo.inimigo_R.width*0.8;
-
-    projetil->projetil_textura_R.x = 0;
-    projetil->projetil_textura_R.y = 0;
-    projetil->projetil_textura_R.height = 80;
-    projetil->projetil_textura_R.width  = 80;
 
     int velocidade = 10;
-    int variacao = inimigo.inimigo_R.height*0.4;
+    int variacao = inimigo.inimigo_R.height*0.15;
 
     projetil->angulo = inimigo.angulo;
 
     switch(projetil->angulo){
         case 0:
+            projetil->projetil_R.height = inimigo.inimigo_R.height*0.6;
+            projetil->projetil_R.width = inimigo.inimigo_R.width*0.3;
             projetil->projetil_R.x = inimigo.inimigo_R.x+((float)(inimigo.inimigo_R.width/2)-variacao);
             projetil->projetil_R.y = inimigo.inimigo_R.y;
             projetil->vel.vx = 0;
@@ -95,6 +90,8 @@ void atirarProjetilInimigo(PROJETIL *projetil, INIMIGO inimigo){
             break;
 
         case 90:
+            projetil->projetil_R.height = inimigo.inimigo_R.height*0.3;
+            projetil->projetil_R.width = inimigo.inimigo_R.width*0.6;
             projetil->projetil_R.x = inimigo.inimigo_R.x+((float)(inimigo.inimigo_R.width)-variacao);
             projetil->projetil_R.y = inimigo.inimigo_R.y+((float)(inimigo.inimigo_R.height/2)-variacao);
             projetil->vel.vx = velocidade;
@@ -105,6 +102,8 @@ void atirarProjetilInimigo(PROJETIL *projetil, INIMIGO inimigo){
 
 
         case 180:
+            projetil->projetil_R.height = inimigo.inimigo_R.height*0.6;
+            projetil->projetil_R.width = inimigo.inimigo_R.width*0.3;
             projetil->projetil_R.x = inimigo.inimigo_R.x+((float)(inimigo.inimigo_R.width/2)-variacao);
             projetil->projetil_R.y = inimigo.inimigo_R.y+((float)(inimigo.inimigo_R.height)-variacao);
             projetil->vel.vx = 0;
@@ -115,6 +114,8 @@ void atirarProjetilInimigo(PROJETIL *projetil, INIMIGO inimigo){
 
 
         case 270:
+            projetil->projetil_R.height = inimigo.inimigo_R.height*0.3;
+            projetil->projetil_R.width = inimigo.inimigo_R.width*0.6;
             projetil->projetil_R.x = inimigo.inimigo_R.x;
             projetil->projetil_R.y = inimigo.inimigo_R.y+((float)(inimigo.inimigo_R.height/2)-variacao);
             projetil->vel.vx = -velocidade;
@@ -123,6 +124,11 @@ void atirarProjetilInimigo(PROJETIL *projetil, INIMIGO inimigo){
             projetil->origem_textura.y  = 0;
             break;
     }
+
+    projetil->projetil_textura_R.x = 0;
+    projetil->projetil_textura_R.y = 0;
+    projetil->projetil_textura_R.height = 80;
+    projetil->projetil_textura_R.width  = 80;
 }
 
 void movimentarProjeteis(PROJETIL *projetil){
@@ -169,7 +175,6 @@ void renderizarProjeteis(PROJETIL *projetil, Texture textura){
             origem_textura.y  = 0;
             break;
     }
-
     DrawTexturePro(
         textura,
         projetil->projetil_textura_R,

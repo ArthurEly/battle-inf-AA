@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1651583496 source:c:\battle inf\battle-inf-aa\main.c
+1651610927 source:c:\battle inf\battle-inf-aa\main.c
 	"raylib.h"
 	"game.h"
 	"menu.h"
@@ -25,7 +25,7 @@
 	"raylib.h"
 	"stdio.h"
 
-1651583473 c:\battle inf\battle-inf-aa\game.h
+1651609026 c:\battle inf\battle-inf-aa\game.h
 	"stdio.h"
 	"raylib.h"
 	"jogador.h"
@@ -72,7 +72,7 @@
 1651306779 c:\battle inf\battle-inf-aa\pause_menu.h
 	"game.h"
 
-1651581983 source:c:\battle inf\battle-inf-aa\game.c
+1651610813 source:c:\battle inf\battle-inf-aa\game.c
 	"game.h"
 	"raylib.h"
 	"stdio.h"
@@ -85,7 +85,7 @@
 	"highscores.h"
 	"string.h"
 
-1651544288 source:c:\battle inf\battle-inf-aa\highscores.c
+1651610276 source:c:\battle inf\battle-inf-aa\highscores.c
 	"raylib.h"
 	"stdio.h"
 	"highscores.h"
@@ -177,7 +177,7 @@
 	"math.h"
 	"string.h"
 
-1651583493 source:c:\battle inf\battle-inf-aa\projetil.c
+1651608349 source:c:\battle inf\battle-inf-aa\projetil.c
 	"game.h"
 	"raylib.h"
 	"stdio.h"
@@ -335,7 +335,7 @@
 1651544109 c:\battle inf\battle-inf-aa\explosoes.h
 	"game.h"
 
-1651576611 source:c:\battle inf\battle-inf-aa\tela_morte.c
+1651611555 source:c:\battle inf\battle-inf-aa\tela_morte.c
 	"raylib.h"
 	"stdio.h"
 	"pause_menu.h"

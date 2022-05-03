@@ -10,6 +10,7 @@
 void SetActiveScreen(int screen_id);
 
 int death_menu_option=0;
+int letterCount = 0;
 void DrawDeathScreen(GAME *jogo){
     const int pause_menu_items[2]={11,10};
     const int PAUSE_MENU_ITEMS_QTDY = sizeof(pause_menu_items)/sizeof(pause_menu_items[0]);
@@ -19,17 +20,10 @@ void DrawDeathScreen(GAME *jogo){
                               " "};
 
     ClearBackground(RED);
-    DrawTextureEx(jogo->texturas.morte, (Vector2){-75,0}, 0, 1, WHITE);
+    DrawTextureEx(jogo->texturas.morte, (Vector2){0,0}, 0, 1, WHITE);
     Color optionColor = LIGHTGRAY;
     int tamanho_fonte = 36;
 
-    if(IsKeyPressed(KEY_DOWN) && death_menu_option<PAUSE_MENU_ITEMS_QTDY-1 + 1){
-       death_menu_option++;
-    }
-
-    if(IsKeyPressed(KEY_UP) && death_menu_option > 0){
-       death_menu_option--;
-    }
     int i;
     for (i = 0; i < 2; i++){
         if(death_menu_option == i){
@@ -40,10 +34,6 @@ void DrawDeathScreen(GAME *jogo){
             tamanho_fonte = 36;
         }
         DrawTextEx(jogo->fontes.fonte_legal, escrito[i], (Vector2){(565 - (MeasureTextEx(jogo->fontes.fonte_legal, escrito[i], tamanho_fonte, 2).x)/2), 300 + 75*i}, tamanho_fonte, 2, optionColor);
-    }
-
-    if (death_menu_option == 2){
-        DrawRectangle(212,438,725,225,ORANGE);
     }
 
     if(IsKeyPressed(KEY_ENTER)){
@@ -88,15 +78,53 @@ void DrawDeathScreen(GAME *jogo){
         printf("horrivel\n");
     }*/
 
-    if(novo_highscore.pontuacao >= ultimo_highscore.pontuacao){
-        DrawRectangle(225,450,700,200,WHITE);
-        DrawText(TextFormat("dai abre essa coisa aqui se o highscore for maior q algum q tem la"), -10, 500, 36, RED);
-        if(IsKeyDown(KEY_H)){
+    int nova_opcao = 0;
+    if(novo_highscore.pontuacao >= ultimo_highscore.pontuacao && novo_highscore.pontuacao !=0 && !jogo->mapa.mapa_foi_pre_carregado){
+        nova_opcao = 1;
+        if (death_menu_option == 2){
+                DrawRectangle(212,438,725,175,ORANGE);
+                // Get char pressed (unicode character) on the queue
+                int key = GetCharPressed();
+
+                // Check if more characters have been pressed on the same frame
+                while (key > 0)
+                {
+                    // NOTE: Only allow keys in range [32..125]
+                    if ((key >= 32) && (key <= 125) && (letterCount < TAMANHO_NOME))
+                    {
+                        jogo->jogador.nome[letterCount] = (char)key;
+                        jogo->jogador.nome[letterCount+1] = '\0'; // Add null terminator at the end of the string.
+                        letterCount++;
+                    }
+
+                    key = GetCharPressed();  // Check next character in the queue
+                }
+
+                if (IsKeyPressed(KEY_BACKSPACE))
+                {
+                    letterCount--;
+                    if (letterCount < 0) letterCount = 0;
+                    jogo->jogador.nome[letterCount] = '\0';
+                }
+        }
+        Rectangle input_nome = {225,450,700,150};
+        DrawRectangleRec(input_nome,WHITE);
+        DrawText(jogo->jogador.nome, (int)input_nome.x + 15, (int)input_nome.y + 30, 70, BLACK);
+        if(IsKeyDown(KEY_ENTER) && death_menu_option == 2){
+            strcpy(novo_highscore.nome,jogo->jogador.nome);
             atualizarHighscore(&novo_highscore);
             printf("parabens!!!!!\n");
             resetarJogo(jogo);
             SetActiveScreen(14);
         }
+    }
+
+    if(IsKeyPressed(KEY_DOWN) && death_menu_option<PAUSE_MENU_ITEMS_QTDY-1 + nova_opcao){
+       death_menu_option++;
+    }
+
+    if(IsKeyPressed(KEY_UP) && death_menu_option > 0){
+       death_menu_option--;
     }
 }
 

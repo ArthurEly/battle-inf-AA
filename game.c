@@ -23,7 +23,7 @@ void DrawGameplayScreen(GAME *jogo){
     //printf("%d.%.2f\n",jogo->segundos, jogo->milisegundos);
 
     ClearBackground(RAYWHITE);
-    DrawTextureEx(jogo->texturas.fundo, (Vector2){0,0}, 0, 1, WHITE);
+    DrawTextureEx(jogo->texturas.fundo, (Vector2){-75,0}, 0, 1, WHITE);
     Color cor_jogo_fundo = {50,50,50,255};
     DrawRectangle(TAMANHO_BORDA_MAPA,CABECALHO+TAMANHO_BORDA_MAPA,1000,600,cor_jogo_fundo);
     int i,j,k;
@@ -651,7 +651,7 @@ void reiniciarJogo(GAME *jogo){
             .origem_textura={0,0},
             .abates = 0,
             .jogador_posicionado = false,
-            .nome = {"NUMERO UNO"}
+            .nome = {"Soldado"}
     };
     jogo->jogador = z_jogador;
 

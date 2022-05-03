@@ -24,7 +24,7 @@ int g_screens[7]={
         13, //Load Map Screen
         14,  //HighScore Screen
     };
-int g_active_screen = 11;
+int g_active_screen = 10;
 const int SCREENS_QTDY = sizeof(g_screens)/sizeof(g_screens[0]);
 
 int main(void)
@@ -45,7 +45,7 @@ int main(void)
     g_jogo.texturas.highscore = LoadTexture("assets/Highscores.png");
     g_jogo.texturas.fundo = LoadTexture("assets/fundo-jogo.png");
     g_jogo.texturas.carregar = LoadTexture("assets/Carregar mapa.png");
-    g_jogo.texturas.morte = LoadTexture("assets/fundo.png");
+    g_jogo.texturas.morte = LoadTexture("assets/tela_morte.png");
 
     g_jogo.texturas.energia = LoadTexture("assets/energy_drop.png");
     g_jogo.texturas.energia.height = ALTURA_CELS_ENERGIA;
@@ -98,7 +98,7 @@ int main(void)
         .jogador_R.y = 0,
         .jogador_R.height = TAMANHO_TANQUES,
         .jogador_R.width = TAMANHO_TANQUES,
-        .vidas = 1,
+        .vidas = 3,
         .pontuacao = 0,
         .angulo = 0,
         .vel = {0,0},

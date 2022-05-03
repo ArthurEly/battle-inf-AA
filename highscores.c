@@ -21,10 +21,10 @@ void DrawHighScoresScreen(GAME *jogo){
     //resetarHighscores();
     lerHighscores(highscores);
 
-    DrawTextEx(jogo->fontes.fonte_legal, TextFormat("Lugar"),     (Vector2){50, 275}, 36, 2, WHITE);
-    DrawTextEx(jogo->fontes.fonte_legal, TextFormat("Nome"),      (Vector2){325, 275}, 36, 2, WHITE);
-    DrawTextEx(jogo->fontes.fonte_legal, TextFormat("Pontos"),    (Vector2){600, 275}, 36, 2, WHITE);
-    DrawTextEx(jogo->fontes.fonte_legal, TextFormat("Tempo"),     (Vector2){900, 275}, 36, 2, WHITE);
+    //DrawTextEx(jogo->fontes.fonte_legal, TextFormat("Lugar"),     (Vector2){50, 275}, 36, 2, WHITE);
+    DrawTextEx(jogo->fontes.fonte_legal, TextFormat("Nome"),      (Vector2){(300 - (MeasureTextEx(jogo->fontes.fonte_legal, TextFormat("Nome"), 36, 2).x)/2), 275}, 36, 2, WHITE);
+    DrawTextEx(jogo->fontes.fonte_legal, TextFormat("Pontos"),    (Vector2){(650 - (MeasureTextEx(jogo->fontes.fonte_legal, TextFormat("Pontos"), 36, 2).x)/2), 275}, 36, 2, WHITE);
+    DrawTextEx(jogo->fontes.fonte_legal, TextFormat("Tempo"),     (Vector2){(950 - (MeasureTextEx(jogo->fontes.fonte_legal, TextFormat("Tempo"), 36, 2).x)/2), 275}, 36, 2, WHITE);
     Color cor;
     for (int i = 0; i < QTDE_HIGHSCORES; i++){
         if(i == 0){
@@ -37,9 +37,9 @@ void DrawHighScoresScreen(GAME *jogo){
             cor = WHITE;
         }
         DrawTextEx(jogo->fontes.fonte_legal, TextFormat("%d",(i+1)),                    (Vector2){50, 325 + 50*(i+1)}, 24, 2, cor);
-        DrawTextEx(jogo->fontes.fonte_legal, TextFormat("%s", highscores[i].nome),      (Vector2){325, 325 + 50*(i+1)}, 18, 2, cor);
-        DrawTextEx(jogo->fontes.fonte_legal, TextFormat("%i", highscores[i].pontuacao), (Vector2){600, 325 + 50*(i+1)}, 22, 2, cor);
-        DrawTextEx(jogo->fontes.fonte_legal, TextFormat("%ds",highscores[i].segundos),  (Vector2){900, 325 + 50*(i+1)}, 20, 2, cor);
+        DrawTextEx(jogo->fontes.fonte_legal, TextFormat("%s", highscores[i].nome),      (Vector2){100, 325 + 50*(i+1)}, 22, 2, cor);
+        DrawTextEx(jogo->fontes.fonte_legal, TextFormat("%i", highscores[i].pontuacao), (Vector2){575, 325 + 50*(i+1)}, 22, 2, cor);
+        DrawTextEx(jogo->fontes.fonte_legal, TextFormat("%ds",highscores[i].segundos),  (Vector2){900, 325 + 50*(i+1)}, 22, 2, cor);
     }
 
     if(IsKeyPressed(KEY_P)){
