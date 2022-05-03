@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1651543830 source:c:\battle inf\battle-inf-aa\main.c
+1651583496 source:c:\battle inf\battle-inf-aa\main.c
 	"raylib.h"
 	"game.h"
 	"menu.h"
@@ -25,7 +25,7 @@
 	"raylib.h"
 	"stdio.h"
 
-1651544125 c:\battle inf\battle-inf-aa\game.h
+1651583473 c:\battle inf\battle-inf-aa\game.h
 	"stdio.h"
 	"raylib.h"
 	"jogador.h"
@@ -72,7 +72,7 @@
 1651306779 c:\battle inf\battle-inf-aa\pause_menu.h
 	"game.h"
 
-1651544139 source:c:\battle inf\battle-inf-aa\game.c
+1651581983 source:c:\battle inf\battle-inf-aa\game.c
 	"game.h"
 	"raylib.h"
 	"stdio.h"
@@ -93,7 +93,7 @@
 	"construcao.h"
 	"string.h"
 
-1651466229 source:c:\battle inf\battle-inf-aa\menu.c
+1651575704 source:c:\battle inf\battle-inf-aa\menu.c
 	"raylib.h"
 	"stdio.h"
 	"menu.h"
@@ -103,7 +103,7 @@
 	"raylib.h"
 	"stdio.h"
 
-1651466411 source:c:\battle inf\battle-inf-aa\pause_menu.c
+1651575697 source:c:\battle inf\battle-inf-aa\pause_menu.c
 	"raylib.h"
 	"stdio.h"
 	"pause_menu.h"
@@ -166,7 +166,7 @@
 	"cel_energia.h"
 	"mapa.h"
 
-1651491702 source:c:\battle inf\battle-inf-aa\inimigo.c
+1651579225 source:c:\battle inf\battle-inf-aa\inimigo.c
 	"game.h"
 	"raylib.h"
 	"stdio.h"
@@ -177,7 +177,7 @@
 	"math.h"
 	"string.h"
 
-1651495698 source:c:\battle inf\battle-inf-aa\projetil.c
+1651583493 source:c:\battle inf\battle-inf-aa\projetil.c
 	"game.h"
 	"raylib.h"
 	"stdio.h"
@@ -246,7 +246,7 @@
 	"projetil.h"
 	"construcao.h"
 
-1651495710 c:\battle inf\battle-inf-aa\projetil.h
+1651581725 c:\battle inf\battle-inf-aa\projetil.h
 
 1651497065 c:\users\user\documents\ufrgs\algoritmos e programacao\trabalho final\battle-inf-aa\projetil.h
 
@@ -256,7 +256,7 @@
 	"stdio.h"
 	"construcao.h"
 
-1651494527 c:\battle inf\battle-inf-aa\construcao.h
+1651557100 c:\battle inf\battle-inf-aa\construcao.h
 	"raylib.h"
 	"game.h"
 
@@ -335,12 +335,13 @@
 1651544109 c:\battle inf\battle-inf-aa\explosoes.h
 	"game.h"
 
-1651493304 source:c:\battle inf\battle-inf-aa\tela_morte.c
+1651576611 source:c:\battle inf\battle-inf-aa\tela_morte.c
 	"raylib.h"
 	"stdio.h"
 	"pause_menu.h"
 	"game.h"
 	"highscores.h"
+	"string.h"
 
 1651444390 source:c:\users\user\documents\ufrgs\algoritmos e programacao\trabalho final\battle-inf-aa\explosoes.c
 	"game.h"

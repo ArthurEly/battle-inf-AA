@@ -24,7 +24,8 @@ void DrawGameplayScreen(GAME *jogo){
 
     ClearBackground(RAYWHITE);
     DrawTextureEx(jogo->texturas.fundo, (Vector2){0,0}, 0, 1, WHITE);
-
+    Color cor_jogo_fundo = {50,50,50,255};
+    DrawRectangle(TAMANHO_BORDA_MAPA,CABECALHO+TAMANHO_BORDA_MAPA,1000,600,cor_jogo_fundo);
     int i,j,k;
 
     if(jogo->jogador.vidas == 0){
@@ -99,30 +100,9 @@ void DrawGameplayScreen(GAME *jogo){
             renderizarBloquinho(&jogo->texturas,jogo->blocos[i][j]);
         }
     }
-
-    DrawText(TextFormat("Fase: %i", jogo->fase), 600, 20, 48, ORANGE);
-    DrawText(TextFormat("%ds", jogo->segundos), 1025, 20, 48, ORANGE);
-    if(!jogo->mapa.passagem_aberta){
-        DrawText(TextFormat("Kills"), 1025, 400, 48, ORANGE);
-        DrawText(TextFormat("%d", jogo->jogador.abates), 1063, 450, 48, ORANGE);
-    }else{
-        DrawText(TextFormat("Entra ai", jogo->jogador.abates), 1025, 625, 24, ORANGE);
-    }
-    DrawText(TextFormat("Pontuacao: %i", jogo->jogador.pontuacao), 250, 30, 36, DARKGRAY);
-    for(i=0; i<jogo->jogador.vidas; i++){
-        DrawTextureEx(jogo->texturas.escudo, (Vector2){i*65, 0}, 0, 0.11, WHITE);
-    }
     /**
     JOGADOR
     */
-    DrawRectangle(
-        jogo->jogador.jogador_R.x,
-        jogo->jogador.jogador_R.y,
-        jogo->jogador.jogador_R.width,
-        jogo->jogador.jogador_R.height,
-        SKYBLUE
-    );
-
     DrawTexturePro(
         jogo->texturas.jogador,
         tanque_textura_R,
@@ -251,20 +231,13 @@ void DrawGameplayScreen(GAME *jogo){
 
                 int atirar = GetRandomValue(0,100);
                 if (atirar == 0){
-                    //atirarProjetilInimigo(&jogo->projeteis[jogo->contador_projeteis],jogo->inimigos[i]);
+                    atirarProjetilInimigo(&jogo->projeteis[jogo->contador_projeteis],jogo->inimigos[i]);
+                    PlaySound(jogo->sons.tiro);
                 }
             }
             else{
                 tanque_inimigo_textura = jogo->texturas.inimigo_patrulha;
             }
-
-            DrawRectangle(
-                jogo->inimigos[i].inimigo_R.x,
-                jogo->inimigos[i].inimigo_R.y,
-                jogo->inimigos[i].inimigo_R.height,
-                jogo->inimigos[i].inimigo_R.width,
-                DARKGREEN
-            );
 
             DrawTexturePro(
                 tanque_inimigo_textura,
@@ -284,7 +257,9 @@ void DrawGameplayScreen(GAME *jogo){
 
         if (jogo->projeteis[i].em_movimento == 1){
             movimentarProjeteis(&jogo->projeteis[i]);
-            renderizarProjeteis(&jogo->projeteis[i]);
+
+
+            renderizarProjeteis(&jogo->projeteis[i], jogo->texturas.bala);
 
             for(j=0; j<jogo->contador_inimigos; j++){
                 if (checarColisaoProjeteisEInimigo(&jogo->projeteis[i], &jogo->inimigos[j])){
@@ -339,34 +314,27 @@ void DrawGameplayScreen(GAME *jogo){
         CELULAS DE ENERGIA
     */
     int rand = 0;
-    rand = GetRandomValue(0,100);
+    rand = GetRandomValue(0,3);
     if(rand == 0){
         if(jogo->contador_cels_energia < NRO_CELS_ENERGIA){
-            //if(jogo->segundos % TEMPO_DE_SPAWN_CELS_ENERGIA == 0 && jogo->milisegundos == 0){
+            if(jogo->segundos % TEMPO_DE_SPAWN_CELS_ENERGIA == 0 && jogo->milisegundos == 0){
                 if(jogo->cels_energia[i].cel_energia_posicionada == FALSE){
                     criarCelulaDeEnergia(jogo->mapa.mapa_atual, jogo->blocos, &jogo->cels_energia[jogo->contador_cels_energia]);
                     jogo->contador_cels_energia++;
                 }
-            //}
+            }
         }else{
-            //if(jogo->segundos % TEMPO_DE_SPAWN_CELS_ENERGIA == 0 && jogo->milisegundos == 0){
+            if(jogo->segundos % TEMPO_DE_SPAWN_CELS_ENERGIA == 0 && jogo->milisegundos == 0){
                 for(i=0; i<NRO_CELS_ENERGIA; i++){
                     if (jogo->cels_energia[i].ativa == false && jogo->cels_energia[i].cel_energia_posicionada == FALSE){
                         criarCelulaDeEnergia(jogo->mapa.mapa_atual, jogo->blocos, &jogo->cels_energia[i]);
                     }
                 }
-           // }
+            }
         }
     }
     for(i=0; i<NRO_CELS_ENERGIA; i++){
         if(jogo->cels_energia[i].ativa == true){
-            DrawRectangle(
-                jogo->cels_energia[i].cel_energia_R.x,
-                jogo->cels_energia[i].cel_energia_R.y,
-                jogo->cels_energia[i].cel_energia_R.width,
-                jogo->cels_energia[i].cel_energia_R.height,
-                YELLOW
-            );
             DrawTexturePro(
                 jogo->texturas.energia,
                 energia_textura,
@@ -377,7 +345,6 @@ void DrawGameplayScreen(GAME *jogo){
             );
 
             if (checarColisaoJogadorECelEnergia(&jogo->jogador.jogador_R, &jogo->cels_energia[i].cel_energia_R)){
-                //botar esse contador num define
                 if (jogo->contador_interno_cel_energia < 20){
                     jogo->contador_interno_cel_energia += 10;
                 }
@@ -396,10 +363,8 @@ void DrawGameplayScreen(GAME *jogo){
 
         if (jogo->milisegundos < 500){
             jogo->jogador.cor = YELLOW;
-            //mudarCorBorda(jogo->blocos,BLUE);
         }else if(jogo->milisegundos > 500){
             jogo->jogador.cor = WHITE;
-           //mudarCorBorda(jogo->blocos,YELLOW);
         }
 
         if(jogo->contador_interno_cel_energia == 0){
@@ -426,6 +391,84 @@ void DrawGameplayScreen(GAME *jogo){
         MAPA DNV
     */
     atualizarMapa(jogo->mapa.mapa_atual,jogo->blocos,jogo->jogador,jogo->inimigos,jogo->contador_inimigos,jogo->cels_energia, jogo->contador_cels_energia);
+
+    /**
+        LAYOUT
+    */
+
+    //DrawRectangle(0,0,1020,CABECALHO,BLUE);
+    for(i=0; i<jogo->jogador.vidas; i++){
+        DrawTextureEx(jogo->texturas.escudo, (Vector2){i*65, 0}, 0, 0.11, WHITE);
+    }
+    DrawText(TextFormat("Pontuacao: %i", jogo->jogador.pontuacao), 375, 30, 36, WHITE);
+    DrawText(TextFormat("Fase: %i", jogo->fase), 800, 20, 48, ORANGE);
+
+    DrawRectangle(1020,0,130,CABECALHO,DARKGRAY);
+    DrawText(TextFormat("%ds", jogo->segundos), 1045, 25, 48, ORANGE);
+
+    Rectangle miniatura_cel_energia_R = {1050,CABECALHO+30,70,70};
+    Vector2 miniatura_origem_textura = {0,0};
+    Color cor_miniatura;
+    Color cor_contador_cel_energia;
+    if(jogo->jogador.energizado){
+        cor_miniatura = WHITE;
+        DrawRectangle(1020,CABECALHO,130,200,YELLOW);
+        cor_contador_cel_energia = DARKBLUE;
+    }else{
+        cor_miniatura = DARKGRAY;
+        cor_contador_cel_energia = ORANGE;
+    }
+    DrawTexturePro(
+        jogo->texturas.energia,
+        energia_textura,
+        miniatura_cel_energia_R,
+        miniatura_origem_textura,
+        0,
+        cor_miniatura
+    );
+    DrawText(TextFormat("%ds", jogo->contador_interno_cel_energia), 1065, CABECALHO+130, 32, cor_contador_cel_energia);
+
+    DrawRectangle(1020,CABECALHO+200,130,420,DARKGRAY);
+    if(!jogo->mapa.passagem_aberta){
+        DrawText(TextFormat("Kills"), 1040, CABECALHO+220, 48, ORANGE);
+        DrawText(TextFormat("%d", jogo->jogador.abates), 1075, CABECALHO+270, 48, ORANGE);
+        int linha = 0;
+        int coluna = 0;
+        for (i=0; i<jogo->contador_inimigos;i++){
+            if(jogo->inimigos[i].vidas > 0){
+                Rectangle miniatura = {1045+(40*coluna),435+(40*linha),30,30};
+                Rectangle miniatura_R = {0,0,TAMANHO_TANQUES/2,TAMANHO_TANQUES/2};
+                Vector2 miniatura_origem_textura = {30/2,30/2};
+                Texture2D miniatura_textura;
+                if(jogo->inimigos[i].emMovimento == 2){
+                    miniatura_textura = jogo->texturas.inimigo_perseguicao;
+                }
+                else{
+                    miniatura_textura = jogo->texturas.inimigo_patrulha;
+                }
+                DrawTexturePro(
+                    miniatura_textura,
+                    miniatura_R,
+                    miniatura,
+                    miniatura_origem_textura,
+                    jogo->inimigos[i].angulo,
+                    jogo->inimigos[i].cor
+                );
+            }
+
+            if(coluna == 2){
+                linha++;
+            }
+
+            if(coluna < 2){
+                coluna++;
+            }else{
+                coluna = 0;
+            }
+        }
+    }else{
+        DrawText(TextFormat("Entra ai", jogo->jogador.abates), 1035, 625, 24, ORANGE);
+    }
 
     if(IsKeyPressed(KEY_S)){
         salvarJogo(jogo);
@@ -459,7 +502,6 @@ void DrawNewGameplayScreen(GAME *jogo){
 
 void DrawSavedGameGameplayScreen(GAME *jogo){
     carregarJogoSalvo(jogo);
-    printf("segundasiodas %d\n",jogo->segundos);
     SetActiveScreen(11);
 }
 
@@ -570,7 +612,6 @@ void passarDeFase(GAME *jogo){
     INIMIGO z_inimigos[NRO_INIMIGOS]={0};
     memcpy(jogo->inimigos, z_inimigos, sizeof(jogo->inimigos));
 
-
     PROJETIL z_projeteis[NRO_PROJETEIS]={0};
     memcpy(jogo->projeteis, z_projeteis, sizeof(jogo->projeteis));
     jogo->contador_projeteis= 0;
@@ -627,6 +668,7 @@ void reiniciarJogo(GAME *jogo){
 
     memcpy(jogo->mapa.mapa_atual, jogo->mapa.mapa_inicial, sizeof(jogo->mapa.mapa_atual));
     jogo->mapa.mapa_carregado = FALSE;
+    jogo->mapa.passagem_aberta = FALSE;
 
     CELULA z_cels_energia[NRO_CELS_ENERGIA]={0};
     memcpy(jogo->cels_energia, z_cels_energia, sizeof(jogo->cels_energia));

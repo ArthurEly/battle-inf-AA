@@ -31,7 +31,7 @@ void DrawPauseMenu(GAME *jogo){
 
     for (int i = 0; i < 3; i++){
         if(pause_menu_option == i){
-            optionColor = YELLOW;
+            optionColor = ORANGE;
             tamanho_fonte = 38;
         }else{
             optionColor = LIGHTGRAY;

@@ -40,10 +40,10 @@ int main(void)
     /**
     * PLANOS DE FUNDO
     */
-    g_jogo.texturas.texture = LoadTexture("assets/FUNDO JOGO.png");
+    g_jogo.texturas.menu_principal = LoadTexture("assets/menu_principal.png");
     g_jogo.texturas.pause = LoadTexture("assets/Tela pause.png");
     g_jogo.texturas.highscore = LoadTexture("assets/Highscores.png");
-    g_jogo.texturas.fundo = LoadTexture("assets/Highscores.png");
+    g_jogo.texturas.fundo = LoadTexture("assets/fundo-jogo.png");
     g_jogo.texturas.carregar = LoadTexture("assets/Carregar mapa.png");
     g_jogo.texturas.morte = LoadTexture("assets/fundo.png");
 
@@ -88,6 +88,10 @@ int main(void)
     g_jogo.texturas.inimigo_perseguicao.height = TAMANHO_TANQUES/2;
     g_jogo.texturas.inimigo_perseguicao.width = TAMANHO_TANQUES/2;
 
+
+    g_jogo.texturas.bala = LoadTexture("assets/bala.png");
+    g_jogo.texturas.bala.height = 80;
+    g_jogo.texturas.bala.width = 80;
 
     JOGADOR jogador = {
         .jogador_R.x = 1100,

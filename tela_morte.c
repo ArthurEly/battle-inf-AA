@@ -33,7 +33,7 @@ void DrawDeathScreen(GAME *jogo){
     int i;
     for (i = 0; i < 2; i++){
         if(death_menu_option == i){
-            optionColor = YELLOW;
+            optionColor = ORANGE;
             tamanho_fonte = 38;
         }else{
             optionColor = LIGHTGRAY;
@@ -43,7 +43,7 @@ void DrawDeathScreen(GAME *jogo){
     }
 
     if (death_menu_option == 2){
-        DrawRectangle(212,438,725,225,YELLOW);
+        DrawRectangle(212,438,725,225,ORANGE);
     }
 
     if(IsKeyPressed(KEY_ENTER)){

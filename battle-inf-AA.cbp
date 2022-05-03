@@ -43,7 +43,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="construcao.h" />
-		<Unit filename="drawFunctions.h" />
 		<Unit filename="explosoes.c">
 			<Option compilerVar="CC" />
 		</Unit>

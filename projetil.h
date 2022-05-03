@@ -9,13 +9,14 @@ typedef struct projetil{
     Texture2D textura;
     Vector2 origem_textura;
     Rectangle projetil_textura_R;
+    int angulo;
 }PROJETIL;
 
 void atirarProjetilJogador(PROJETIL *projetil, JOGADOR jogador);
 void atirarProjetilInimigo(PROJETIL *projetil, INIMIGO inimigo);
 void movimentarProjeteis(PROJETIL *projetil);
 void removerProjetil(PROJETIL projeteis[], int indice);
-void renderizarProjeteis(PROJETIL *projetil);
+void renderizarProjeteis(PROJETIL *projetil, Texture textura);
 bool checarColisaoProjeteisEInimigo(PROJETIL *projetil, INIMIGO *inimigo);
 bool checarColisaoProjeteisEJogador(PROJETIL *projetil, JOGADOR *jogador);
 bool checarColisaoProjeteisEBlocos(PROJETIL *projetil, BLOCO *id);

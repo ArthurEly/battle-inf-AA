@@ -38,7 +38,7 @@ void DrawMainMenuScreen(GAME *jogo){
     Color optionColor = LIGHTGRAY;
     int tamanho_fonte = 36;
    // DrawTexture(texture, 0, 0, GRAY);
-    DrawTextureEx(jogo->texturas.texture, (Vector2){-75,0}, 0, 1, WHITE);
+    DrawTextureEx(jogo->texturas.menu_principal, (Vector2){-75,0}, 0, 1, WHITE);
 
     if(IsKeyPressed(KEY_DOWN) &&menu_option<MENU_ITEMS_QTDY-1){
        menu_option++;
@@ -49,7 +49,7 @@ void DrawMainMenuScreen(GAME *jogo){
     }
     for (int i = 0; i < TEXTOS; i++){
             if(menu_option == i){
-                optionColor = YELLOW;
+                optionColor = ORANGE;
                 tamanho_fonte = 38;
             }else{
                 optionColor = LIGHTGRAY;

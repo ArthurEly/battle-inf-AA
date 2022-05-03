@@ -10,7 +10,7 @@ typedef struct texturas{
     Texture2D energia;
     Texture2D tijolo;
     Texture2D escudo;
-    Texture2D texture;
+    Texture2D menu_principal;
     Texture2D pause;
     Texture2D highscore;
     Texture2D carregar;
