@@ -28,6 +28,6 @@ int converterIndiceXParaCoordenada(int indice_x);
 int converterIndiceYParaCoordenada(int indice_y);
 void printarMapa(int mapa[][MAPA_COLUNAS]);
 void abrirPassagem(int mapa[][MAPA_COLUNAS]);
-void fecharPassagem(int mapa[][MAPA_COLUNAS])
+void fecharPassagem(int mapa[][MAPA_COLUNAS]);
 #endif
 

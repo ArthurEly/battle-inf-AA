@@ -4,13 +4,14 @@
 #include "carregar.h"
 #include "highscores.h"
 #include "pause_menu.h"
+#include "tela_morte.h"
 #include "stdio.h"
 #include "string.h"
 
 void SetActiveScreen(int screen_id);
 void DrawScreen(GAME *jogo, int screen_id);
 void DrawLoadMapGameplayScreen(FILE *mapa_fp);
-void DrawNewGameplayScreen();
+void DrawNewGameplayScreen(GAME *jogo);
 void DrawMainMenuScreen();
 void timerSegundos(int *segundos, float *milisegundos);
 

@@ -9,6 +9,10 @@ typedef struct highscore{
 }HIGHSCORE;
 
 void DrawHighScoresScreen(GAME *jogo);
-
+void resetarHighscores();
+void escreverHighscores(HIGHSCORE highscores[]);
+void lerHighscores(HIGHSCORE highscores[]);
+void lerUltimoColocado(HIGHSCORE *highscore);
+void atualizarHighscore(HIGHSCORE *novo_highscore);
 #endif
 

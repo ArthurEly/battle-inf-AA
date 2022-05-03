@@ -17,9 +17,9 @@ void DrawHighScoresScreen(GAME *jogo){
     DrawTextureEx(jogo->texturas.highscore, (Vector2){-75,0}, 0, 1, WHITE);
 
     HIGHSCORE highscores[QTDE_HIGHSCORES]={0};
-    int i;
+
     //resetarHighscores();
-    lerHighscores(&highscores);
+    lerHighscores(highscores);
 
     DrawTextEx(jogo->fontes.fonte_legal, TextFormat("Lugar"),     (Vector2){50, 275}, 36, 2, WHITE);
     DrawTextEx(jogo->fontes.fonte_legal, TextFormat("Nome"),      (Vector2){325, 275}, 36, 2, WHITE);
@@ -144,7 +144,7 @@ void atualizarHighscore(HIGHSCORE *novo_highscore){
 
     HIGHSCORE highscores_antigos[QTDE_HIGHSCORES]={0};
     HIGHSCORE highscores_atualizados[QTDE_HIGHSCORES]={0};
-    lerHighscores(&highscores_antigos);
+    lerHighscores(highscores_antigos);
 
     FILE *highscores_fp;
     highscores_fp = fopen("highscore.bin","wb+");
@@ -186,7 +186,7 @@ void atualizarHighscore(HIGHSCORE *novo_highscore){
         printf("segundos: %d\n",highscores_atualizados[i].segundos);
     }
 
-    escreverHighscores(&highscores_atualizados);
+    escreverHighscores(highscores_atualizados);
 
     fclose(highscores_fp);
 }

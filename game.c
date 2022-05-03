@@ -417,7 +417,7 @@ void DrawGameplayScreen(GAME *jogo){
 
     for(i=0; i<NRO_EXPLOSOES; i++){
         if (jogo->explosoes[i].ativa){
-            renderizarExplosoes(&jogo->explosoes[i],jogo->texturas.explosa);
+            renderizarExplosoes(&jogo->explosoes[i]);
         }
     }
     /**

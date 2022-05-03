@@ -1,11 +1,12 @@
 # depslib dependency file v1.0
-1651495813 source:c:\battle inf\battle-inf-aa\main.c
+1651543830 source:c:\battle inf\battle-inf-aa\main.c
 	"raylib.h"
 	"game.h"
 	"menu.h"
 	"carregar.h"
 	"highscores.h"
 	"pause_menu.h"
+	"tela_morte.h"
 	"stdio.h"
 	"string.h"
 
@@ -24,13 +25,14 @@
 	"raylib.h"
 	"stdio.h"
 
-1651489666 c:\battle inf\battle-inf-aa\game.h
+1651544125 c:\battle inf\battle-inf-aa\game.h
 	"stdio.h"
 	"raylib.h"
 	"jogador.h"
 	"inimigo.h"
 	"projetil.h"
 	"construcao.h"
+	"explosoes.h"
 	"mapa.h"
 	"cel_energia.h"
 
@@ -62,13 +64,13 @@
 
 1651278105 c:\battle inf\battle-inf-aa\menu.h
 
-1651459981 c:\battle inf\battle-inf-aa\highscores.h
+1651544234 c:\battle inf\battle-inf-aa\highscores.h
 	"game.h"
 
 1651306779 c:\battle inf\battle-inf-aa\pause_menu.h
 	"game.h"
 
-1651495901 source:c:\battle inf\battle-inf-aa\game.c
+1651544139 source:c:\battle inf\battle-inf-aa\game.c
 	"game.h"
 	"raylib.h"
 	"stdio.h"
@@ -81,7 +83,7 @@
 	"highscores.h"
 	"string.h"
 
-1651480634 source:c:\battle inf\battle-inf-aa\highscores.c
+1651544288 source:c:\battle inf\battle-inf-aa\highscores.c
 	"raylib.h"
 	"stdio.h"
 	"highscores.h"
@@ -182,7 +184,7 @@
 	"projetil.h"
 	"construcao.h"
 
-1651479480 c:\battle inf\battle-inf-aa\jogador.h
+1651544188 c:\battle inf\battle-inf-aa\jogador.h
 	"game.h"
 
 1651488271 source:c:\battle inf\battle-inf-aa\jogador.c
@@ -267,7 +269,7 @@
 	"mapa.h"
 	<math.h>
 
-1651491422 c:\battle inf\battle-inf-aa\mapa.h
+1651543698 c:\battle inf\battle-inf-aa\mapa.h
 	"construcao.h"
 	"cel_energia.h"
 
@@ -328,7 +330,8 @@
 	"stdio.h"
 	"explosoes.h"
 
-1651404841 c:\battle inf\battle-inf-aa\explosoes.h
+1651544109 c:\battle inf\battle-inf-aa\explosoes.h
+	"game.h"
 
 1651493304 source:c:\battle inf\battle-inf-aa\tela_morte.c
 	"raylib.h"
@@ -344,4 +347,7 @@
 	"explosoes.h"
 
 1651444390 c:\users\user\documents\ufrgs\algoritmos e programacao\trabalho final\battle-inf-aa\explosoes.h
+
+1651543819 c:\battle inf\battle-inf-aa\tela_morte.h
+	"game.h"
 

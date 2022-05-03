@@ -7,6 +7,7 @@
 #include "inimigo.h"
 #include "projetil.h"
 #include "construcao.h"
+#include "explosoes.h"
 #include "mapa.h"
 #include "cel_energia.h"
 
@@ -34,15 +35,6 @@
 
 #define FALSE 0
 #define TRUE 1
-
-typedef struct explosao{
-    Rectangle explosao_R;
-    bool ativa;
-    int frames;
-    int currentFrame;
-    int currentLine;
-    Texture2D textura;
-}EXPLOSAO;
 
 typedef struct fontes{
     Font fonte_legal;
