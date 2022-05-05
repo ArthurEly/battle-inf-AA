@@ -175,6 +175,7 @@ void renderizarProjeteis(PROJETIL *projetil, Texture textura){
             origem_textura.y  = 0;
             break;
     }
+
     DrawTexturePro(
         textura,
         projetil->projetil_textura_R,

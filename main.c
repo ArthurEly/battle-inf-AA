@@ -1,5 +1,7 @@
 #include "raylib.h"
 #include "game.h"
+#include "main.h"
+#include "construcao.h"
 #include "menu.h"
 #include "carregar.h"
 #include "highscores.h"
@@ -7,13 +9,6 @@
 #include "tela_morte.h"
 #include "stdio.h"
 #include "string.h"
-
-void SetActiveScreen(int screen_id);
-void DrawScreen(GAME *jogo, int screen_id);
-void DrawLoadMapGameplayScreen(FILE *mapa_fp);
-void DrawNewGameplayScreen(GAME *jogo);
-void DrawMainMenuScreen();
-void timerSegundos(int *segundos, float *milisegundos);
 
 int g_screens[7]={
         10, //Main Menu Screen
@@ -138,7 +133,7 @@ int main(void)
         {8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8},
         {8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8},
         {8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8},
-        {8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8},
+        {8,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8},
         {8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8},
         {8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8},
         {8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8},
@@ -170,6 +165,7 @@ int main(void)
     g_jogo.fase = fase;
     g_jogo.jogo_carregado = jogo_carregado;
     g_jogo.mapa = mapa;
+    g_jogo.modo_infinito = false;
 
     memcpy(g_jogo.inimigos, inimigos, sizeof(inimigos));
     memcpy(g_jogo.projeteis, projeteis, sizeof(projeteis));

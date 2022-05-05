@@ -1,4 +1,4 @@
-#ifndef PAUISE_MENU_H_INCLUDED
+#ifndef PAUSE_MENU_H_INCLUDED
 #define PAUSE_MENU_H_INCLUDED
 #include "game.h"
 

@@ -19,17 +19,19 @@
 #define TAMANHO_LAYOUT_LATERAL 150
 #define TAMANHO_BORDA_MAPA 10
 
+#define QTDE_HIGHSCORES         5
 #define TAMANHO_NOME 15
 
-#define NRO_INIMIGOS 1
-#define TEMPO_DE_SPAWN_INIMIGOS 3
+#define NRO_INIMIGOS 5
+#define TEMPO_DE_SPAWN_INIMIGOS 1
 #define NRO_PROJETEIS 100
-#define NRO_CELS_ENERGIA 5
-#define TEMPO_DE_SPAWN_CELS_ENERGIA 5
+#define NRO_CELS_ENERGIA 3
 
 #define NRO_EXPLOSOES 30
 #define NUM_FRAMES_PER_LINE     4
 #define NUM_LINES               4
+
+#define NRO_FASES 2
 
 #define TAMANHO_TANQUES 35
 #define ALTURA_CELS_ENERGIA 30
@@ -70,6 +72,7 @@ typedef struct game{
     SONS sons;
     EXPLOSAO explosoes[NRO_EXPLOSOES];
     int contador_explosoes;
+    int zerou_fases;
 }GAME;
 
 void DrawGameplayScreen(GAME *jogo);
@@ -80,5 +83,4 @@ void carregarJogoSalvo(GAME *jogo);
 void passarDeFase(GAME *jogo);
 void reiniciarJogo(GAME *jogo);
 void resetarJogo(GAME *jogo);
-void carregarMapa(int mapa[][MAPA_COLUNAS], FILE *nivel_fp);
 #endif

@@ -5,11 +5,6 @@
 #include "construcao.h"
 #include "string.h"
 
-#define NUM_FRAMES_PER_LINE     4
-#define NUM_LINES               4
-
-#define QTDE_HIGHSCORES         5
-
 void SetActiveScreen(int screen_id);
 
 void DrawHighScoresScreen(GAME *jogo){
@@ -21,21 +16,20 @@ void DrawHighScoresScreen(GAME *jogo){
     //resetarHighscores();
     lerHighscores(highscores);
 
-    //DrawTextEx(jogo->fontes.fonte_legal, TextFormat("Lugar"),     (Vector2){50, 275}, 36, 2, WHITE);
     DrawTextEx(jogo->fontes.fonte_legal, TextFormat("Nome"),      (Vector2){(300 - (MeasureTextEx(jogo->fontes.fonte_legal, TextFormat("Nome"), 36, 2).x)/2), 275}, 36, 2, WHITE);
     DrawTextEx(jogo->fontes.fonte_legal, TextFormat("Pontos"),    (Vector2){(650 - (MeasureTextEx(jogo->fontes.fonte_legal, TextFormat("Pontos"), 36, 2).x)/2), 275}, 36, 2, WHITE);
     DrawTextEx(jogo->fontes.fonte_legal, TextFormat("Tempo"),     (Vector2){(950 - (MeasureTextEx(jogo->fontes.fonte_legal, TextFormat("Tempo"), 36, 2).x)/2), 275}, 36, 2, WHITE);
     Color cor;
     for (int i = 0; i < QTDE_HIGHSCORES; i++){
-        if(i == 0){
+        if(i == 0)
             cor = YELLOW;
-        }else if (i == 1){
+        else if (i == 1)
             cor = GRAY;
-        }else if (i == 2){
+        else if (i == 2)
             cor = BROWN;
-        }else{
+        else
             cor = WHITE;
-        }
+
         DrawTextEx(jogo->fontes.fonte_legal, TextFormat("%d",(i+1)),                    (Vector2){50, 325 + 50*(i+1)}, 24, 2, cor);
         DrawTextEx(jogo->fontes.fonte_legal, TextFormat("%s", highscores[i].nome),      (Vector2){100, 325 + 50*(i+1)}, 22, 2, cor);
         DrawTextEx(jogo->fontes.fonte_legal, TextFormat("%i", highscores[i].pontuacao), (Vector2){575, 325 + 50*(i+1)}, 22, 2, cor);
@@ -73,6 +67,7 @@ void escreverHighscores(HIGHSCORE highscores[]){
     FILE *highscores_fp;
     highscores_fp = fopen("highscore.bin","wb+");
     int i;
+
     if (highscores_fp != NULL){
         rewind(highscores_fp);
         for(i=0; i<QTDE_HIGHSCORES; i++){
@@ -134,7 +129,9 @@ void atualizarHighscore(HIGHSCORE *novo_highscore){
     int i = 0;
 
     HIGHSCORE highscores_antigos[QTDE_HIGHSCORES]={0};
+
     HIGHSCORE highscores_atualizados[QTDE_HIGHSCORES]={0};
+
     lerHighscores(highscores_antigos);
 
     FILE *highscores_fp;
@@ -142,7 +139,7 @@ void atualizarHighscore(HIGHSCORE *novo_highscore){
 
     int posicionado = FALSE;
 
-    for (i=0; i<QTDE_HIGHSCORES ; i++){
+    for (i=0; i<QTDE_HIGHSCORES && !posicionado; i++){
         if(novo_highscore->pontuacao > highscores_antigos[i].pontuacao && !posicionado){
             highscores_atualizados[i] = *novo_highscore;
             posicionado = TRUE;
@@ -153,6 +150,7 @@ void atualizarHighscore(HIGHSCORE *novo_highscore){
             }
         }
     }
+
     int j=0;
     for (i=0; i<QTDE_HIGHSCORES ; i++){
         if(highscores_atualizados[i].pontuacao == 0){

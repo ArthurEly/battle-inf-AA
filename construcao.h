@@ -1,6 +1,7 @@
 #ifndef CONSTRUCAO_H_INCLUDED
 #define CONSTRUCAO_H_INCLUDED
 #include "raylib.h"
+
 #include "game.h"
 
 #define MAPA_LINHAS 17

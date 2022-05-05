@@ -11,9 +11,7 @@ typedef struct celula{
     int multiplicador_cel_energia;
     Color cor;
     Vector2 origem_textura;
-    bool ativa;
-    int cel_energia_posicionada;
-
+    bool cel_energia_posicionada;
 }CELULA;
 
 void criarCelulaDeEnergia(int mapa[][MAPA_COLUNAS] ,BLOCO blocos[][MAPA_COLUNAS], CELULA *cel_energia);

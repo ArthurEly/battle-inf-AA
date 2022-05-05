@@ -3,5 +3,6 @@
 #include "game.h"
 
 void DrawCarregarScreen(GAME *jogo);
+void verificarArquivosDropados(void);
 
 #endif

@@ -62,21 +62,19 @@ void DrawDeathScreen(GAME *jogo){
         nova_opcao = 1;
         if (death_menu_option == 2){
                 DrawRectangle(212,438,725,175,ORANGE);
-                // Get char pressed (unicode character) on the queue
                 int key = GetCharPressed();
 
-                // Check if more characters have been pressed on the same frame
                 while (key > 0)
                 {
-                    // NOTE: Only allow keys in range [32..125]
+                    // só pega letras do alfabeto
                     if ((key >= 32) && (key <= 125) && (letterCount < TAMANHO_NOME))
                     {
                         jogo->jogador.nome[letterCount] = (char)key;
-                        jogo->jogador.nome[letterCount+1] = '\0'; // Add null terminator at the end of the string.
+                        jogo->jogador.nome[letterCount+1] = '\0'; //adiciona o \0 pra indicar que é string.
                         letterCount++;
                     }
 
-                    key = GetCharPressed();  // Check next character in the queue
+                    key = GetCharPressed();  // ve qual é a proxima letra pra por
                 }
 
                 if (IsKeyPressed(KEY_BACKSPACE))
@@ -100,7 +98,7 @@ void DrawDeathScreen(GAME *jogo){
         }
     }
 
-    if(IsKeyPressed(KEY_DOWN) && death_menu_option<PAUSE_MENU_ITEMS_QTDY-1 + nova_opcao){
+    if(IsKeyPressed(KEY_DOWN) && death_menu_option < PAUSE_MENU_ITEMS_QTDY-1 + nova_opcao){
        death_menu_option++;
     }
 

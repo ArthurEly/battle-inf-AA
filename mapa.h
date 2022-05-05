@@ -29,5 +29,6 @@ int converterIndiceYParaCoordenada(int indice_y);
 void printarMapa(int mapa[][MAPA_COLUNAS]);
 void abrirPassagem(int mapa[][MAPA_COLUNAS]);
 void fecharPassagem(int mapa[][MAPA_COLUNAS]);
+void carregarMapa(int mapa[][MAPA_COLUNAS], FILE *nivel_fp);
 #endif
 

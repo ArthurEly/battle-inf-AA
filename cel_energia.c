@@ -7,22 +7,15 @@
 #include "cel_energia.h"
 #include "mapa.h"
 
-#define MAPA_LINHAS 17
-#define MAPA_COLUNAS 42
-
-
-#define FALSE 0
-#define TRUE 1
-
 void criarCelulaDeEnergia(int mapa[][MAPA_COLUNAS] ,BLOCO blocos[][MAPA_COLUNAS], CELULA *cel_energia){
     cel_energia->multiplicador_cel_energia = 2;
     cel_energia->cor = WHITE;
-    cel_energia->ativa = true;
     cel_energia->cel_energia_R.height = ALTURA_CELS_ENERGIA;
     cel_energia->cel_energia_R.width = LARGURA_CELS_ENERGIA;
     cel_energia->origem_textura.x = 0;
     cel_energia->origem_textura.y = 0;
-    cel_energia->cel_energia_posicionada = TRUE;
+    cel_energia->cel_energia_posicionada = true;
+
     int coord_y_rand;
     int coord_x_rand;
     int y_rand;
@@ -43,7 +36,7 @@ void criarCelulaDeEnergia(int mapa[][MAPA_COLUNAS] ,BLOCO blocos[][MAPA_COLUNAS]
     if (temUmAORedor(mapa,y_rand,x_rand,1,1)){
         printf("oooooooi\n");
         if (!reposicionarObjeto(mapa,&novo_y,&novo_x)){
-            cel_energia->cel_energia_posicionada = FALSE;
+            cel_energia->cel_energia_posicionada = false;
         }
     }
 
@@ -51,9 +44,7 @@ void criarCelulaDeEnergia(int mapa[][MAPA_COLUNAS] ,BLOCO blocos[][MAPA_COLUNAS]
         cel_energia->cel_energia_R.x = converterIndiceXParaCoordenada(novo_x);
         cel_energia->cel_energia_R.y = converterIndiceYParaCoordenada(novo_y);
     }else{
-        CELULA z_cel_energia = {0};
-        *cel_energia = z_cel_energia;
-        printf("nao foi possivel colcoar a celualr de energia?!\n");
+        removerCelEnergia(cel_energia);
     }
 }
 
@@ -63,10 +54,8 @@ void energizarJogador(JOGADOR *jogador, CELULA *cel_energia){
 }
 
 void removerCelEnergia(CELULA *cel_energia){
-    cel_energia->ativa = false;
-    cel_energia->cel_energia_R.x = 2000;
-    cel_energia->cel_energia_R.y = 2000;
-    cel_energia->cel_energia_posicionada = FALSE;
+    CELULA z_cel_energia = {0};
+    *cel_energia = z_cel_energia;
 }
 
 

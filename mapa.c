@@ -8,15 +8,6 @@
 #include "mapa.h"
 #include <math.h>
 
-#define MAPA_LINHAS 17
-#define MAPA_COLUNAS 42
-
-#define FALSE 0
-#define TRUE 1
-
-/*
-    depois tem que mexer aqui
-*/
 void transcreverMapa(int *id, int y, int x, int y_max, int x_max, BLOCO blocos[][MAPA_COLUNAS]){
     /*
     printf("blocos[%d][%d]:\n",y,x);
@@ -27,6 +18,7 @@ void transcreverMapa(int *id, int y, int x, int y_max, int x_max, BLOCO blocos[]
     printf("cabei!\n");
     */
     if(*id == 1){
+        //bloquinho
         blocos[y][x].bloco_R.x = converterIndiceXParaCoordenada(x);
         blocos[y][x].bloco_R.y = converterIndiceYParaCoordenada(y);
         blocos[y][x].bloco_R.width = LARGURA_BLOCO;
@@ -35,8 +27,24 @@ void transcreverMapa(int *id, int y, int x, int y_max, int x_max, BLOCO blocos[]
         blocos[y][x].tipo = 1;
         blocos[y][x].destrutivel = true;
     }
-    /*da pra deixar mais enxuto isso aqui*/
+
+    if(*id == 6){
+        //saída lateral
+        blocos[y][x].tipo = 6;
+        blocos[y][x].destrutivel = true;
+        blocos[y][x].bloco_R.y = converterIndiceYParaCoordenada(y);
+        if (x == 0){
+            blocos[y][x].bloco_R.x = converterIndiceXParaCoordenada(x) - TAMANHO_BORDA_MAPA;
+        }else{
+            blocos[y][x].bloco_R.x = converterIndiceXParaCoordenada(x);
+        }
+        blocos[y][x].bloco_R.width = TAMANHO_BORDA_MAPA;
+        blocos[y][x].bloco_R.height = ALTURA_BLOCO;
+        blocos[y][x].cor = DARKGRAY;
+    }
+
     if(*id == 7){
+        //canto borda
         if(y == 0){
             blocos[y][x].bloco_R.y = converterIndiceYParaCoordenada(y) - TAMANHO_BORDA_MAPA;
         }else{
@@ -72,21 +80,6 @@ void transcreverMapa(int *id, int y, int x, int y_max, int x_max, BLOCO blocos[]
         }
         blocos[y][x].bloco_R.width = TAMANHO_BORDA_MAPA;
         blocos[y][x].bloco_R.height = ALTURA_BLOCO;
-    }
-
-    if(*id == 6){
-        //saída lateral
-        blocos[y][x].tipo = 6;
-        blocos[y][x].destrutivel = true;
-        blocos[y][x].bloco_R.y = converterIndiceYParaCoordenada(y);
-        if (x == 0){
-            blocos[y][x].bloco_R.x = converterIndiceXParaCoordenada(x) - TAMANHO_BORDA_MAPA;
-        }else{
-            blocos[y][x].bloco_R.x = converterIndiceXParaCoordenada(x);
-        }
-        blocos[y][x].bloco_R.width = TAMANHO_BORDA_MAPA;
-        blocos[y][x].bloco_R.height = ALTURA_BLOCO;
-        blocos[y][x].cor = DARKGRAY;
     }
 
     if(*id == 9){
@@ -237,22 +230,22 @@ int reposicionarObjeto(int mapa[][MAPA_COLUNAS], int *novo_y, int *novo_x){
                     *novo_x = j;
                     *novo_y = i;
                     objeto_posicionado = TRUE;
-                    //printf("[!!]\n");
-                    //printf("%d,%d\n",i,j);
+                    printf("[!!]\n");
+                    printf("%d,%d\n",i,j);
                 }
                 else{
-                    //if(mapa[i][j]==11){
-                     //   printf("[I]");
-                    //}else if(mapa[i][j]==10){
-                    //    printf("[J]");
-                    //}else{
-                     //   printf("[%d]",mapa[i][j]);
-                    //}
+                    if(mapa[i][j]==11){
+                        printf("[I]");
+                    }else if(mapa[i][j]==10){
+                        printf("[J]");
+                    }else{
+                        printf("[%d]",mapa[i][j]);
+                    }
                 }
             }
-            //printf("\n");
+            printf("\n");
         }
-        //printf("\n");
+        printf("\n");
         raio_procura++;
     };
     return objeto_posicionado;

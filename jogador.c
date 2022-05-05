@@ -65,7 +65,7 @@ void pararJogador(JOGADOR *jogador){
 }
 
 void retomarJogador(JOGADOR *jogador){
-    jogador->colidindo=false;
+    jogador->colidindo = false;
 }
 
 bool checarColisaoJogadorEInimigo(Rectangle *jogador_R, Rectangle *inimigo_R){

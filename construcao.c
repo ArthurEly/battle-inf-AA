@@ -4,15 +4,9 @@
 #include "construcao.h"
 
 void renderizarBloquinho(TEXTURAS *texturas, BLOCO bloco){
-    Rectangle bloco_textura = {0,0,40,25};
+    Rectangle bloco_textura = {0,0,LARGURA_BLOCO,ALTURA_BLOCO};
+
     if(bloco.tipo == 1){
-        /*DrawRectangle(
-            id.bloco_R.x,
-            id.bloco_R.y,
-            id.bloco_R.width,
-            id.bloco_R.height,
-            id.cor
-        );*/
         DrawTexturePro(
             texturas->tijolo,
             bloco_textura,
@@ -22,9 +16,6 @@ void renderizarBloquinho(TEXTURAS *texturas, BLOCO bloco){
             0,
             WHITE
         );
-
-
-        //DrawTextureTiled(tijolo, sourceRec, (Rectangle){0, 2, 4, 9}, (Vector2){id.bloco_R.x,  id.bloco_R.y}, 0, 1, WHITE);
     }
 
     if(bloco.tipo >= 6 && bloco.tipo <= 9){

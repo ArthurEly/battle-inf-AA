@@ -19,6 +19,7 @@ const Rectangle energia_textura = {0,0, ALTURA_CELS_ENERGIA, LARGURA_CELS_ENERGI
 const Rectangle bala_textura_R = {0,0, 35, 35};
 const Rectangle bala_R = {0,0, 35, 35};
 
+
 void DrawGameplayScreen(GAME *jogo){
     //printf("%d.%.2f\n",jogo->segundos, jogo->milisegundos);
 
@@ -32,8 +33,8 @@ void DrawGameplayScreen(GAME *jogo){
         PlaySound(jogo->sons.explosao_inimigo);
         SetActiveScreen(112);
     }
-    //tirar esse NRO_INIMIGOS != 0 depois
-    if ((jogo->jogador.abates == NRO_INIMIGOS && NRO_INIMIGOS != 0) && jogo->fase != 6){
+
+    if ((jogo->jogador.abates == NRO_INIMIGOS) && jogo->fase != NRO_FASES){
         if (!jogo->mapa.passagem_aberta){
             abrirPassagem(jogo->mapa.mapa_atual);
             jogo->mapa.passagem_aberta = TRUE;
@@ -47,6 +48,9 @@ void DrawGameplayScreen(GAME *jogo){
                 }
             }
         }
+    }else if (jogo->jogador.abates == NRO_INIMIGOS && jogo->fase == NRO_FASES){
+        printf("modo infinito papai!\n");
+        jogo->modo_infinito = true;
     }
 
     if (!jogo->mapa.mapa_carregado){
@@ -112,6 +116,7 @@ void DrawGameplayScreen(GAME *jogo){
         jogo->jogador.cor
     );
 
+
     if (IsKeyDown(KEY_LEFT) ||
         IsKeyDown(KEY_RIGHT)||
         IsKeyDown(KEY_DOWN) ||
@@ -164,12 +169,12 @@ void DrawGameplayScreen(GAME *jogo){
         INIMIGOS
     */
     if(jogo->contador_inimigos < NRO_INIMIGOS){
-        if(jogo->segundos % TEMPO_DE_SPAWN_INIMIGOS == 0 && jogo->milisegundos == 0){
+        if((jogo->segundos % TEMPO_DE_SPAWN_INIMIGOS == 0 && jogo->milisegundos == 0) || jogo->modo_infinito){
             criarNovoInimigo(jogo->mapa.mapa_atual, jogo->blocos, &jogo->inimigos[jogo->contador_inimigos],TAMANHO_TANQUES,TAMANHO_TANQUES);
             jogo->contador_inimigos++;
         }
     }else{
-        if(jogo->segundos % TEMPO_DE_SPAWN_INIMIGOS == 0 && jogo->milisegundos == 0){
+        if((jogo->segundos % TEMPO_DE_SPAWN_INIMIGOS == 0 && jogo->milisegundos == 0)){
             bool nao_reviveu_inimigo = true;
             for(i=0;i<jogo->contador_inimigos;i++){
                 if(jogo->inimigos[i].vidas == 0 && nao_reviveu_inimigo && !jogo->inimigos[i].abatidoPeloJogador){
@@ -231,7 +236,7 @@ void DrawGameplayScreen(GAME *jogo){
 
                 int atirar = GetRandomValue(0,100);
                 if (atirar == 0){
-                    atirarProjetilInimigo(&jogo->projeteis[jogo->contador_projeteis],jogo->inimigos[i]);
+                    //atirarProjetilInimigo(&jogo->projeteis[jogo->contador_projeteis],jogo->inimigos[i]);
                     PlaySound(jogo->sons.tiro);
                 }
             }
@@ -314,27 +319,23 @@ void DrawGameplayScreen(GAME *jogo){
         CELULAS DE ENERGIA
     */
     int rand = 0;
-    rand = GetRandomValue(0,3);
+    //rand = GetRandomValue(0,160);
     if(rand == 0){
         if(jogo->contador_cels_energia < NRO_CELS_ENERGIA){
-            if(jogo->segundos % TEMPO_DE_SPAWN_CELS_ENERGIA == 0 && jogo->milisegundos == 0){
-                if(jogo->cels_energia[i].cel_energia_posicionada == FALSE){
-                    criarCelulaDeEnergia(jogo->mapa.mapa_atual, jogo->blocos, &jogo->cels_energia[jogo->contador_cels_energia]);
-                    jogo->contador_cels_energia++;
-                }
+            if(jogo->cels_energia[i].cel_energia_posicionada == false){
+                criarCelulaDeEnergia(jogo->mapa.mapa_atual, jogo->blocos, &jogo->cels_energia[jogo->contador_cels_energia]);
+                jogo->contador_cels_energia++;
             }
         }else{
-            if(jogo->segundos % TEMPO_DE_SPAWN_CELS_ENERGIA == 0 && jogo->milisegundos == 0){
-                for(i=0; i<NRO_CELS_ENERGIA; i++){
-                    if (jogo->cels_energia[i].ativa == false && jogo->cels_energia[i].cel_energia_posicionada == FALSE){
-                        criarCelulaDeEnergia(jogo->mapa.mapa_atual, jogo->blocos, &jogo->cels_energia[i]);
-                    }
+            for(i=0; i<NRO_CELS_ENERGIA; i++){
+                if (jogo->cels_energia[i].cel_energia_posicionada == false){
+                    criarCelulaDeEnergia(jogo->mapa.mapa_atual, jogo->blocos, &jogo->cels_energia[i]);
                 }
             }
         }
     }
     for(i=0; i<NRO_CELS_ENERGIA; i++){
-        if(jogo->cels_energia[i].ativa == true){
+        if(jogo->cels_energia[i].cel_energia_posicionada == true){
             DrawTexturePro(
                 jogo->texturas.energia,
                 energia_textura,
@@ -404,7 +405,8 @@ void DrawGameplayScreen(GAME *jogo){
     DrawText(TextFormat("Fase: %i", jogo->fase), 800, 20, 48, ORANGE);
 
     DrawRectangle(1020,0,130,CABECALHO,DARKGRAY);
-    DrawText(TextFormat("%ds", jogo->segundos), 1045, 25, 48, ORANGE);
+    //centralizar esse texto aqui
+    DrawText(TextFormat("%ds", jogo->segundos), 1050, 25, 48, ORANGE);
 
     Rectangle miniatura_cel_energia_R = {1050,CABECALHO+30,70,70};
     Vector2 miniatura_origem_textura = {0,0};
@@ -469,8 +471,8 @@ void DrawGameplayScreen(GAME *jogo){
         DrawText(TextFormat("Faltam"), 1050, 625, 24, ORANGE);
         DrawText(TextFormat("%d inimigos",(NRO_INIMIGOS - jogo->jogador.abates)), 1030, 660, 24, ORANGE);
     }else{
-        DrawText(TextFormat("Prox. fase!", jogo->jogador.abates), 1020, 625, 24, ORANGE);
-        DrawText(TextFormat("<----------",(NRO_INIMIGOS - jogo->jogador.abates)), 1020, 660, 24, ORANGE);
+        DrawText(TextFormat("Prox. fase!", jogo->jogador.abates), 1015, 615, 24, ORANGE);
+        DrawText(TextFormat("<----------",(NRO_INIMIGOS - jogo->jogador.abates)), 1017, 650, 24, ORANGE);
     }
 
     if(IsKeyPressed(KEY_S)){
@@ -540,6 +542,7 @@ void salvarJogo(GAME *jogo){
     jogo_salvo.milisegundos = jogo->milisegundos;
 
     jogo_salvo.jogo_carregado = jogo->jogo_carregado;
+    jogo_salvo.modo_infinito = jogo->modo_infinito;
 
     if (save_fp != NULL){
         if (fwrite(&jogo_salvo, sizeof(GAME), 1, save_fp) != 1){
@@ -561,31 +564,31 @@ void carregarJogoSalvo(GAME *jogo){
     save_fp = fopen("saves/ultimo-save.bin","rb");
     if (save_fp != NULL){
         rewind(save_fp);
-        GAME jooj;
-        printf("3\n");
-        if(fread(&jooj, sizeof(GAME), 1, save_fp) == 1){
-            jogo->jogador = jooj.jogador;
-            memcpy(jogo->inimigos, jooj.inimigos, sizeof(jogo->inimigos));
-            jogo->contador_inimigos = jooj.contador_inimigos;
+        GAME jogo_carregado;
+        if(fread(&jogo_carregado, sizeof(GAME), 1, save_fp) == 1){
+            jogo->jogador = jogo_carregado.jogador;
+            memcpy(jogo->inimigos, jogo_carregado.inimigos, sizeof(jogo->inimigos));
+            jogo->contador_inimigos = jogo_carregado.contador_inimigos;
 
-            memcpy(jogo->projeteis, jooj.projeteis, sizeof(jogo->projeteis));
-            jogo->contador_projeteis = jooj.contador_projeteis;
+            memcpy(jogo->projeteis, jogo_carregado.projeteis, sizeof(jogo->projeteis));
+            jogo->contador_projeteis = jogo_carregado.contador_projeteis;
 
-            memcpy(jogo->cels_energia, jooj.cels_energia, sizeof(jogo->cels_energia));
-            jogo->contador_cels_energia = jooj.contador_cels_energia;
-            jogo->contador_interno_cel_energia = jooj.contador_interno_cel_energia;
+            memcpy(jogo->cels_energia, jogo_carregado.cels_energia, sizeof(jogo->cels_energia));
+            jogo->contador_cels_energia = jogo_carregado.contador_cels_energia;
+            jogo->contador_interno_cel_energia = jogo_carregado.contador_interno_cel_energia;
 
-            memcpy(jogo->explosoes, jooj.explosoes, sizeof(jogo->explosoes));
-            jogo->contador_explosoes = jooj.contador_explosoes;
+            memcpy(jogo->explosoes, jogo_carregado.explosoes, sizeof(jogo->explosoes));
+            jogo->contador_explosoes = jogo_carregado.contador_explosoes;
 
-            memcpy(jogo->blocos, jooj.blocos, sizeof(jogo->blocos));
+            memcpy(jogo->blocos, jogo_carregado.blocos, sizeof(jogo->blocos));
 
-            jogo->mapa = jooj.mapa;
+            jogo->mapa = jogo_carregado.mapa;
 
-            jogo->segundos = jooj.segundos;
-            jogo->milisegundos = jooj.milisegundos;
-            jogo->fase = jooj.fase;
-            jogo->jogo_carregado = jooj.jogo_carregado;
+            jogo->segundos = jogo_carregado.segundos;
+            jogo->milisegundos = jogo_carregado.milisegundos;
+            jogo->fase = jogo_carregado.fase;
+            jogo->jogo_carregado = jogo_carregado.jogo_carregado;
+            jogo->modo_infinito = jogo_carregado.modo_infinito;
         }else{
             perror("erro na leitura do save ");
         }
@@ -681,6 +684,8 @@ void reiniciarJogo(GAME *jogo){
     EXPLOSAO z_explosoes[NRO_EXPLOSOES]={0};
     memcpy(jogo->explosoes, z_explosoes, sizeof(jogo->explosoes));
     jogo->contador_explosoes = 0;
+
+    jogo->modo_infinito = false;
 }
 
 void resetarJogo(GAME *jogo){
