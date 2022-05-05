@@ -21,7 +21,6 @@ void DrawCarregarScreen(GAME *jogo){
             FILE *mapa_fp;
             mapa_fp = fopen(droppedFiles[0],"r");
             if(mapa_fp != NULL){
-                printf("%s\n",droppedFiles[0]);
                 carregarMapa(jogo->mapa.mapa_inicial,mapa_fp);
                 printarMapa(jogo->mapa.mapa_inicial);
                 jogo->mapa.mapa_foi_pre_carregado = TRUE;

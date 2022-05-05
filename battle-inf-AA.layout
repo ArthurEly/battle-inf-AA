@@ -2,56 +2,180 @@
 <CodeBlocks_layout_file>
 	<FileVersion major="1" minor="0" />
 	<ActiveTarget name="Debug" />
-	<File name="carregar.c" open="0" top="0" tabpos="7" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="pause_menu.c" open="0" top="0" tabpos="7" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="619" topLine="6" />
+			<Cursor1 position="1595" topLine="18" />
 		</Cursor>
+	</File>
+	<File name="tela_morte.c" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="3412" topLine="77" />
+		</Cursor>
+	</File>
+	<File name="inimigo.h" open="0" top="0" tabpos="7" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="105" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="menu.c" open="0" top="0" tabpos="10" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="289" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="highscores.c" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="376" topLine="0" />
+		</Cursor>
+		<Folding>
+			<Collapse line="43" />
+			<Collapse line="65" />
+			<Collapse line="86" />
+			<Collapse line="109" />
+			<Collapse line="127" />
+		</Folding>
+	</File>
+	<File name="main.c" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="2" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="6080" topLine="141" />
+		</Cursor>
+	</File>
+	<File name="menu.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="101" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="mapa.c" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="7652" topLine="144" />
+		</Cursor>
+		<Folding>
+			<Collapse line="95" />
+			<Collapse line="132" />
+			<Collapse line="141" />
+			<Collapse line="150" />
+		</Folding>
 	</File>
 	<File name="explosoes.c" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="58" topLine="0" />
+			<Cursor1 position="1614" topLine="0" />
 		</Cursor>
 		<Folding>
 			<Collapse line="5" />
 			<Collapse line="17" />
 		</Folding>
 	</File>
-	<File name="pause_menu.h" open="0" top="0" tabpos="10" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="construcao.h" open="0" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="82" topLine="0" />
+			<Cursor1 position="740" topLine="17" />
 		</Cursor>
 	</File>
-	<File name="highscores.c" open="0" top="0" tabpos="9" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="jogador.h" open="0" top="0" tabpos="8" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="5476" topLine="0" />
+			<Cursor1 position="79" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="construcao.c" open="0" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="492" topLine="0" />
 		</Cursor>
 		<Folding>
-			<Collapse line="14" />
-			<Collapse line="49" />
-			<Collapse line="71" />
-			<Collapse line="91" />
-			<Collapse line="114" />
-			<Collapse line="132" />
+			<Collapse line="5" />
+			<Collapse line="31" />
+			<Collapse line="43" />
 		</Folding>
 	</File>
-	<File name="explosoes.h" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="325" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="pause_menu.c" open="0" top="0" tabpos="7" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="941" topLine="23" />
-		</Cursor>
-	</File>
-	<File name="tela_morte.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="tela_morte.h" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
 			<Cursor1 position="103" topLine="0" />
 		</Cursor>
 	</File>
+	<File name="cel_energia.h" open="0" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="3" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="164" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="pause_menu.h" open="0" top="0" tabpos="10" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="11" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="highscores.h" open="0" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="148" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="main.h" open="1" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="81" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="explosoes.h" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="351" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="game.c" open="0" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="18622" topLine="469" />
+		</Cursor>
+		<Folding>
+			<Collapse line="518" />
+			<Collapse line="523" />
+			<Collapse line="528" />
+			<Collapse line="573" />
+			<Collapse line="612" />
+			<Collapse line="653" />
+			<Collapse line="667" />
+			<Collapse line="716" />
+			<Collapse line="721" />
+		</Folding>
+	</File>
+	<File name="carregar.c" open="0" top="0" tabpos="7" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="606" topLine="1" />
+		</Cursor>
+	</File>
+	<File name="game.h" open="1" top="1" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="690" topLine="9" />
+		</Cursor>
+		<Folding>
+			<Collapse line="42" />
+			<Collapse line="46" />
+			<Collapse line="54" />
+		</Folding>
+	</File>
+	<File name="mapa.h" open="0" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="122" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="cel_energia.c" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="4" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1097" topLine="26" />
+		</Cursor>
+		<Folding>
+			<Collapse line="49" />
+		</Folding>
+	</File>
+	<File name="inimigo.c" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="188" topLine="5" />
+		</Cursor>
+		<Folding>
+			<Collapse line="10" />
+			<Collapse line="52" />
+			<Collapse line="146" />
+			<Collapse line="188" />
+			<Collapse line="225" />
+			<Collapse line="252" />
+			<Collapse line="260" />
+			<Collapse line="265" />
+		</Folding>
+	</File>
 	<File name="projetil.c" open="0" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="-1" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="6937" topLine="0" />
+			<Cursor1 position="6798" topLine="0" />
 		</Cursor>
 		<Folding>
 			<Collapse line="8" />
@@ -59,31 +183,15 @@
 			<Collapse line="133" />
 			<Collapse line="138" />
 			<Collapse line="146" />
-			<Collapse line="187" />
-			<Collapse line="192" />
-			<Collapse line="197" />
-		</Folding>
-	</File>
-	<File name="game.h" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="496" topLine="39" />
-		</Cursor>
-		<Folding>
-			<Collapse line="40" />
-		</Folding>
-	</File>
-	<File name="construcao.c" open="0" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="0" topLine="0" />
-		</Cursor>
-		<Folding>
-			<Collapse line="40" />
-			<Collapse line="52" />
+			<Collapse line="188" />
+			<Collapse line="193" />
+			<Collapse line="198" />
+			<Collapse line="203" />
 		</Folding>
 	</File>
 	<File name="jogador.c" open="0" top="0" tabpos="7" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="2571" topLine="0" />
+			<Cursor1 position="2607" topLine="0" />
 		</Cursor>
 		<Folding>
 			<Collapse line="7" />
@@ -92,117 +200,17 @@
 			<Collapse line="70" />
 			<Collapse line="75" />
 			<Collapse line="80" />
+			<Collapse line="85" />
 		</Folding>
-	</File>
-	<File name="main.c" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="1" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="7918" topLine="45" />
-		</Cursor>
-	</File>
-	<File name="cel_energia.c" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="-1" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="196" topLine="0" />
-		</Cursor>
-		<Folding>
-			<Collapse line="16" />
-			<Collapse line="59" />
-			<Collapse line="64" />
-		</Folding>
-	</File>
-	<File name="construcao.h" open="0" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="494" topLine="6" />
-		</Cursor>
-	</File>
-	<File name="game.c" open="0" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="749" topLine="12" />
-		</Cursor>
 	</File>
 	<File name="projetil.h" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="271" topLine="0" />
+			<Cursor1 position="300" topLine="0" />
 		</Cursor>
-	</File>
-	<File name="jogador.h" open="0" top="0" tabpos="8" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="322" topLine="2" />
-		</Cursor>
-	</File>
-	<File name="highscores.h" open="0" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="222" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="inimigo.h" open="0" top="0" tabpos="7" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="704" topLine="0" />
-		</Cursor>
-		<Folding>
-			<Collapse line="8" />
-		</Folding>
-	</File>
-	<File name="menu.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="54" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="menu.c" open="0" top="0" tabpos="10" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="1729" topLine="36" />
-		</Cursor>
-	</File>
-	<File name="mapa.h" open="0" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="356" topLine="1" />
-		</Cursor>
-	</File>
-	<File name="cel_energia.h" open="0" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="162" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="inimigo.c" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="-1" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="1609" topLine="28" />
-		</Cursor>
-		<Folding>
-			<Collapse line="60" />
-			<Collapse line="150" />
-			<Collapse line="152" />
-			<Collapse line="192" />
-			<Collapse line="195" />
-			<Collapse line="229" />
-			<Collapse line="255" />
-			<Collapse line="263" />
-			<Collapse line="268" />
-		</Folding>
-	</File>
-	<File name="mapa.c" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="5274" topLine="64" />
-		</Cursor>
-		<Folding>
-			<Collapse line="19" />
-			<Collapse line="130" />
-			<Collapse line="184" />
-			<Collapse line="232" />
-			<Collapse line="260" />
-			<Collapse line="285" />
-			<Collapse line="292" />
-			<Collapse line="310" />
-			<Collapse line="316" />
-			<Collapse line="328" />
-		</Folding>
 	</File>
 	<File name="carregar.h" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="115" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="tela_morte.c" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="609" topLine="1" />
+			<Cursor1 position="77" topLine="0" />
 		</Cursor>
 	</File>
 </CodeBlocks_layout_file>

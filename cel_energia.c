@@ -34,7 +34,6 @@ void criarCelulaDeEnergia(int mapa[][MAPA_COLUNAS] ,BLOCO blocos[][MAPA_COLUNAS]
     int novo_y = y_rand;
 
     if (temUmAORedor(mapa,y_rand,x_rand,1,1)){
-        printf("oooooooi\n");
         if (!reposicionarObjeto(mapa,&novo_y,&novo_x)){
             cel_energia->cel_energia_posicionada = false;
         }

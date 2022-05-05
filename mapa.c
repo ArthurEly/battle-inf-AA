@@ -9,14 +9,6 @@
 #include <math.h>
 
 void transcreverMapa(int *id, int y, int x, int y_max, int x_max, BLOCO blocos[][MAPA_COLUNAS]){
-    /*
-    printf("blocos[%d][%d]:\n",y,x);
-    printf("x: %.2f\n",blocos[y][x].bloco_R.x);
-    printf("y: %.2f\n",blocos[y][x].bloco_R.y);
-    printf("width: %.2f\n",blocos[y][x].bloco_R.width);
-    printf("height: %.2f\n",blocos[y][x].bloco_R.height);
-    printf("cabei!\n");
-    */
     if(*id == 1){
         //bloquinho
         blocos[y][x].bloco_R.x = converterIndiceXParaCoordenada(x);
@@ -194,26 +186,20 @@ int reposicionarObjeto(int mapa[][MAPA_COLUNAS], int *novo_y, int *novo_x){
         else
             indice_comeco_linha = 1;
 
-        //printf("indice_comeco_linha %d\n",indice_comeco_linha);
         if (y+raio_procura < MAPA_LINHAS-2)
             indice_fim_linha = y+raio_procura;
         else
             indice_fim_linha = MAPA_LINHAS-2;
-
-        //printf("indice_fim_linha %d\n",indice_fim_linha);
 
         if(x-raio_procura > 1)
             indice_comeco_coluna = x-raio_procura;
         else
             indice_comeco_coluna = 1;
 
-        //printf("indice_comeco_coluna %d\n",indice_comeco_coluna);
         if(x+raio_procura < MAPA_COLUNAS-2)
             indice_fim_coluna = x+raio_procura;
         else
             indice_fim_coluna = MAPA_COLUNAS-2;
-
-        //printf("indice_fim_coluna %d\n",indice_fim_coluna);
 
         if(indice_comeco_linha  == 1              &&
            indice_comeco_coluna == 1              &&
@@ -233,19 +219,19 @@ int reposicionarObjeto(int mapa[][MAPA_COLUNAS], int *novo_y, int *novo_x){
                     printf("[!!]\n");
                     printf("%d,%d\n",i,j);
                 }
-                else{
-                    if(mapa[i][j]==11){
-                        printf("[I]");
-                    }else if(mapa[i][j]==10){
-                        printf("[J]");
-                    }else{
-                        printf("[%d]",mapa[i][j]);
-                    }
+                //else{
+                //    if(mapa[i][j]==11){
+                //        printf("[I]");
+                //    }else if(mapa[i][j]==10){
+                //        printf("[J]");
+                //    }else{
+                //        printf("[%d]",mapa[i][j]);
+                //   }
                 }
-            }
-            printf("\n");
+            //}
+            //printf("\n");
         }
-        printf("\n");
+        //printf("\n");
         raio_procura++;
     };
     return objeto_posicionado;

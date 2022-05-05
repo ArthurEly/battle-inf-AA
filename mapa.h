@@ -2,9 +2,7 @@
 #define MAPA_H_INCLUDED
 #include "construcao.h"
 #include "cel_energia.h"
-
-#define MAPA_LINHAS 17
-#define MAPA_COLUNAS 42
+#include "game.h"
 
 typedef struct mapa{
     int mapa_atual[MAPA_LINHAS][MAPA_COLUNAS];
@@ -15,7 +13,6 @@ typedef struct mapa{
 }MAPA;
 
 void transcreverMapa(int *id, int y, int x, int y_max, int x_max, BLOCO blocos[][MAPA_COLUNAS]);
-/*repartir isso em mais funcoes*/
 void atualizarMapa(int mapa[][MAPA_COLUNAS], BLOCO blocos[][MAPA_COLUNAS], JOGADOR jogador, INIMIGO inimigos[], int contador_inimigos, CELULA cels_energia[], int contador_cels_energia);
 void posicionarJogador(int id, JOGADOR *jogador, int y, int x);
 int reposicionarObjeto(int mapa[][MAPA_COLUNAS], int *novo_y, int *novo_x);

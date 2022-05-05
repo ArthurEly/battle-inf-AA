@@ -125,6 +125,7 @@ int main(void)
     mapa.mapa_carregado = FALSE;
     mapa.passagem_aberta = FALSE;
     int mapa_base[MAPA_LINHAS][MAPA_COLUNAS] = {
+        //7-> canto da borda
         //8-> borda lateral
         //9-> borda superior/inferior
         {7,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,7},
@@ -145,6 +146,7 @@ int main(void)
         {8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8},
         {7,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,7},
     };
+
     memcpy(mapa.mapa_atual, mapa_base, sizeof(mapa_base));
     memcpy(mapa.mapa_inicial, mapa_base, sizeof(mapa_base));
 
@@ -165,7 +167,7 @@ int main(void)
     g_jogo.fase = fase;
     g_jogo.jogo_carregado = jogo_carregado;
     g_jogo.mapa = mapa;
-    g_jogo.modo_infinito = false;
+    g_jogo.zerou_fases = 0;
 
     memcpy(g_jogo.inimigos, inimigos, sizeof(inimigos));
     memcpy(g_jogo.projeteis, projeteis, sizeof(projeteis));
@@ -173,24 +175,36 @@ int main(void)
     memcpy(g_jogo.blocos, blocos, sizeof(blocos));
     memcpy(g_jogo.explosoes, explosoes, sizeof(explosoes));
 
-    //feito pra teste
-    Camera2D camera = { 0 };
-    camera.target = (Vector2){ 0, 0};
-    camera.offset = (Vector2){ 0, 0 };
-    camera.rotation = 0.0f;
-    camera.zoom = 1.0f;
-
     while (!WindowShouldClose())
     {
         BeginDrawing();
-            BeginMode2D(camera);
             DrawScreen(&g_jogo, g_active_screen);
-            EndMode2D();
         EndDrawing();
     }
 
-    CloseWindow();
+    UnloadTexture(g_jogo.texturas.bala);
+    UnloadTexture(g_jogo.texturas.carregar);
+    UnloadTexture(g_jogo.texturas.energia);
+    UnloadTexture(g_jogo.texturas.escudo);
+    UnloadTexture(g_jogo.texturas.explosa);
+    UnloadTexture(g_jogo.texturas.fundo);
+    UnloadTexture(g_jogo.texturas.highscore);
+    UnloadTexture(g_jogo.texturas.inimigo_patrulha);
+    UnloadTexture(g_jogo.texturas.inimigo_perseguicao);
+    UnloadTexture(g_jogo.texturas.jogador);
+    UnloadTexture(g_jogo.texturas.morte);
+    UnloadTexture(g_jogo.texturas.pause);
+    UnloadTexture(g_jogo.texturas.tijolo);
 
+    UnloadSound(g_jogo.sons.construcao);
+    UnloadSound(g_jogo.sons.explosao_inimigo);
+    UnloadSound(g_jogo.sons.hit_jogador);
+    UnloadSound(g_jogo.sons.power_up);
+    UnloadSound(g_jogo.sons.tiro);
+
+    CloseAudioDevice();
+
+    CloseWindow();
     return 0;
 }
 

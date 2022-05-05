@@ -11,31 +11,31 @@
 #include "mapa.h"
 #include "cel_energia.h"
 
-#define MAPA_LINHAS 17
-#define MAPA_COLUNAS 42
-#define ALTURA_BLOCO 40
-#define LARGURA_BLOCO 25
-#define CABECALHO 90
-#define TAMANHO_LAYOUT_LATERAL 150
-#define TAMANHO_BORDA_MAPA 10
+#define MAPA_LINHAS             17
+#define MAPA_COLUNAS            42
+#define ALTURA_BLOCO            40
+#define LARGURA_BLOCO           25
+#define CABECALHO               90
+#define TAMANHO_LAYOUT_LATERAL  150
+#define TAMANHO_BORDA_MAPA      10
 
 #define QTDE_HIGHSCORES         5
-#define TAMANHO_NOME 15
+#define TAMANHO_NOME            15
 
-#define NRO_INIMIGOS 5
-#define TEMPO_DE_SPAWN_INIMIGOS 1
-#define NRO_PROJETEIS 100
-#define NRO_CELS_ENERGIA 3
+#define NRO_INIMIGOS            15
+#define TEMPO_DE_SPAWN_INIMIGOS 3
+#define NRO_PROJETEIS           100
+#define NRO_CELS_ENERGIA        3
 
-#define NRO_EXPLOSOES 30
+#define NRO_EXPLOSOES           30
 #define NUM_FRAMES_PER_LINE     4
 #define NUM_LINES               4
 
-#define NRO_FASES 2
+#define NRO_FASES               6
 
-#define TAMANHO_TANQUES 35
-#define ALTURA_CELS_ENERGIA 30
-#define LARGURA_CELS_ENERGIA 30
+#define TAMANHO_TANQUES         35
+#define ALTURA_CELS_ENERGIA     30
+#define LARGURA_CELS_ENERGIA    30
 
 #define FALSE 0
 #define TRUE 1
@@ -83,4 +83,5 @@ void carregarJogoSalvo(GAME *jogo);
 void passarDeFase(GAME *jogo);
 void reiniciarJogo(GAME *jogo);
 void resetarJogo(GAME *jogo);
+void voltarPraPrimeiroMapa(GAME *jogo);
 #endif

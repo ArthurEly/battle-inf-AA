@@ -3,9 +3,6 @@
 #include "jogador.h"
 #include "construcao.h"
 
-#define MAPA_LINHAS 17
-#define MAPA_COLUNAS 42
-
 typedef struct inimigo{
     Rectangle inimigo_R;
     int vidas;

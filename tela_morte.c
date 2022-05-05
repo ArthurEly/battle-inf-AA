@@ -58,7 +58,7 @@ void DrawDeathScreen(GAME *jogo){
     novo_highscore.segundos = jogo->segundos;
 
     int nova_opcao = 0;
-    if(novo_highscore.pontuacao >= ultimo_highscore.pontuacao && novo_highscore.pontuacao !=0 && !jogo->mapa.mapa_foi_pre_carregado){
+    if(novo_highscore.pontuacao >= ultimo_highscore.pontuacao  && (novo_highscore.segundos <= ultimo_highscore.segundos || ultimo_highscore.segundos == 0) && novo_highscore.pontuacao !=0 && !jogo->mapa.mapa_foi_pre_carregado){
         nova_opcao = 1;
         if (death_menu_option == 2){
                 DrawRectangle(212,438,725,175,ORANGE);
@@ -92,9 +92,9 @@ void DrawDeathScreen(GAME *jogo){
             nova_opcao = 0;
             strcpy(novo_highscore.nome,jogo->jogador.nome);
             atualizarHighscore(&novo_highscore);
-            printf("parabens!!!!!\n");
             resetarJogo(jogo);
             SetActiveScreen(14);
+            letterCount = 0;
         }
     }
 

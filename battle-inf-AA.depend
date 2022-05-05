@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1651711206 source:c:\battle inf\battle-inf-aa\main.c
+1651717279 source:c:\battle inf\battle-inf-aa\main.c
 	"raylib.h"
 	"game.h"
 	"main.h"
@@ -27,7 +27,7 @@
 	"raylib.h"
 	"stdio.h"
 
-1651711774 c:\battle inf\battle-inf-aa\game.h
+1651717816 c:\battle inf\battle-inf-aa\game.h
 	"stdio.h"
 	"raylib.h"
 	"jogador.h"
@@ -75,7 +75,7 @@
 1651705188 c:\battle inf\battle-inf-aa\pause_menu.h
 	"game.h"
 
-1651711735 source:c:\battle inf\battle-inf-aa\game.c
+1651717399 source:c:\battle inf\battle-inf-aa\game.c
 	"game.h"
 	"raylib.h"
 	"stdio.h"
@@ -87,8 +87,9 @@
 	"cel_energia.h"
 	"highscores.h"
 	"string.h"
+	"main.h"
 
-1651708750 source:c:\battle inf\battle-inf-aa\highscores.c
+1651716907 source:c:\battle inf\battle-inf-aa\highscores.c
 	"raylib.h"
 	"stdio.h"
 	"highscores.h"
@@ -160,7 +161,7 @@
 	"pause_menu.h"
 	"game.h"
 
-1651707293 source:c:\battle inf\battle-inf-aa\cel_energia.c
+1651714623 source:c:\battle inf\battle-inf-aa\cel_energia.c
 	"game.h"
 	"raylib.h"
 	"stdio.h"
@@ -170,7 +171,7 @@
 	"cel_energia.h"
 	"mapa.h"
 
-1651709721 source:c:\battle inf\battle-inf-aa\inimigo.c
+1651714825 source:c:\battle inf\battle-inf-aa\inimigo.c
 	"game.h"
 	"raylib.h"
 	"stdio.h"
@@ -201,7 +202,7 @@
 	"inimigo.h"
 	"cel_energia.h"
 
-1651305718 c:\battle inf\battle-inf-aa\inimigo.h
+1651714860 c:\battle inf\battle-inf-aa\inimigo.h
 	"jogador.h"
 	"construcao.h"
 
@@ -264,7 +265,7 @@
 	"raylib.h"
 	"game.h"
 
-1651710156 source:c:\battle inf\battle-inf-aa\mapa.c
+1651714644 source:c:\battle inf\battle-inf-aa\mapa.c
 	"game.h"
 	"raylib.h"
 	"stdio.h"
@@ -275,11 +276,12 @@
 	"mapa.h"
 	<math.h>
 
-1651708000 c:\battle inf\battle-inf-aa\mapa.h
+1651714876 c:\battle inf\battle-inf-aa\mapa.h
 	"construcao.h"
 	"cel_energia.h"
+	"game.h"
 
-1651705724 source:c:\battle inf\battle-inf-aa\carregar.c
+1651714623 source:c:\battle inf\battle-inf-aa\carregar.c
 	"raylib.h"
 	"stdio.h"
 	"carregar.h"
@@ -323,7 +325,7 @@
 	"mapa.h"
 	<math.h>
 
-1651707261 c:\battle inf\battle-inf-aa\cel_energia.h
+1651714847 c:\battle inf\battle-inf-aa\cel_energia.h
 	"jogador.h"
 	"construcao.h"
 
@@ -340,7 +342,7 @@
 1651544109 c:\battle inf\battle-inf-aa\explosoes.h
 	"game.h"
 
-1651711042 source:c:\battle inf\battle-inf-aa\tela_morte.c
+1651716205 source:c:\battle inf\battle-inf-aa\tela_morte.c
 	"raylib.h"
 	"stdio.h"
 	"pause_menu.h"

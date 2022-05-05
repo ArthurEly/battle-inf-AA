@@ -66,6 +66,7 @@
 		<Unit filename="main.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="main.h" />
 		<Unit filename="mapa.c">
 			<Option compilerVar="CC" />
 		</Unit>
